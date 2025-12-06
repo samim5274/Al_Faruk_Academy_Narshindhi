@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2025 at 09:41 AM
+-- Generation Time: Dec 06, 2025 at 02:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,30 @@ CREATE TABLE `attendances` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `attendances`
+--
+
+INSERT INTO `attendances` (`id`, `student_id`, `class_id`, `attendance_date`, `status`, `remarks`, `created_at`, `updated_at`) VALUES
+(1, 36, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:34:58', '2025-12-06 10:34:58'),
+(2, 41, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:34:59', '2025-12-06 10:34:59'),
+(3, 48, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:00', '2025-12-06 10:35:00'),
+(4, 71, 12, '2025-12-06', 'Absent', 'N/A', '2025-12-06 10:35:01', '2025-12-06 10:35:01'),
+(5, 95, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:02', '2025-12-06 10:35:02'),
+(6, 101, 12, '2025-12-06', 'Absent', 'N/A', '2025-12-06 10:35:03', '2025-12-06 10:35:03'),
+(7, 102, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:04', '2025-12-06 10:35:04'),
+(8, 140, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:05', '2025-12-06 10:35:05'),
+(9, 150, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:06', '2025-12-06 10:35:06'),
+(10, 152, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:07', '2025-12-06 10:35:07'),
+(11, 160, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:08', '2025-12-06 10:35:08'),
+(12, 164, 12, '2025-12-06', 'Absent', 'N/A', '2025-12-06 10:35:09', '2025-12-06 10:35:09'),
+(13, 174, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:10', '2025-12-06 10:35:10'),
+(14, 201, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:13', '2025-12-06 10:35:13'),
+(15, 227, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:14', '2025-12-06 10:35:14'),
+(16, 262, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:15', '2025-12-06 10:35:15'),
+(17, 280, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:16', '2025-12-06 10:35:16'),
+(18, 286, 12, '2025-12-06', 'Present', 'N/A', '2025-12-06 10:35:17', '2025-12-06 10:35:17');
 
 -- --------------------------------------------------------
 
@@ -96,6 +120,13 @@ CREATE TABLE `exams` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `exams`
+--
+
+INSERT INTO `exams` (`id`, `name`, `date`, `class_id`, `subject_id`, `max_marks`, `created_at`, `updated_at`) VALUES
+(1, 'Mid', '2025-12-10', 12, 131, 100, '2025-12-06 10:36:09', '2025-12-06 10:36:09');
+
 -- --------------------------------------------------------
 
 --
@@ -108,6 +139,81 @@ CREATE TABLE `exam_names` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `exam_names`
+--
+
+INSERT INTO `exam_names` (`id`, `exam_name`, `created_at`, `updated_at`) VALUES
+(1, 'Mid', '2025-12-06 10:35:55', '2025-12-06 10:35:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `excategories`
+--
+
+CREATE TABLE `excategories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `excategories`
+--
+
+INSERT INTO `excategories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Entertainment', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expenses`
+--
+
+CREATE TABLE `expenses` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `catId` bigint(20) UNSIGNED NOT NULL,
+  `subcatId` bigint(20) UNSIGNED NOT NULL,
+  `userId` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `amount` decimal(12,2) NOT NULL,
+  `remark` text NOT NULL DEFAULT 'N/A',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`id`, `catId`, `subcatId`, `userId`, `title`, `date`, `amount`, `remark`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 'Bazar', '2025-12-06', 500.00, 'N/A', '2025-12-06 13:05:44', '2025-12-06 13:05:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exsubcategories`
+--
+
+CREATE TABLE `exsubcategories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cat_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `exsubcategories`
+--
+
+INSERT INTO `exsubcategories` (`id`, `cat_id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Nasta', NULL, NULL),
+(2, 1, 'Nasta 2', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -213,6 +319,15 @@ CREATE TABLE `marks` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `marks`
+--
+
+INSERT INTO `marks` (`id`, `student_id`, `subject_id`, `exam_id`, `marks_obtained`, `grade`, `gpa`, `remarks`, `created_at`, `updated_at`) VALUES
+(1, 36, 131, 1, 85, 'A+', 5, 'N/A', '2025-12-06 10:36:52', '2025-12-06 10:36:52'),
+(2, 41, 131, 1, 45, 'C', 2, 'N/A', '2025-12-06 10:36:56', '2025-12-06 10:36:56'),
+(3, 48, 131, 1, 25, 'F', 0, 'N/A', '2025-12-06 10:36:59', '2025-12-06 10:36:59');
+
 -- --------------------------------------------------------
 
 --
@@ -247,7 +362,30 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (51, '2025_09_22_185444_create_fee_structures_table', 1),
 (52, '2025_09_22_185453_create_fee_payments_table', 1),
 (53, '2025_09_28_183808_create_exam_names_table', 1),
-(54, '2025_10_03_153733_create_class_schedules_table', 1);
+(54, '2025_10_03_153733_create_class_schedules_table', 1),
+(55, '2025_12_06_164031_create_notices_table', 2),
+(56, '2025_12_06_181454_create_excategories_table', 3),
+(57, '2025_12_06_181520_create_exsubcategories_table', 3),
+(59, '2025_12_06_181537_create_expenses_table', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notices`
+--
+
+CREATE TABLE `notices` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `publish_date` date NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `attachment` varchar(255) DEFAULT NULL,
+  `notice_type` varchar(255) NOT NULL DEFAULT 'public',
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -419,19 +557,19 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (33, 'Bailee', 'Torp', '1974-07-09', 'Male', 'B+', 'Islam', 'Bangladeshi', '161', '(430) 465-0451', 'student162@example.com', '$2y$12$oEJwrY6NltYKg2kbIGolcujl.hey9K21y8LO43c3gCpkMtdr3tIza', '6919 Oma Island Suite 623\nDaisyfort, IA 05537-0031', 'Apt. 060', 'Luigi Marks', 'Engineer', '(608) 229-1712', 'student162@example.com', '162', 'Luz Moore', 'Nurse', '+1.757.961.3521', 'student163@example.com', '163', 'Jordi Heaney', '+17312064285', 'student164@example.com', '164', 'Aunt', 1, 3, 7, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:25', '2025-12-06 07:05:34'),
 (34, 'Kathryne', 'Farrell', '1979-12-07', 'Male', 'O+', 'Christian', 'Bangladeshi', '166', '+1-862-458-3705', 'student167@example.com', '$2y$12$One9eBsChMRebnXPxBdksu6hOIIUSA3PeOTQdzq5Gmlx6/jC1x1My', '89899 Nyah Camp Suite 246\nDuBuquehaven, AR 38060', 'Apt. 453', 'Rosendo Tremblay', 'Businessman', '+16809520711', 'student167@example.com', '167', 'Germaine Weber', 'Teacher', '+1.214.219.0240', 'student168@example.com', '168', 'Prof. Hassie Williamson', '229.839.4069', 'student169@example.com', '169', 'Aunt', 1, 2, 6, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:25', '2025-12-06 07:05:34'),
 (35, 'Danielle', 'Gutmann', '2022-09-21', 'Other', 'A-', 'Christian', 'Bangladeshi', '171', '+1-845-673-8548', 'student172@example.com', '$2y$12$sxMYOOcBHUGNB1xJ5e1irODvk8v6ryjuPOCzlcHzrFKBh7jegmaeC', '307 Jakob Summit\nEast Arjun, WA 45943', 'Suite 092', 'Ladarius Schowalter', 'Teacher', '+1-651-558-2137', 'student172@example.com', '172', 'Neoma Emard', 'Businesswoman', '(385) 460-8791', 'student173@example.com', '173', 'Odell King I', '+1-763-324-9086', 'student174@example.com', '174', 'Aunt', 1, 6, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:25', '2025-12-06 07:05:34'),
-(36, 'Jayde', 'White', '2025-05-29', 'Male', 'AB-', 'Other', 'Bangladeshi', '176', '786-638-9530', 'student177@example.com', '$2y$12$V8YxmSDcMjm6Sw71dzqBTe3BunWSeFlgANQww61N/3v7APeCQUnI2', '21726 Kelley Prairie Apt. 061\nShanahanbury, MT 13402', 'Suite 755', 'Mr. Eugene Weimann II', 'Doctor', '1-434-213-8898', 'student177@example.com', '177', 'Paula Bauch', 'Housewife', '(754) 209-0178', 'student178@example.com', '178', 'Estevan Franecki', '281.619.2994', 'student179@example.com', '179', 'Uncle', 1, 1, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:25', '2025-12-06 07:05:34'),
+(36, 'Jayde', 'White', '2025-05-29', 'Male', 'AB-', 'Other', 'Bangladeshi', '176', '786-638-9530', 'student177@example.com', '$2y$12$V8YxmSDcMjm6Sw71dzqBTe3BunWSeFlgANQww61N/3v7APeCQUnI2', '21726 Kelley Prairie Apt. 061\nShanahanbury, MT 13402', 'Suite 755', 'Mr. Eugene Weimann II', 'Doctor', '1-434-213-8898', 'student177@example.com', '177', 'Paula Bauch', 'Housewife', '(754) 209-0178', 'student178@example.com', '178', 'Estevan Franecki', '281.619.2994', 'student179@example.com', '179', 'Uncle', 1, 1, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:25', '2025-12-06 10:34:58'),
 (37, 'Ottis', 'Ward', '2016-04-14', 'Other', 'A-', 'Christian', 'Bangladeshi', '181', '539.347.1228', 'student182@example.com', '$2y$12$0DWQjH1PZkliJEebMUBDV.Mw.fXfD3fjggDlHtpqWLPprGG4fidji', '24564 Ike Path\nThurmanchester, VA 28822', 'Suite 882', 'Elian Keeling', 'Farmer', '971.563.5169', 'student182@example.com', '182', 'Neva Erdman', 'Businesswoman', '863-571-1777', 'student183@example.com', '183', 'Donavon Hagenes', '615-821-6643', 'student184@example.com', '184', 'Sister', 1, 3, 5, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:25', '2025-12-06 07:05:34'),
 (38, 'Sydni', 'Oberbrunner', '2011-02-28', 'Male', 'AB+', 'Hindu', 'Bangladeshi', '186', '512-438-6579', 'student187@example.com', '$2y$12$2.RbehOYm6AqGAKIDCieUuUDgPh49v34HAV.YX48c5354B4RVXuES', '7856 Rogahn Vista\nNew Linnieland, IA 80546', 'Suite 623', 'Justus Wuckert', 'Teacher', '1-360-394-8841', 'student187@example.com', '187', 'Hermina Cronin', 'Housewife', '(934) 986-7523', 'student188@example.com', '188', 'Dr. Ethan Schaden', '+1-770-955-9804', 'student189@example.com', '189', 'Grandparent', 1, 7, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:26', '2025-12-06 07:05:34'),
 (39, 'Keaton', 'VonRueden', '1996-09-11', 'Female', 'O+', 'Buddhist', 'Bangladeshi', '191', '1-732-397-6483', 'student192@example.com', '$2y$12$49fkjcYvmeqTc6T4hDV1..6XruSMkhLgpkv4b/o3V9p.tDeKU9VYe', '99714 Emard Views\nParisianview, RI 49591-0248', 'Suite 404', 'Prof. Easter Lesch I', 'Farmer', '(620) 255-6997', 'student192@example.com', '192', 'Dr. Susanna Haag', 'Nurse', '+1 (929) 522-1116', 'student193@example.com', '193', 'Prof. Ernesto Kozey', '+1-904-339-7295', 'student194@example.com', '194', 'Sister', 1, 3, 2, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:26', '2025-12-06 07:05:34'),
 (40, 'Rick', 'Rodriguez', '1973-08-01', 'Other', 'A-', 'Hindu', 'Bangladeshi', '196', '+1-909-991-4130', 'student197@example.com', '$2y$12$S00uRZNbNGuJ.yksUudZn.fcHpTqD4VxvRZ2xMHX/1msMLPFxdU2y', '701 Pete Expressway\nNorth Hertaside, KS 36113', 'Suite 097', 'Mr. Kiel Hahn PhD', 'Teacher', '831.629.0919', 'student197@example.com', '197', 'Dr. Sophia Corkery IV', 'Nurse', '+1-716-293-2007', 'student198@example.com', '198', 'Aleen Hessel', '+17475947752', 'student199@example.com', '199', 'Brother', 1, 4, 2, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:26', '2025-12-06 07:05:34'),
-(41, 'Donato', 'Lubowitz', '1972-03-14', 'Other', 'AB+', 'Buddhist', 'Bangladeshi', '201', '(352) 898-0790', 'student202@example.com', '$2y$12$hjQ2YgP1BUCruAsPvu3ot.IvLd..FePfrsc/JiEsK2jcMAoGPBWim', '55201 Bashirian Creek Apt. 131\nKesslerberg, AK 31013', 'Apt. 724', 'Raul McDermott MD', 'Engineer', '(302) 571-0890', 'student202@example.com', '202', 'Emily Sporer', 'Teacher', '+1.810.572.7423', 'student203@example.com', '203', 'Colt Hickle Sr.', '1-214-346-8646', 'student204@example.com', '204', 'Brother', 1, 2, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:26', '2025-12-06 07:05:34'),
+(41, 'Donato', 'Lubowitz', '1972-03-14', 'Other', 'AB+', 'Buddhist', 'Bangladeshi', '201', '(352) 898-0790', 'student202@example.com', '$2y$12$hjQ2YgP1BUCruAsPvu3ot.IvLd..FePfrsc/JiEsK2jcMAoGPBWim', '55201 Bashirian Creek Apt. 131\nKesslerberg, AK 31013', 'Apt. 724', 'Raul McDermott MD', 'Engineer', '(302) 571-0890', 'student202@example.com', '202', 'Emily Sporer', 'Teacher', '+1.810.572.7423', 'student203@example.com', '203', 'Colt Hickle Sr.', '1-214-346-8646', 'student204@example.com', '204', 'Brother', 1, 2, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:26', '2025-12-06 10:34:59'),
 (42, 'Floyd', 'Hintz', '1995-12-15', 'Male', 'B-', 'Buddhist', 'Bangladeshi', '206', '(442) 890-8063', 'student207@example.com', '$2y$12$O8cIXTQvnHlX/EtSc2o5puykgPnczCcam8gMyZL/U6nldCh6Mi3g.', '4446 Reggie Centers Suite 302\nWest Karianne, IA 68444', 'Apt. 954', 'Lonny Macejkovic', 'Farmer', '+1-404-589-8449', 'student207@example.com', '207', 'Syble Jacobi MD', 'Housewife', '+17652918211', 'student208@example.com', '208', 'Joshua Ruecker MD', '+12209952457', 'student209@example.com', '209', 'Grandparent', 1, 4, 5, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:26', '2025-12-06 07:05:34'),
 (43, 'Caroline', 'Toy', '2016-09-21', 'Other', 'O+', 'Islam', 'Bangladeshi', '211', '1-562-487-5116', 'student212@example.com', '$2y$12$vuS6dW2tGZINnctacJ3GduzNt/rseEg2XE.eKXnRNOGQEspm3/IpS', '1068 Feil Plains Apt. 868\nLake Jaylenstad, DC 09310', 'Apt. 617', 'Savion McLaughlin', 'Businessman', '+1.910.880.5442', 'student212@example.com', '212', 'Mrs. Alanna Nikolaus', 'Teacher', '209-662-8508', 'student213@example.com', '213', 'Dolores Predovic', '248-273-8393', 'student214@example.com', '214', 'Uncle', 1, 3, 3, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:27', '2025-12-06 07:05:34'),
 (44, 'Sadie', 'Schowalter', '2017-01-11', 'Male', 'AB+', 'Buddhist', 'Bangladeshi', '216', '(469) 540-0890', 'student217@example.com', '$2y$12$koe.MmiqPdCyIbyP1mbyieidCz.JwQ1S9bG1d9f5ZZsUFv9EOBJyG', '38557 Domenick Shoals Apt. 908\nWest Chaunceyland, LA 69419-3035', 'Apt. 946', 'Ethel Lakin', 'Engineer', '+1.716.837.8882', 'student217@example.com', '217', 'Layla Keebler IV', 'Teacher', '657.431.2091', 'student218@example.com', '218', 'Krystina Witting', '+19282772188', 'student219@example.com', '219', 'Uncle', 1, 5, 5, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:27', '2025-12-06 07:05:34'),
 (45, 'Margarita', 'Lockman', '1987-07-09', 'Male', 'A+', 'Buddhist', 'Bangladeshi', '221', '+1.419.345.8868', 'student222@example.com', '$2y$12$O1uuVYJS812lK8zWdiMUOuc8edftEJrq2DB7jcbY7JBuWxVMiISoK', '282 Ebert Inlet\nHammesmouth, GA 92119', 'Suite 704', 'Doris Dooley', 'Farmer', '860.522.1690', 'student222@example.com', '222', 'Vesta Wiza', 'Doctor', '+1-601-327-0654', 'student223@example.com', '223', 'Mr. Gennaro Quitzon DDS', '810.470.2456', 'student224@example.com', '224', 'Sister', 1, 6, 10, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:27', '2025-12-06 07:05:34'),
 (46, 'Maryse', 'Murphy', '2007-12-18', 'Male', 'B+', 'Christian', 'Bangladeshi', '226', '832.995.0184', 'student227@example.com', '$2y$12$G0MqLYNQ.s2UfkWKaKRGS.qcEIri0xLbPpelS1oZAANuBLS.QK40G', '3544 Hoeger Rapid\nEast Gilda, RI 26289', 'Suite 680', 'Theodore Brown', 'Teacher', '(848) 793-6440', 'student227@example.com', '227', 'Prof. Katharina Ernser IV', 'Nurse', '815.652.0289', 'student228@example.com', '228', 'Cesar Gusikowski', '+1.630.250.3356', 'student229@example.com', '229', 'Sister', 1, 4, 3, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:27', '2025-12-06 07:05:34'),
 (47, 'Andreane', 'Mann', '1980-05-05', 'Male', 'O-', 'Islam', 'Bangladeshi', '231', '802-250-5911', 'student232@example.com', '$2y$12$2U9HbDXAJRo2Bin6pnl11OvcrPe1kV5WeZdNEi2vcZFR0qhFiesva', '40994 Koepp Cliff\nWest Hannamouth, KY 79990-9257', 'Apt. 507', 'Gus Schaden V', 'Farmer', '1-703-937-8005', 'student232@example.com', '232', 'Miss May Ebert', 'Housewife', '781.953.2244', 'student233@example.com', '233', 'Pierre Kessler PhD', '1-786-200-7822', 'student234@example.com', '234', 'Uncle', 1, 3, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:27', '2025-12-06 07:05:34'),
-(48, 'Lourdes', 'Fahey', '2012-10-30', 'Male', 'AB-', 'Hindu', 'Bangladeshi', '236', '810-439-2624', 'student237@example.com', '$2y$12$LdDg0qUWj3207woMjZV44uQKUihFnQ06PNbAi0Rp6EyRLG2iLQ5AO', '52875 Theodore Mews Suite 292\nSouth Shanafurt, IA 32068-9747', 'Suite 652', 'Brody Abbott', 'Engineer', '(267) 672-2827', 'student237@example.com', '237', 'Velda McCullough', 'Nurse', '+1-310-596-4484', 'student238@example.com', '238', 'Kurtis Rutherford DDS', '(772) 877-4413', 'student239@example.com', '239', 'Sister', 1, 3, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:28', '2025-12-06 07:05:34'),
+(48, 'Lourdes', 'Fahey', '2012-10-30', 'Male', 'AB-', 'Hindu', 'Bangladeshi', '236', '810-439-2624', 'student237@example.com', '$2y$12$LdDg0qUWj3207woMjZV44uQKUihFnQ06PNbAi0Rp6EyRLG2iLQ5AO', '52875 Theodore Mews Suite 292\nSouth Shanafurt, IA 32068-9747', 'Suite 652', 'Brody Abbott', 'Engineer', '(267) 672-2827', 'student237@example.com', '237', 'Velda McCullough', 'Nurse', '+1-310-596-4484', 'student238@example.com', '238', 'Kurtis Rutherford DDS', '(772) 877-4413', 'student239@example.com', '239', 'Sister', 1, 3, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:28', '2025-12-06 10:35:00'),
 (49, 'Uriel', 'Thompson', '2005-06-18', 'Male', 'AB-', 'Other', 'Bangladeshi', '241', '352-623-4054', 'student242@example.com', '$2y$12$LL8wyAkuC41PxFoByljU7uyhtGZe9u.SJ43CkqoXOLF1gZq/yyw46', '6447 Etha Grove Suite 842\nHomenickchester, MN 42904-9162', 'Suite 593', 'Silas Wyman DVM', 'Doctor', '620-260-8589', 'student242@example.com', '242', 'Miss Alia Crist DDS', 'Nurse', '+1 (361) 314-9837', 'student243@example.com', '243', 'Reyna Hermann', '820.205.7523', 'student244@example.com', '244', 'Brother', 1, 4, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:28', '2025-12-06 07:05:34'),
 (50, 'Gia', 'Kulas', '1976-12-09', 'Other', 'A+', 'Buddhist', 'Bangladeshi', '246', '458.719.8479', 'student247@example.com', '$2y$12$reVvBENTjJUZZ7Etr8vrE.ufHZ/afKKrnhvhF2C9MIjz3BUjBOySC', '858 Gene Springs\nJudsonton, ME 85535-1471', 'Suite 643', 'Pietro Hettinger', 'Engineer', '757.799.7130', 'student247@example.com', '247', 'Julia Heller', 'Businesswoman', '813.358.1484', 'student248@example.com', '248', 'Prof. Alford Fay III', '+1 (325) 315-5301', 'student249@example.com', '249', 'Uncle', 1, 7, 10, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:28', '2025-12-06 07:05:34'),
 (51, 'Sandy', 'Bosco', '1973-10-03', 'Male', 'AB+', 'Christian', 'Bangladeshi', '251', '+12404193436', 'student252@example.com', '$2y$12$UtJihpS4CywKzinQ5C9Lk.BzJ6h.W9LjjViTwYm2AALirkb6YgZoS', '77234 Little Mills Suite 851\nSouth Zitamouth, UT 50643-9246', 'Apt. 203', 'Gregorio Kris', 'Businessman', '810-379-7550', 'student252@example.com', '252', 'Marisa Hermiston', 'Nurse', '341-846-3508', 'student253@example.com', '253', 'Rosalind Lynch', '575.544.8583', 'student254@example.com', '254', 'Aunt', 1, 4, 7, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:28', '2025-12-06 07:05:34'),
@@ -454,7 +592,7 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (68, 'Lenore', 'Kunde', '1972-12-07', 'Female', 'A+', 'Other', 'Bangladeshi', '336', '(817) 388-8064', 'student337@example.com', '$2y$12$4G3pvxPpzbtimXarvF80XOz0XEZ.dX52QEDLcEHRmMRidIziKYCWO', '1440 Fritz Cove\nEast Roslyn, MS 90865-0156', 'Apt. 916', 'Anastacio O\'Conner', 'Doctor', '+1 (805) 330-5324', 'student337@example.com', '337', 'Gisselle Roob', 'Nurse', '+19859726075', 'student338@example.com', '338', 'Sheldon Fisher', '1-251-921-5690', 'student339@example.com', '339', 'Brother', 1, 5, 6, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:31', '2025-12-06 07:05:34'),
 (69, 'Ricky', 'Kunde', '1997-08-25', 'Female', 'O-', 'Other', 'Bangladeshi', '341', '+1.563.859.6511', 'student342@example.com', '$2y$12$St6uONdSEn8nF6mB1IpIUuUaCRWXn5AREgIy.tPuZa8XWlT5nLRJu', '40885 Agustina Gardens Suite 634\nDenesikstad, MN 58137-5210', 'Suite 031', 'Prof. Cooper Stanton DVM', 'Engineer', '1-435-236-4624', 'student342@example.com', '342', 'Mrs. Beth Ondricka', 'Housewife', '+1.617.989.6648', 'student343@example.com', '343', 'Pablo Leuschke', '445.926.1979', 'student344@example.com', '344', 'Aunt', 1, 6, 6, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:32', '2025-12-06 07:05:34'),
 (70, 'Duncan', 'Yundt', '1995-03-01', 'Other', 'AB-', 'Christian', 'Bangladeshi', '346', '1-928-959-4720', 'student347@example.com', '$2y$12$HQdZZnas2S5/FjiDP/BQQ.6TFFNic3m2gmETn6SNuO4HR.7z0kNfi', '21078 Zboncak Inlet Apt. 527\nCaspermouth, OH 73959', 'Apt. 964', 'Omer Orn', 'Teacher', '629-586-4093', 'student347@example.com', '347', 'Mrs. Elsie Kilback', 'Doctor', '+1 (727) 315-0193', 'student348@example.com', '348', 'Trystan Osinski DDS', '351.875.7760', 'student349@example.com', '349', 'Uncle', 1, 4, 11, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:32', '2025-12-06 07:05:34'),
-(71, 'Jordan', 'VonRueden', '2008-02-04', 'Female', 'AB+', 'Other', 'Bangladeshi', '351', '(332) 924-4485', 'student352@example.com', '$2y$12$MO2chCKm60B6yUqChH69cONCeuZDcmM2vBlB2Ik6hIoXDPFumh3Q2', '865 Considine Circle Apt. 454\nMurrayburgh, AK 03976', 'Suite 058', 'Mr. Tyreek Reichel', 'Doctor', '+1.413.526.6246', 'student352@example.com', '352', 'Prof. Daniella Denesik', 'Businesswoman', '+18789703816', 'student353@example.com', '353', 'Dr. Weldon Tremblay II', '+19492758436', 'student354@example.com', '354', 'Brother', 1, 4, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:32', '2025-12-06 07:05:34'),
+(71, 'Jordan', 'VonRueden', '2008-02-04', 'Female', 'AB+', 'Other', 'Bangladeshi', '351', '(332) 924-4485', 'student352@example.com', '$2y$12$MO2chCKm60B6yUqChH69cONCeuZDcmM2vBlB2Ik6hIoXDPFumh3Q2', '865 Considine Circle Apt. 454\nMurrayburgh, AK 03976', 'Suite 058', 'Mr. Tyreek Reichel', 'Doctor', '+1.413.526.6246', 'student352@example.com', '352', 'Prof. Daniella Denesik', 'Businesswoman', '+18789703816', 'student353@example.com', '353', 'Dr. Weldon Tremblay II', '+19492758436', 'student354@example.com', '354', 'Brother', 1, 4, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:32', '2025-12-06 10:35:01'),
 (72, 'Geraldine', 'Wisoky', '1990-12-21', 'Female', 'B-', 'Other', 'Bangladeshi', '356', '630-727-2218', 'student357@example.com', '$2y$12$s6/5NNBKa/MjZUVyAPOrC.w4CC09QDEKLY0mCyS9b3iq6/tmX6lb6', '958 Prosacco Forge\nNorth Floydmouth, ME 75666', 'Apt. 272', 'Prof. Walton Walter Jr.', 'Doctor', '(854) 932-1854', 'student357@example.com', '357', 'Ila Champlin', 'Teacher', '+1-970-991-2255', 'student358@example.com', '358', 'Jodie Shanahan', '+1.475.291.0719', 'student359@example.com', '359', 'Brother', 1, 7, 2, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:32', '2025-12-06 07:05:34'),
 (73, 'Amina', 'Murray', '2016-09-04', 'Other', 'A-', 'Christian', 'Bangladeshi', '361', '+16676901895', 'student362@example.com', '$2y$12$tpN9z0H9HrQkUPZ7Uu6oNOaiYYTspkElcOS5bdSCVeWVvE8CDwHKG', '757 Keon Hollow\nNew Carroll, FL 11695', 'Suite 674', 'Jarrell Wehner', 'Businessman', '262-217-2768', 'student362@example.com', '362', 'Beryl Johnston', 'Teacher', '260-372-6448', 'student363@example.com', '363', 'Julie Corwin', '+12406389225', 'student364@example.com', '364', 'Aunt', 1, 7, 6, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:32', '2025-12-06 07:05:34'),
 (74, 'Arvilla', 'Armstrong', '2005-06-05', 'Other', 'O+', 'Hindu', 'Bangladeshi', '366', '(586) 943-1613', 'student367@example.com', '$2y$12$C9mjodybxfWPmA4g6THubOoQ/wf5LOy4ZbOKi3kh9B5GLtVlNVwjG', '8521 Pacocha Lights\nWest Vaughnchester, TX 10032', 'Suite 974', 'Dr. Jaiden Vandervort', 'Farmer', '725-542-4225', 'student367@example.com', '367', 'Myrtie Effertz', 'Doctor', '872.762.9501', 'student368@example.com', '368', 'Ludie Tillman', '+1-530-667-8961', 'student369@example.com', '369', 'Brother', 1, 8, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:32', '2025-12-06 07:05:34'),
@@ -479,14 +617,14 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (92, 'Ali', 'Rau', '2004-12-04', 'Female', 'B-', 'Other', 'Bangladeshi', '456', '+15206663494', 'student457@example.com', '$2y$12$KkBPkiZT9T73Pjr05WA13ertoxrflk4jwkINnXa6lupW2xEAH5WaG', '4782 Rebekah Springs\nNorth Brucemouth, NV 82472', 'Apt. 932', 'Akeem Donnelly', 'Farmer', '+1.904.734.7283', 'student457@example.com', '457', 'Chyna Durgan', 'Teacher', '(269) 268-3261', 'student458@example.com', '458', 'Prof. Litzy Baumbach', '(859) 413-1587', 'student459@example.com', '459', 'Grandparent', 1, 6, 11, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:36', '2025-12-06 07:05:35'),
 (93, 'Jason', 'Lind', '1974-12-28', 'Male', 'A-', 'Buddhist', 'Bangladeshi', '461', '+1 (551) 366-0161', 'student462@example.com', '$2y$12$RghfQjxnYiDWF1sWt0gGu.9ISTG1OF8PzDa0a1CI8yL279NH8eV/G', '111 Konopelski Keys\nLisettehaven, MD 84571-1760', 'Apt. 670', 'Rashawn Emmerich', 'Teacher', '+1 (903) 898-3031', 'student462@example.com', '462', 'Lessie Block I', 'Businesswoman', '+1.469.678.9580', 'student463@example.com', '463', 'Prof. Audreanne Vandervort', '509.600.2597', 'student464@example.com', '464', 'Uncle', 1, 10, 5, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:36', '2025-12-06 07:05:35'),
 (94, 'Rosella', 'Feeney', '1986-03-27', 'Male', 'AB+', 'Other', 'Bangladeshi', '466', '+14588477051', 'student467@example.com', '$2y$12$7oNCM6gEjmv2FBmqXOKesuOd6a6slpjfYdeDrKl8bPwLTzCyvt01y', '8021 Braun Plaza\nSouth Rickiemouth, ND 02719-8463', 'Apt. 515', 'Prof. Merlin Greenfelder I', 'Businessman', '(916) 518-2274', 'student467@example.com', '467', 'Ms. Katarina Schuppe', 'Teacher', '(828) 412-5916', 'student468@example.com', '468', 'Gilda Romaguera', '(781) 549-7303', 'student469@example.com', '469', 'Grandparent', 1, 8, 4, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:36', '2025-12-06 07:05:35'),
-(95, 'Tomasa', 'Renner', '1993-07-21', 'Other', 'A-', 'Other', 'Bangladeshi', '471', '725.901.9779', 'student472@example.com', '$2y$12$BmWJV9qzkZxSyxc2mLrNTOacVIkgrPVnsMHyPCbkfxUujhdve/LiC', '8270 O\'Keefe Squares Suite 097\nWestborough, DC 86111-8225', 'Suite 805', 'Wilfred Shanahan', 'Engineer', '+1-918-566-8740', 'student472@example.com', '472', 'Magnolia Turcotte III', 'Teacher', '757.967.7843', 'student473@example.com', '473', 'Twila Hilpert', '351-361-6408', 'student474@example.com', '474', 'Uncle', 1, 5, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:36', '2025-12-06 07:05:35'),
+(95, 'Tomasa', 'Renner', '1993-07-21', 'Other', 'A-', 'Other', 'Bangladeshi', '471', '725.901.9779', 'student472@example.com', '$2y$12$BmWJV9qzkZxSyxc2mLrNTOacVIkgrPVnsMHyPCbkfxUujhdve/LiC', '8270 O\'Keefe Squares Suite 097\nWestborough, DC 86111-8225', 'Suite 805', 'Wilfred Shanahan', 'Engineer', '+1-918-566-8740', 'student472@example.com', '472', 'Magnolia Turcotte III', 'Teacher', '757.967.7843', 'student473@example.com', '473', 'Twila Hilpert', '351-361-6408', 'student474@example.com', '474', 'Uncle', 1, 5, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:36', '2025-12-06 10:35:02'),
 (96, 'Kailee', 'Heller', '2022-06-25', 'Other', 'AB+', 'Hindu', 'Bangladeshi', '476', '1-920-403-8633', 'student477@example.com', '$2y$12$Wt6Ow/kDTZAbzrMTAHBomOkhwJnDaEX36jbf2enT7OBRXYXWV7AWa', '48218 West Branch\nPort Yadira, KY 60364-6360', 'Suite 968', 'Brooks Klein Jr.', 'Teacher', '(346) 234-6170', 'student477@example.com', '477', 'Miss Samara Wuckert DVM', 'Housewife', '+1-937-489-1038', 'student478@example.com', '478', 'Nikko Hyatt', '508-465-6752', 'student479@example.com', '479', 'Aunt', 1, 10, 8, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:37', '2025-12-06 07:05:35'),
 (97, 'Sandrine', 'Swift', '2007-05-02', 'Female', 'A+', 'Buddhist', 'Bangladeshi', '481', '331.296.9591', 'student482@example.com', '$2y$12$Rlm4CTjfgtWU/PZMFZ1WHOXr/Iz6mfpvXONYFu22KCllKadHyZFuK', '16356 Morissette Shore\nOrtizborough, AL 10109', 'Apt. 868', 'Gilbert Roberts Sr.', 'Farmer', '430-461-0795', 'student482@example.com', '482', 'Melissa Towne', 'Doctor', '318.505.2632', 'student483@example.com', '483', 'Mr. Thurman West III', '+1-820-723-8522', 'student484@example.com', '484', 'Aunt', 1, 7, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:37', '2025-12-06 07:05:35'),
 (98, 'Giovanny', 'Walker', '1979-10-26', 'Other', 'A-', 'Islam', 'Bangladeshi', '486', '434-286-1058', 'student487@example.com', '$2y$12$QfrOrudfna/2TRcB31N2L.h8Hnq872tI388LsIUd6rbHQ07buNjBK', '93213 Raynor Crescent Suite 158\nEast Issac, DC 16114', 'Apt. 847', 'Kurtis Bartell', 'Farmer', '(762) 682-1304', 'student487@example.com', '487', 'Mrs. Missouri Marks Jr.', 'Housewife', '978-422-1453', 'student488@example.com', '488', 'Lexi O\'Hara', '(386) 454-6534', 'student489@example.com', '489', 'Uncle', 1, 8, 7, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:37', '2025-12-06 07:05:35'),
 (99, 'Pat', 'Quigley', '1983-07-12', 'Other', 'AB-', 'Hindu', 'Bangladeshi', '491', '+1-818-741-6254', 'student492@example.com', '$2y$12$iUE4gHxd.O36J/5LGfzv/.c.YKiDBAW7zTcmVV5xNOdW6OBQ14X9q', '696 Keven Way Suite 513\nBrookemouth, NC 44940', 'Suite 703', 'Chandler Mante', 'Doctor', '+1.520.377.4287', 'student492@example.com', '492', 'Megane King', 'Teacher', '606.581.3156', 'student493@example.com', '493', 'Clement Will', '351-783-0330', 'student494@example.com', '494', 'Grandparent', 1, 11, 8, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:37', '2025-12-06 07:05:35'),
 (100, 'Waino', 'Herzog', '2020-01-08', 'Female', 'A-', 'Islam', 'Bangladeshi', '496', '+19848360034', 'student497@example.com', '$2y$12$zXSnPMIPdtrRI08Blrk3W.ChQqLrda4yv69gziwg6/8vUKoq52gwy', '63096 Schaden Plains Suite 717\nMohrtown, OR 41122', 'Suite 523', 'Wendell Marvin', 'Doctor', '+12019907702', 'student497@example.com', '497', 'Karen Barrows IV', 'Doctor', '724.640.7941', 'student498@example.com', '498', 'Beatrice Hickle', '947.710.7452', 'student499@example.com', '499', 'Uncle', 1, 9, 2, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:37', '2025-12-06 07:05:35'),
-(101, 'Christine', 'Hilpert', '1987-12-20', 'Female', 'A-', 'Hindu', 'Bangladeshi', '501', '1-205-618-2129', 'student502@example.com', '$2y$12$omA1GR7Z1Zj2.YGvSHfPfOYM2hWM6k4gM.1k4oN6bz8vJPxfCtTxe', '751 Sidney Summit Suite 963\nMakenziebury, TX 94629', 'Apt. 397', 'Trenton Kassulke', 'Farmer', '607.625.1803', 'student502@example.com', '502', 'Prof. Nola Ankunding Jr.', 'Doctor', '925-889-3150', 'student503@example.com', '503', 'Damion Nolan', '1-906-526-3677', 'student504@example.com', '504', 'Uncle', 1, 6, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:37', '2025-12-06 07:05:35'),
-(102, 'Rupert', 'Ritchie', '2004-11-07', 'Female', 'O-', 'Buddhist', 'Bangladeshi', '506', '+1-480-565-4682', 'student507@example.com', '$2y$12$mFI9LfAWZUUjIiBm9rAo1.LAm.eNc05A.SM27563Rzw1IdjLcvZsq', '88569 Jimmy Turnpike\nEast Virgilport, HI 89316', 'Apt. 433', 'Westley Connelly', 'Engineer', '774-978-2272', 'student507@example.com', '507', 'Ms. Delta Durgan Sr.', 'Doctor', '+1.828.221.0239', 'student508@example.com', '508', 'Lavina Predovic', '1-843-856-6386', 'student509@example.com', '509', 'Brother', 1, 7, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:38', '2025-12-06 07:05:35'),
+(101, 'Christine', 'Hilpert', '1987-12-20', 'Female', 'A-', 'Hindu', 'Bangladeshi', '501', '1-205-618-2129', 'student502@example.com', '$2y$12$omA1GR7Z1Zj2.YGvSHfPfOYM2hWM6k4gM.1k4oN6bz8vJPxfCtTxe', '751 Sidney Summit Suite 963\nMakenziebury, TX 94629', 'Apt. 397', 'Trenton Kassulke', 'Farmer', '607.625.1803', 'student502@example.com', '502', 'Prof. Nola Ankunding Jr.', 'Doctor', '925-889-3150', 'student503@example.com', '503', 'Damion Nolan', '1-906-526-3677', 'student504@example.com', '504', 'Uncle', 1, 6, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:37', '2025-12-06 10:35:03'),
+(102, 'Rupert', 'Ritchie', '2004-11-07', 'Female', 'O-', 'Buddhist', 'Bangladeshi', '506', '+1-480-565-4682', 'student507@example.com', '$2y$12$mFI9LfAWZUUjIiBm9rAo1.LAm.eNc05A.SM27563Rzw1IdjLcvZsq', '88569 Jimmy Turnpike\nEast Virgilport, HI 89316', 'Apt. 433', 'Westley Connelly', 'Engineer', '774-978-2272', 'student507@example.com', '507', 'Ms. Delta Durgan Sr.', 'Doctor', '+1.828.221.0239', 'student508@example.com', '508', 'Lavina Predovic', '1-843-856-6386', 'student509@example.com', '509', 'Brother', 1, 7, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:38', '2025-12-06 10:35:04'),
 (103, 'Harmony', 'Hettinger', '1994-03-25', 'Other', 'A+', 'Christian', 'Bangladeshi', '511', '+1-970-704-3171', 'student512@example.com', '$2y$12$uYHk7EKmWseqHKQjbbjZdOHKXyvj1fRH3SbKMlXBaHkSXcn71EbI2', '68490 Julie Flat\nMitchellhaven, NV 03372', 'Suite 972', 'Sheldon Howell', 'Engineer', '412-277-7788', 'student512@example.com', '512', 'Idella Huel', 'Nurse', '(585) 318-3298', 'student513@example.com', '513', 'Madisyn Kuhn', '+1 (586) 536-4776', 'student514@example.com', '514', 'Grandparent', 1, 8, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:38', '2025-12-06 07:05:35'),
 (104, 'Guy', 'Flatley', '1987-12-04', 'Female', 'A-', 'Christian', 'Bangladeshi', '516', '352-880-5605', 'student517@example.com', '$2y$12$SHwQAlOX6G7WhCAozZzc4OcPrW2wDHmM8xaojrjnSeTgvzLgm/vTS', '6822 Lebsack Circles\nEast Collin, MO 96759-3310', 'Apt. 409', 'Edd Streich', 'Doctor', '240-816-9385', 'student517@example.com', '517', 'Florida Konopelski', 'Businesswoman', '580.653.8983', 'student518@example.com', '518', 'Jackeline Steuber Sr.', '(520) 948-6264', 'student519@example.com', '519', 'Sister', 1, 9, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:38', '2025-12-06 07:05:35'),
 (105, 'Judy', 'Hessel', '1981-10-20', 'Female', 'AB-', 'Islam', 'Bangladeshi', '521', '531.529.9546', 'student522@example.com', '$2y$12$57kwM/41r.RCm1rKgfSZpekyVjOSJiAU5TqqGsp70dRzzX3HJpZ1.', '12006 Sandrine Unions Apt. 017\nJarrellport, MS 09027-0116', 'Apt. 921', 'Prof. Maxime Kutch I', 'Teacher', '+1-682-258-3324', 'student522@example.com', '522', 'Bryana Rowe', 'Doctor', '360.284.3063', 'student523@example.com', '523', 'Dr. Bernardo Leuschke', '660-265-9233', 'student524@example.com', '524', 'Sister', 1, 10, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:38', '2025-12-06 07:05:35'),
@@ -524,7 +662,7 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (137, 'Camilla', 'Buckridge', '2020-01-27', 'Female', 'B+', 'Christian', 'Bangladeshi', '681', '+1.680.991.7903', 'student682@example.com', '$2y$12$GYdYsNB5A.0zVuhJ6GiaMuSnXzlARSuDxHKU5kUltdAx74oEiLfem', '1329 Kuphal Fork\nLake Krystalberg, RI 71438-7906', 'Suite 827', 'Kiel Hartmann Jr.', 'Farmer', '1-870-889-5505', 'student682@example.com', '682', 'Dr. Lizzie Corwin', 'Businesswoman', '+15024628246', 'student683@example.com', '683', 'Alfredo Towne', '984.850.9180', 'student684@example.com', '684', 'Brother', 1, 13, 8, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:44', '2025-12-06 07:05:35'),
 (138, 'Bruce', 'Mosciski', '1993-06-09', 'Female', 'O-', 'Buddhist', 'Bangladeshi', '686', '+1 (831) 343-6125', 'student687@example.com', '$2y$12$t8Aj/YoAcVxlUIJQlYssw.WvNqpfVOKTx3UbAK4F.d85gSASSndxW', '573 Johns Locks Suite 479\nAuerville, VA 62700', 'Suite 237', 'Prof. Jaylin Baumbach', 'Businessman', '+1-828-630-8776', 'student687@example.com', '687', 'Eulah Frami', 'Teacher', '+1.321.419.5509', 'student688@example.com', '688', 'Melvin Runolfsson', '+1.540.546.1696', 'student689@example.com', '689', 'Grandparent', 1, 14, 6, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:44', '2025-12-06 07:05:35'),
 (139, 'Erika', 'Fahey', '1983-10-10', 'Male', 'AB-', 'Other', 'Bangladeshi', '691', '(970) 928-4640', 'student692@example.com', '$2y$12$S5tsAuyB6Hh3Guh.hS2Sv.60FqMhtJMa3Ejjxq9sUaQQcETql47Sm', '828 Giovanni Parks\nHelenechester, SD 99430', 'Suite 070', 'Morgan Schumm', 'Teacher', '(435) 224-0853', 'student692@example.com', '692', 'Kathleen Lebsack', 'Teacher', '757-795-2448', 'student693@example.com', '693', 'Ashley Bayer', '1-786-878-0475', 'student694@example.com', '694', 'Uncle', 1, 12, 2, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:44', '2025-12-06 07:05:35'),
-(140, 'Celine', 'Gleichner', '1973-07-03', 'Other', 'O+', 'Islam', 'Bangladeshi', '696', '(269) 297-1077', 'student697@example.com', '$2y$12$sDvYxou7tg4LJOmhjV30lO7BOUTDHD4oRI7xpuZOWgkuJxzH5Bknu', '493 Bethany Bridge\nChristiansenfurt, MI 62515-9359', 'Apt. 485', 'Kris Hand', 'Doctor', '+1-781-921-2753', 'student697@example.com', '697', 'Baby Crona', 'Doctor', '480.494.6214', 'student698@example.com', '698', 'Lewis Gorczany', '(586) 584-6526', 'student699@example.com', '699', 'Uncle', 1, 8, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:44', '2025-12-06 07:05:35'),
+(140, 'Celine', 'Gleichner', '1973-07-03', 'Other', 'O+', 'Islam', 'Bangladeshi', '696', '(269) 297-1077', 'student697@example.com', '$2y$12$sDvYxou7tg4LJOmhjV30lO7BOUTDHD4oRI7xpuZOWgkuJxzH5Bknu', '493 Bethany Bridge\nChristiansenfurt, MI 62515-9359', 'Apt. 485', 'Kris Hand', 'Doctor', '+1-781-921-2753', 'student697@example.com', '697', 'Baby Crona', 'Doctor', '480.494.6214', 'student698@example.com', '698', 'Lewis Gorczany', '(586) 584-6526', 'student699@example.com', '699', 'Uncle', 1, 8, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:44', '2025-12-06 10:35:05'),
 (141, 'Marcellus', 'Hahn', '2010-07-16', 'Male', 'A-', 'Hindu', 'Bangladeshi', '701', '352.758.3100', 'student702@example.com', '$2y$12$4YAeGXontfFsK.dJEF5aye2qKBwivFmro61rSRE2AN5lOl/i2D2Y6', '5398 Ledner Freeway\nNorth Emmet, MO 19126-9922', 'Suite 826', 'Herminio Bosco Sr.', 'Businessman', '+1 (520) 527-8868', 'student702@example.com', '702', 'Miss Ollie White', 'Teacher', '(309) 461-3391', 'student703@example.com', '703', 'Prof. Casper Shields', '929.540.3725', 'student704@example.com', '704', 'Uncle', 1, 10, 11, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:45', '2025-12-06 07:05:35'),
 (142, 'Agustina', 'Gorczany', '2000-01-06', 'Male', 'O-', 'Hindu', 'Bangladeshi', '706', '316-963-5625', 'student707@example.com', '$2y$12$KU4EClscHjtlspF0Tx..oe/j1xncq9pUsPpTqEx7FSrdDTNzpUTzK', '7994 Kihn Branch Suite 564\nJailynmouth, AK 09062-7703', 'Apt. 579', 'Mr. Cole Pagac', 'Engineer', '+1-986-998-9658', 'student707@example.com', '707', 'Mia Morissette V', 'Nurse', '412-737-3944', 'student708@example.com', '708', 'Narciso Becker I', '360.642.7632', 'student709@example.com', '709', 'Sister', 1, 11, 11, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:45', '2025-12-06 07:05:35'),
 (143, 'Jaylon', 'Wolff', '1980-04-20', 'Female', 'AB-', 'Buddhist', 'Bangladeshi', '711', '1-283-466-6354', 'student712@example.com', '$2y$12$hWhI5slG3LGKuyVy3F2uzuaCpCij8G2eJOE7zpAnUuli/2N.2SqUG', '997 Hane Forest\nMarcellefort, CA 10316-7311', 'Apt. 076', 'Johnpaul Reilly', 'Engineer', '+1-678-794-7707', 'student712@example.com', '712', 'Laurie Mann', 'Doctor', '805-622-3180', 'student713@example.com', '713', 'Ramona Mraz III', '984.740.1394', 'student714@example.com', '714', 'Sister', 1, 16, 10, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:45', '2025-12-06 07:05:35'),
@@ -534,9 +672,9 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (147, 'Brittany', 'Hudson', '2003-07-27', 'Other', 'A+', 'Christian', 'Bangladeshi', '731', '346-372-8090', 'student732@example.com', '$2y$12$lWtmjBzyoSIQSaYAa1zZce5YPzNV9fsUl5alzJC00ZhKoJbu/7QH.', '92632 Gerlach Fords Apt. 886\nNorth Katelyn, NE 86628', 'Apt. 031', 'Mr. Royal Kshlerin PhD', 'Engineer', '726.664.0088', 'student732@example.com', '732', 'Miss Megane Cruickshank', 'Teacher', '1-773-795-2388', 'student733@example.com', '733', 'Melba Bogan MD', '(984) 683-4855', 'student734@example.com', '734', 'Brother', 1, 18, 10, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:46', '2025-12-06 07:05:35'),
 (148, 'Tamara', 'Jones', '2021-05-14', 'Other', 'O+', 'Buddhist', 'Bangladeshi', '736', '404-779-0594', 'student737@example.com', '$2y$12$8SwKTImaSglb8ByCL0uE6OF2wt1CrkAywnfQg9qvh1q5xhvdVkpeG', '1705 Gleason Skyway Apt. 937\nMillerberg, WA 03166', 'Apt. 642', 'Dennis Hand', 'Businessman', '832-481-0456', 'student737@example.com', '737', 'Bria Sipes', 'Housewife', '1-463-236-3628', 'student738@example.com', '738', 'Dr. Leo Bins Jr.', '857.795.1265', 'student739@example.com', '739', 'Grandparent', 1, 11, 3, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:46', '2025-12-06 07:05:35'),
 (149, 'Nathanael', 'Littel', '1999-06-01', 'Other', 'O+', 'Hindu', 'Bangladeshi', '741', '+1-681-843-0067', 'student742@example.com', '$2y$12$CtSzASHh39V5dMg9.diFpu/RXdOz3ScxWGaksIJ8zyh1U6o.vWvL2', '12232 Nicklaus Turnpike Apt. 839\nWest Carroll, RI 11558-6369', 'Apt. 368', 'Prof. Adolfo Wehner', 'Teacher', '+1 (240) 973-6389', 'student742@example.com', '742', 'Bernadine Cremin', 'Teacher', '847.873.0780', 'student743@example.com', '743', 'Lemuel Kub', '+1.318.464.3027', 'student744@example.com', '744', 'Grandparent', 1, 13, 2, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:46', '2025-12-06 07:05:35'),
-(150, 'Patricia', 'Miller', '2019-09-29', 'Female', 'A+', 'Other', 'Bangladeshi', '746', '+1.989.874.7463', 'student747@example.com', '$2y$12$P/K9pZQjrA6AMR1EWBNe/etuz.Tc153NCeFMQr1ghSATgtoghWaA.', '39150 Domenico Green\nEast Tremayneborough, DE 23888', 'Suite 922', 'Horace Gleason', 'Engineer', '(442) 698-8110', 'student747@example.com', '747', 'Dr. Holly Haag', 'Nurse', '+16807079335', 'student748@example.com', '748', 'Miracle Sipes', '920-672-4025', 'student749@example.com', '749', 'Brother', 1, 9, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:46', '2025-12-06 07:05:35'),
+(150, 'Patricia', 'Miller', '2019-09-29', 'Female', 'A+', 'Other', 'Bangladeshi', '746', '+1.989.874.7463', 'student747@example.com', '$2y$12$P/K9pZQjrA6AMR1EWBNe/etuz.Tc153NCeFMQr1ghSATgtoghWaA.', '39150 Domenico Green\nEast Tremayneborough, DE 23888', 'Suite 922', 'Horace Gleason', 'Engineer', '(442) 698-8110', 'student747@example.com', '747', 'Dr. Holly Haag', 'Nurse', '+16807079335', 'student748@example.com', '748', 'Miracle Sipes', '920-672-4025', 'student749@example.com', '749', 'Brother', 1, 9, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:46', '2025-12-06 10:35:06'),
 (151, 'Frida', 'Haag', '1979-05-06', 'Male', 'B-', 'Other', 'Bangladeshi', '751', '801.547.6401', 'student752@example.com', '$2y$12$g7iL3lcKQAk8s9d2uOogq.b.qc/cL7ATBYF6Oqg2o/3ogaJ5.JNzG', '46753 Ottilie Fork Apt. 730\nSouth Brooksland, KS 29905', 'Apt. 830', 'Mr. Antwan Morissette IV', 'Teacher', '1-952-443-7723', 'student752@example.com', '752', 'Gwen Ryan', 'Nurse', '1-606-818-3878', 'student753@example.com', '753', 'Mr. Arno Hamill I', '(831) 977-9198', 'student754@example.com', '754', 'Grandparent', 1, 14, 2, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:46', '2025-12-06 07:05:35'),
-(152, 'Erick', 'Marquardt', '2010-05-04', 'Other', 'B+', 'Hindu', 'Bangladeshi', '756', '(402) 709-7958', 'student757@example.com', '$2y$12$/RFEuHJ4zyzpSN03fUiUje/mv7xCTntk3Rp.fgwkta2rwBjkcKfy6', '170 Dorthy Valleys\nNorth Arnaldo, IN 86567', 'Apt. 089', 'Adelbert Sawayn', 'Farmer', '1-680-510-5146', 'student757@example.com', '757', 'Miss Rosalyn Ferry', 'Businesswoman', '(712) 852-9667', 'student758@example.com', '758', 'Freddie Pollich', '847.648.0506', 'student759@example.com', '759', 'Brother', 1, 10, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:47', '2025-12-06 07:05:35'),
+(152, 'Erick', 'Marquardt', '2010-05-04', 'Other', 'B+', 'Hindu', 'Bangladeshi', '756', '(402) 709-7958', 'student757@example.com', '$2y$12$/RFEuHJ4zyzpSN03fUiUje/mv7xCTntk3Rp.fgwkta2rwBjkcKfy6', '170 Dorthy Valleys\nNorth Arnaldo, IN 86567', 'Apt. 089', 'Adelbert Sawayn', 'Farmer', '1-680-510-5146', 'student757@example.com', '757', 'Miss Rosalyn Ferry', 'Businesswoman', '(712) 852-9667', 'student758@example.com', '758', 'Freddie Pollich', '847.648.0506', 'student759@example.com', '759', 'Brother', 1, 10, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:47', '2025-12-06 10:35:07'),
 (153, 'Darion', 'Prohaska', '1999-05-02', 'Other', 'A+', 'Buddhist', 'Bangladeshi', '761', '+1 (442) 540-7238', 'student762@example.com', '$2y$12$956qEsSUykrdS14QPKVaauckz7krGNTIeAmCwxKXnsTdpWtlERjhS', '37392 Rosemarie Field Apt. 312\nNorth Arleneview, PA 96872-9687', 'Suite 170', 'Haleigh Bauch', 'Doctor', '(386) 350-8941', 'student762@example.com', '762', 'Ms. Ruthie Crona V', 'Housewife', '424.857.9684', 'student763@example.com', '763', 'Mr. Trevion Bartell DDS', '1-410-837-8265', 'student764@example.com', '764', 'Uncle', 1, 15, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:47', '2025-12-06 07:05:35'),
 (154, 'Mckenzie', 'Armstrong', '2017-06-15', 'Female', 'O+', 'Other', 'Bangladeshi', '766', '281-275-8523', 'student767@example.com', '$2y$12$9RC0Xm/GKU0qyZMu3HLCm.UmJaN8KXLZaVaWLgAIeSK1lfT2HWOGm', '75632 Barton Via\nCasimerborough, DC 52975-4721', 'Suite 946', 'Ned DuBuque', 'Businessman', '+1.507.288.9509', 'student767@example.com', '767', 'Adrianna Runolfsson', 'Teacher', '+12537025358', 'student768@example.com', '768', 'Prof. Virginia Haley IV', '989-977-2213', 'student769@example.com', '769', 'Brother', 1, 15, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:47', '2025-12-06 07:05:35'),
 (155, 'Isai', 'Rowe', '1977-10-15', 'Female', 'B+', 'Buddhist', 'Bangladeshi', '771', '678-391-7334', 'student772@example.com', '$2y$12$ZtsHEbO/YCyaLcXz/pJCJe6RiuwlTJePgUqYwRAwhEVEW1PKqUSIe', '52164 Murphy Lock Suite 737\nWest Jadestad, VT 57109', 'Apt. 308', 'Arden Crona', 'Farmer', '931-305-9412', 'student772@example.com', '772', 'Dr. Bette O\'Hara DDS', 'Businesswoman', '(267) 886-3563', 'student773@example.com', '773', 'Camylle Balistreri', '505.837.8425', 'student774@example.com', '774', 'Aunt', 1, 12, 3, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:47', '2025-12-06 07:05:35'),
@@ -545,11 +683,11 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (157, 'Renee', 'Walter', '2016-11-06', 'Male', 'O-', 'Christian', 'Bangladeshi', '781', '989-813-0618', 'student782@example.com', '$2y$12$p/I3xGPSqhvqZ1dgT.W6FO4tToCq/w4Pznn3.KvTXbTrmDoZra5N6', '959 Brianne Locks\nPort Loraine, AL 64996-3209', 'Apt. 281', 'Forrest Gerlach', 'Engineer', '1-539-787-0890', 'student782@example.com', '782', 'Loren Daniel Jr.', 'Nurse', '1-870-823-7146', 'student783@example.com', '783', 'Dr. Izaiah Will PhD', '(657) 476-7805', 'student784@example.com', '784', 'Aunt', 1, 15, 6, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:48', '2025-12-06 07:05:35'),
 (158, 'Merlin', 'Jacobs', '2011-05-17', 'Male', 'A+', 'Islam', 'Bangladeshi', '786', '+16512213994', 'student787@example.com', '$2y$12$nNEscTcXS.eJQUszj9RxsOzlihzlYvyrNmKI3FxAHcYzEx8YJurl6', '4792 Kiehn Plain Apt. 288\nNew Laila, DC 83459', 'Suite 487', 'Jaylen Legros', 'Businessman', '+1-405-484-7459', 'student787@example.com', '787', 'Ms. Onie Fadel II', 'Businesswoman', '+1-561-742-8257', 'student788@example.com', '788', 'Prof. Callie Strosin', '743-887-1712', 'student789@example.com', '789', 'Grandparent', 1, 19, 10, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:48', '2025-12-06 07:05:35'),
 (159, 'Adeline', 'Jacobson', '2020-04-30', 'Other', 'AB-', 'Buddhist', 'Bangladeshi', '791', '+1-401-248-8842', 'student792@example.com', '$2y$12$03XNnmy8mLQrZRuREnGW.eQ/urZubyUYl2pcZkvhaG1gN0AV3TOfS', '2581 Wolff Manor\nLake Joeyshire, ND 54751', 'Suite 466', 'Dr. Torrance Hermann', 'Businessman', '320-254-0371', 'student792@example.com', '792', 'Lora VonRueden', 'Teacher', '505.333.9220', 'student793@example.com', '793', 'Mr. Lukas Abbott', '1-502-742-9791', 'student794@example.com', '794', 'Grandparent', 1, 16, 2, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:48', '2025-12-06 07:05:35'),
-(160, 'Keeley', 'Schoen', '1990-07-05', 'Male', 'O-', 'Other', 'Bangladeshi', '796', '1-706-303-3459', 'student797@example.com', '$2y$12$6k/9COyRwfrB1x7uTV0Fl.eVSTMDIpEAAeCSMFREIKMRPVjvrt6Ye', '4096 McDermott Plaza Apt. 215\nSouth Octavia, SC 48512', 'Apt. 698', 'Fredrick Greenholt', 'Businessman', '(414) 687-1987', 'student797@example.com', '797', 'Valentina Hoeger', 'Teacher', '+1 (806) 546-9539', 'student798@example.com', '798', 'Magdalena Littel', '469-326-2427', 'student799@example.com', '799', 'Uncle', 1, 11, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:48', '2025-12-06 07:05:35'),
+(160, 'Keeley', 'Schoen', '1990-07-05', 'Male', 'O-', 'Other', 'Bangladeshi', '796', '1-706-303-3459', 'student797@example.com', '$2y$12$6k/9COyRwfrB1x7uTV0Fl.eVSTMDIpEAAeCSMFREIKMRPVjvrt6Ye', '4096 McDermott Plaza Apt. 215\nSouth Octavia, SC 48512', 'Apt. 698', 'Fredrick Greenholt', 'Businessman', '(414) 687-1987', 'student797@example.com', '797', 'Valentina Hoeger', 'Teacher', '+1 (806) 546-9539', 'student798@example.com', '798', 'Magdalena Littel', '469-326-2427', 'student799@example.com', '799', 'Uncle', 1, 11, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:48', '2025-12-06 10:35:08'),
 (161, 'Nelson', 'Howell', '1993-12-15', 'Female', 'A+', 'Hindu', 'Bangladeshi', '801', '+1-445-861-9395', 'student802@example.com', '$2y$12$DvrMRzX7m0khTZ.wk0l5HOy/fqwv.bT7CXy5x5XLl0DyaBKjV34dq', '9149 Verlie Drives\nSouth Roscoe, KS 59129-2941', 'Apt. 098', 'Matt Mayer', 'Teacher', '+1-539-514-6624', 'student802@example.com', '802', 'Dr. Jewel Nikolaus', 'Housewife', '+17545364448', 'student803@example.com', '803', 'Prof. Lazaro Sanford', '831.455.3983', 'student804@example.com', '804', 'Grandparent', 1, 12, 11, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:48', '2025-12-06 07:05:35'),
 (162, 'Ray', 'Hill', '2013-08-27', 'Female', 'A+', 'Hindu', 'Bangladeshi', '806', '1-239-472-5888', 'student807@example.com', '$2y$12$pbGZXFfaMrni4zrFy0NzNul0heOkjCT0ebMgFx6dGVp7MuqU328Yi', '502 Green Junctions Suite 273\nYostview, UT 93961-1556', 'Apt. 412', 'Jessie Considine', 'Farmer', '1-458-871-3163', 'student807@example.com', '807', 'Alison Goyette', 'Nurse', '959-515-4625', 'student808@example.com', '808', 'Mrs. Miracle Beier II', '585.243.6476', 'student809@example.com', '809', 'Uncle', 1, 16, 6, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:48', '2025-12-06 07:05:35'),
 (163, 'Gerry', 'Olson', '1995-02-20', 'Female', 'A-', 'Christian', 'Bangladeshi', '811', '+1 (603) 746-3015', 'student812@example.com', '$2y$12$wP4KE2YFUvk7HqemAa.1xuHfeeZPIxR7YQ4P/3/tHlOUtGDWHl/0K', '98167 Koch Shores\nJennyfermouth, AL 05682-5790', 'Apt. 557', 'Johann Roob', 'Doctor', '(248) 451-3523', 'student812@example.com', '812', 'Addison Wehner', 'Teacher', '831.985.4499', 'student813@example.com', '813', 'Coleman Moore', '1-947-715-5850', 'student814@example.com', '814', 'Uncle', 1, 13, 5, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:49', '2025-12-06 07:05:35'),
-(164, 'Bernita', 'Daniel', '2009-10-02', 'Other', 'A+', 'Hindu', 'Bangladeshi', '816', '903-442-5096', 'student817@example.com', '$2y$12$7KKjJeCkwZJwlqdsLxhrqOKsHrzx3/JKe5GB0DxQNO8F02IF.fG46', '8607 Schamberger Stravenue Suite 939\nPort Clifford, LA 18508', 'Suite 447', 'Prof. Estevan Hettinger I', 'Doctor', '740.472.5391', 'student817@example.com', '817', 'Darby Pouros', 'Teacher', '+1 (251) 283-4831', 'student818@example.com', '818', 'Raegan Donnelly', '(828) 532-2956', 'student819@example.com', '819', 'Grandparent', 1, 12, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:49', '2025-12-06 07:05:35'),
+(164, 'Bernita', 'Daniel', '2009-10-02', 'Other', 'A+', 'Hindu', 'Bangladeshi', '816', '903-442-5096', 'student817@example.com', '$2y$12$7KKjJeCkwZJwlqdsLxhrqOKsHrzx3/JKe5GB0DxQNO8F02IF.fG46', '8607 Schamberger Stravenue Suite 939\nPort Clifford, LA 18508', 'Suite 447', 'Prof. Estevan Hettinger I', 'Doctor', '740.472.5391', 'student817@example.com', '817', 'Darby Pouros', 'Teacher', '+1 (251) 283-4831', 'student818@example.com', '818', 'Raegan Donnelly', '(828) 532-2956', 'student819@example.com', '819', 'Grandparent', 1, 12, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:49', '2025-12-06 10:35:09'),
 (165, 'Maria', 'Nolan', '2016-02-22', 'Male', 'O-', 'Islam', 'Bangladeshi', '821', '+1.918.757.2928', 'student822@example.com', '$2y$12$4JqyCBMWPWUAsBsvXuYlt.Ak8LwBE6UnG5ku6463zRuZCumkc5oQq', '4219 Mariana Station\nNew Josephine, DE 96556', 'Apt. 127', 'Mr. Buddy Labadie I', 'Engineer', '+1-419-355-4898', 'student822@example.com', '822', 'Elaina Abernathy', 'Teacher', '+1.406.938.3491', 'student823@example.com', '823', 'Breana Lindgren', '(847) 470-3431', 'student824@example.com', '824', 'Grandparent', 1, 16, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:49', '2025-12-06 07:05:35'),
 (166, 'Sabryna', 'Dach', '2015-12-12', 'Other', 'O-', 'Buddhist', 'Bangladeshi', '826', '+1 (859) 560-4959', 'student827@example.com', '$2y$12$Lt5xKTkAqtSoH0YdSrh2r.YwcLqagfhye1DcJp43DjCL9PYBh116i', '85277 Hollis Key\nSouth Hettieborough, NY 80652', 'Apt. 258', 'Mr. Clinton Wilderman', 'Doctor', '1-307-539-3630', 'student827@example.com', '827', 'Alexanne Schneider', 'Businesswoman', '+1 (534) 386-3141', 'student828@example.com', '828', 'Dr. Adrianna Lubowitz', '571-892-0992', 'student829@example.com', '829', 'Aunt', 1, 16, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:49', '2025-12-06 07:05:35'),
 (167, 'Grayson', 'Tillman', '2012-01-05', 'Female', 'A-', 'Buddhist', 'Bangladeshi', '831', '(206) 713-3958', 'student832@example.com', '$2y$12$LxuesVhEIrLS4C4sfLd1WuQ4fx22uwkZL.Y8CRRyYDTL9wbWA89.e', '2340 Johnston Glen Suite 555\nEast Marleeside, ND 36105', 'Suite 865', 'Nicolas Schumm', 'Businessman', '+1 (678) 216-2603', 'student832@example.com', '832', 'Mrs. Ofelia Goyette Sr.', 'Teacher', '(931) 650-5269', 'student833@example.com', '833', 'Ricardo Thiel', '+1-850-246-1904', 'student834@example.com', '834', 'Uncle', 1, 17, 6, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:49', '2025-12-06 07:05:35'),
@@ -559,7 +697,7 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (171, 'Markus', 'Stiedemann', '2024-02-23', 'Other', 'O+', 'Buddhist', 'Bangladeshi', '851', '720.339.4159', 'student852@example.com', '$2y$12$AErkY/B.2ZUxLHZVQsdgn.2WfMrlZfRdwsm9XjppIJE7XYf2s9H9q', '5711 Wolff Camp\nFadelview, NY 51576', 'Suite 903', 'Demetrius Runolfsdottir Sr.', 'Doctor', '1-785-208-1799', 'student852@example.com', '852', 'Angeline Turcotte', 'Teacher', '+1-954-365-5874', 'student853@example.com', '853', 'Marian Hayes', '947-225-5407', 'student854@example.com', '854', 'Aunt', 1, 19, 6, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:50', '2025-12-06 07:05:35'),
 (172, 'Aleen', 'Predovic', '2020-09-18', 'Female', 'B+', 'Other', 'Bangladeshi', '856', '1-828-294-4560', 'student857@example.com', '$2y$12$td0oh/YN6qDLmSi0HUgNS.hpUejqWd.kYS3N0CBxCTXFMIQcQNg.i', '63923 Grayson Corners\nSouth Josianetown, IN 05992', 'Apt. 048', 'Cesar Heidenreich', 'Doctor', '+14634169615', 'student857@example.com', '857', 'Dr. Jaqueline DuBuque', 'Doctor', '1-559-937-4666', 'student858@example.com', '858', 'Gerda Hills', '(760) 255-2231', 'student859@example.com', '859', 'Brother', 1, 13, 11, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:50', '2025-12-06 07:05:35'),
 (173, 'Destin', 'Krajcik', '2017-05-17', 'Female', 'A-', 'Other', 'Bangladeshi', '861', '+1-216-593-8564', 'student862@example.com', '$2y$12$OgA393/l3eDp2JGwGxnyX.bqcffpV2U.DKd8DqTob9oqsVChoeVI6', '1012 Raynor Walks\nDanielview, MN 05673-5493', 'Apt. 116', 'Solon Jenkins', 'Businessman', '737-981-1303', 'student862@example.com', '862', 'Dr. Bette Durgan Sr.', 'Businesswoman', '+1-678-528-8704', 'student863@example.com', '863', 'Rafael Toy IV', '337-580-2682', 'student864@example.com', '864', 'Grandparent', 1, 18, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:50', '2025-12-06 07:05:35'),
-(174, 'Heloise', 'Herman', '2015-07-24', 'Female', 'AB-', 'Buddhist', 'Bangladeshi', '866', '+1.530.914.9262', 'student867@example.com', '$2y$12$E9In2ly2wzDx/koxjxefX.7fzIKs05vKJhTGNqf85/8NRb8M8Xy.y', '889 Goyette Tunnel Suite 793\nSatterfieldmouth, UT 77528', 'Suite 684', 'Orville Hudson', 'Teacher', '(570) 442-5852', 'student867@example.com', '867', 'Miss Shanelle Waters Sr.', 'Businesswoman', '(463) 351-3919', 'student868@example.com', '868', 'Dr. Julian Hickle I', '828-887-3517', 'student869@example.com', '869', 'Brother', 1, 13, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:51', '2025-12-06 07:05:35'),
+(174, 'Heloise', 'Herman', '2015-07-24', 'Female', 'AB-', 'Buddhist', 'Bangladeshi', '866', '+1.530.914.9262', 'student867@example.com', '$2y$12$E9In2ly2wzDx/koxjxefX.7fzIKs05vKJhTGNqf85/8NRb8M8Xy.y', '889 Goyette Tunnel Suite 793\nSatterfieldmouth, UT 77528', 'Suite 684', 'Orville Hudson', 'Teacher', '(570) 442-5852', 'student867@example.com', '867', 'Miss Shanelle Waters Sr.', 'Businesswoman', '(463) 351-3919', 'student868@example.com', '868', 'Dr. Julian Hickle I', '828-887-3517', 'student869@example.com', '869', 'Brother', 1, 13, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:51', '2025-12-06 10:35:10'),
 (175, 'Clay', 'Wolff', '1981-03-01', 'Female', 'AB-', 'Christian', 'Bangladeshi', '871', '1-909-672-9368', 'student872@example.com', '$2y$12$wjtD9kVkwTFwLOt/iGM.huhTyAwlVf0IAoKfESzFQQvH7E1yfOozy', '64413 Corwin Highway\nPort Kelly, VT 42954-0844', 'Suite 572', 'Clay Kertzmann', 'Doctor', '423-385-1052', 'student872@example.com', '872', 'Telly Upton', 'Teacher', '+1-803-990-9225', 'student873@example.com', '873', 'Kris Auer', '775.477.9667', 'student874@example.com', '874', 'Sister', 1, 19, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:51', '2025-12-06 07:05:35'),
 (176, 'Linda', 'Lynch', '2023-10-27', 'Female', 'O+', 'Christian', 'Bangladeshi', '876', '380-794-4127', 'student877@example.com', '$2y$12$ImiTYAo/cRAV4MhubJiCoO809W8D8Pt3h3h9hr0fJr9xXfA8ArhR.', '761 Aletha Haven\nWest Rollinview, KY 54825', 'Suite 042', 'Fermin O\'Keefe', 'Engineer', '(440) 214-1388', 'student877@example.com', '877', 'Ashlee Abbott III', 'Businesswoman', '+16574810384', 'student878@example.com', '878', 'Melisa Greenholt', '316-901-1699', 'student879@example.com', '879', 'Sister', 1, 17, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:51', '2025-12-06 07:05:35'),
 (177, 'Marlee', 'Tremblay', '2005-02-18', 'Male', 'AB-', 'Christian', 'Bangladeshi', '881', '541.884.2795', 'student882@example.com', '$2y$12$uvLar649X53P5Ipot6Ea.eNPscsAXgbeA2N2CA2jipcJxd3UpOqIa', '312 Keanu Stravenue\nPort Coltshire, DC 11418', 'Apt. 612', 'Mathias Tremblay', 'Teacher', '208-687-4957', 'student882@example.com', '882', 'Kaci Pacocha', 'Housewife', '214-827-7200', 'student883@example.com', '883', 'Prof. Vaughn Konopelski I', '+12834683832', 'student884@example.com', '884', 'Aunt', 1, 18, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:51', '2025-12-06 07:05:35'),
@@ -586,7 +724,7 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (198, 'Lenny', 'Mitchell', '2016-04-02', 'Female', 'AB-', 'Other', 'Bangladeshi', '986', '(508) 413-8382', 'student987@example.com', '$2y$12$q8xvH7cgV9tw0uCMqlH7TeMXy1MrjWLS7g7Ey.EiRp1mLqg2JsSaa', '67211 Mohr Crossing Apt. 615\nNew Bernita, AL 68538', 'Suite 471', 'Prof. Savion Hegmann', 'Doctor', '1-386-674-9678', 'student987@example.com', '987', 'Prof. Maryjane Kautzer III', 'Doctor', '765-590-8990', 'student988@example.com', '988', 'Aniya Dickens', '786-516-4520', 'student989@example.com', '989', 'Uncle', 1, 24, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:55', '2025-12-06 07:05:35'),
 (199, 'Milton', 'Wiza', '1997-09-04', 'Other', 'AB+', 'Christian', 'Bangladeshi', '991', '308-414-4036', 'student992@example.com', '$2y$12$wbn90dPGOouVxrnHni7o0eotmn8Sppm5cZ3Wu0PCdQjv6t4koG5Oq', '9605 Imani Mountains Suite 097\nSouth Constance, IN 93508-3051', 'Suite 431', 'Leonardo Wiegand', 'Engineer', '283.508.0733', 'student992@example.com', '992', 'Mrs. Laurine Schaefer IV', 'Doctor', '(845) 477-1904', 'student993@example.com', '993', 'Tabitha Howell', '1-248-764-8695', 'student994@example.com', '994', 'Uncle', 1, 12, 7, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:55', '2025-12-06 07:05:35'),
 (200, 'Libbie', 'Hackett', '1991-04-22', 'Other', 'A-', 'Buddhist', 'Bangladeshi', '996', '231-567-1808', 'student997@example.com', '$2y$12$mcv./RgqKkfUeUrVfO7WMuRccfpDC.X5wiSz7mo900miMT3HiFnn.', '94695 Roselyn Extensions Apt. 116\nWyatttown, AK 27745', 'Apt. 278', 'Dr. Tavares Adams', 'Engineer', '956.559.9643', 'student997@example.com', '997', 'Julianne Hackett III', 'Teacher', '+1-217-203-9146', 'student998@example.com', '998', 'Leilani Zieme', '+1-929-998-4024', 'student999@example.com', '999', 'Uncle', 1, 16, 5, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:55', '2025-12-06 07:05:35'),
-(201, 'Leopold', 'Christiansen', '2015-11-24', 'Other', 'O+', 'Hindu', 'Bangladeshi', '1001', '1-361-219-5271', 'student1002@example.com', '$2y$12$D1qceYfeUMlvdiblf.axK.CC8P1L1YF4C1OUko7zozZ1nNuXtMFaK', '5293 Aurelie Tunnel Apt. 198\nPowlowskiland, CO 39093-2854', 'Suite 333', 'Gerardo Stiedemann', 'Engineer', '+19047605834', 'student1002@example.com', '1002', 'Dr. Vivienne Vandervort IV', 'Businesswoman', '1-458-789-1558', 'student1003@example.com', '1003', 'Mrs. Janiya Schowalter DDS', '631-587-6763', 'student1004@example.com', '1004', 'Grandparent', 1, 14, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:56', '2025-12-06 07:05:35'),
+(201, 'Leopold', 'Christiansen', '2015-11-24', 'Other', 'O+', 'Hindu', 'Bangladeshi', '1001', '1-361-219-5271', 'student1002@example.com', '$2y$12$D1qceYfeUMlvdiblf.axK.CC8P1L1YF4C1OUko7zozZ1nNuXtMFaK', '5293 Aurelie Tunnel Apt. 198\nPowlowskiland, CO 39093-2854', 'Suite 333', 'Gerardo Stiedemann', 'Engineer', '+19047605834', 'student1002@example.com', '1002', 'Dr. Vivienne Vandervort IV', 'Businesswoman', '1-458-789-1558', 'student1003@example.com', '1003', 'Mrs. Janiya Schowalter DDS', '631-587-6763', 'student1004@example.com', '1004', 'Grandparent', 1, 14, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:56', '2025-12-06 10:35:13'),
 (202, 'Domingo', 'Thompson', '1981-02-08', 'Male', 'O-', 'Hindu', 'Bangladeshi', '1006', '678-548-9251', 'student1007@example.com', '$2y$12$FcLR2hYoYPxDtQ7lTniKPOuwfHdQ82hOad4FjjGuzEkVLU41ssQGi', '462 Stephanie Land Suite 587\nEast Rodgerville, WY 35269', 'Apt. 870', 'Grayson Ryan', 'Businessman', '+1-520-215-5602', 'student1007@example.com', '1007', 'Amely Towne', 'Nurse', '1-773-632-6083', 'student1008@example.com', '1008', 'Ms. America Mayert I', '+1-321-303-2170', 'student1009@example.com', '1009', 'Sister', 1, 13, 7, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:56', '2025-12-06 07:05:35'),
 (203, 'Letitia', 'Lindgren', '1996-07-29', 'Other', 'AB+', 'Hindu', 'Bangladeshi', '1011', '+1 (351) 571-3459', 'student1012@example.com', '$2y$12$pUi2oFd1r1Tj5NKR9EHl9Osvv2DPqi/pLsli7YywpCbhciSEH/AYi', '73286 Quigley Tunnel Suite 315\nConnellyborough, DC 68639-3132', 'Apt. 624', 'Dr. Bo Ortiz DDS', 'Teacher', '214-632-2817', 'student1012@example.com', '1012', 'Mrs. Felicia Johns PhD', 'Doctor', '337.572.0463', 'student1013@example.com', '1013', 'Ruben Pfeffer', '445-830-2219', 'student1014@example.com', '1014', 'Sister', 1, 15, 8, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:56', '2025-12-06 07:05:35'),
 (204, 'Daija', 'Weimann', '1988-11-26', 'Female', 'A+', 'Other', 'Bangladeshi', '1016', '561-892-2768', 'student1017@example.com', '$2y$12$t.3H48wDj0KOptmhH2sQie4ZuOlbgiCA47fJEVT3w4S/H8DxMeU.C', '709 Grant Manors Suite 629\nSouth Aylinchester, TN 25291', 'Apt. 359', 'Jackson Walsh', 'Businessman', '+1-931-667-6680', 'student1017@example.com', '1017', 'Prof. Jacynthe Johnson IV', 'Nurse', '(331) 394-1926', 'student1018@example.com', '1018', 'Susie Thompson IV', '785.360.1703', 'student1019@example.com', '1019', 'Sister', 1, 14, 7, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:38:56', '2025-12-06 07:05:35'),
@@ -612,7 +750,7 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (224, 'Ally', 'Muller', '1970-05-24', 'Female', 'A+', 'Hindu', 'Bangladeshi', '1116', '1-713-559-9779', 'student1117@example.com', '$2y$12$/koP/2fCg/rRHQhcqLtYIuNiVkO96voKjHlsel7k6wBWQahSe/RCG', '255 Dejah Divide Apt. 181\nNorth Rae, NM 47828-8168', 'Apt. 155', 'Baylee Rohan I', 'Farmer', '541-203-2049', 'student1117@example.com', '1117', 'Lempi Ryan', 'Businesswoman', '860.324.7774', 'student1118@example.com', '1118', 'Susanna Davis', '(628) 646-4261', 'student1119@example.com', '1119', 'Brother', 1, 25, 10, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:00', '2025-12-06 07:05:35'),
 (225, 'Garett', 'Schoen', '1986-10-23', 'Male', 'B-', 'Christian', 'Bangladeshi', '1121', '330-429-8958', 'student1122@example.com', '$2y$12$Jl99DgI1UgDsa0XGS8l7SO7sHGY3sc3wx4O84SbW6e3fAYAfaTSj6', '88650 Jaskolski Run Suite 550\nNew Zackeryland, TX 31131', 'Apt. 983', 'Morris Kulas I', 'Engineer', '+1 (980) 382-6909', 'student1122@example.com', '1122', 'Kaycee Dooley MD', 'Teacher', '+13053592990', 'student1123@example.com', '1123', 'Lourdes Gutkowski', '360-280-9977', 'student1124@example.com', '1124', 'Aunt', 1, 22, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:00', '2025-12-06 07:05:35'),
 (226, 'Maryse', 'Collins', '1996-06-14', 'Male', 'O+', 'Christian', 'Bangladeshi', '1126', '1-801-557-4030', 'student1127@example.com', '$2y$12$wKPS9J2xE9Oh/RWMoOShF.YasfCxIRDaouXt7dnSSjWuROKYKV1bi', '65143 Abby Trail Apt. 062\nVeronicaport, ID 84124', 'Apt. 916', 'Lucio Mante Jr.', 'Doctor', '+1.570.844.2519', 'student1127@example.com', '1127', 'Alison Ratke', 'Teacher', '+1 (360) 467-8851', 'student1128@example.com', '1128', 'Tate Braun', '1-725-204-8885', 'student1129@example.com', '1129', 'Brother', 1, 23, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:00', '2025-12-06 07:05:35'),
-(227, 'Darien', 'Muller', '2011-04-11', 'Male', 'AB-', 'Buddhist', 'Bangladeshi', '1131', '1-540-489-1227', 'student1132@example.com', '$2y$12$jG5OqeVx.ZxnnScYiCebKOfd5dEhBb.pPvuro.zDQPrPGkmOy9up.', '761 Raleigh Creek\nSouth Orval, RI 33790-3966', 'Suite 270', 'Dr. Andrew Carter', 'Doctor', '(332) 856-2162', 'student1132@example.com', '1132', 'Jude Effertz MD', 'Nurse', '+1-302-773-2934', 'student1133@example.com', '1133', 'Annetta Ritchie PhD', '1-785-456-3778', 'student1134@example.com', '1134', 'Grandparent', 1, 15, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:00', '2025-12-06 07:05:35'),
+(227, 'Darien', 'Muller', '2011-04-11', 'Male', 'AB-', 'Buddhist', 'Bangladeshi', '1131', '1-540-489-1227', 'student1132@example.com', '$2y$12$jG5OqeVx.ZxnnScYiCebKOfd5dEhBb.pPvuro.zDQPrPGkmOy9up.', '761 Raleigh Creek\nSouth Orval, RI 33790-3966', 'Suite 270', 'Dr. Andrew Carter', 'Doctor', '(332) 856-2162', 'student1132@example.com', '1132', 'Jude Effertz MD', 'Nurse', '+1-302-773-2934', 'student1133@example.com', '1133', 'Annetta Ritchie PhD', '1-785-456-3778', 'student1134@example.com', '1134', 'Grandparent', 1, 15, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:00', '2025-12-06 10:35:14'),
 (228, 'Lafayette', 'Gibson', '2016-01-16', 'Other', 'B+', 'Christian', 'Bangladeshi', '1136', '1-310-425-7631', 'student1137@example.com', '$2y$12$Lkb9YTeAqdxLBTRqDvSvcu/.YX0mF4FcPBOp4SFBgBqEMUKcBdDU.', '5120 Herman Parkways Apt. 529\nHackettfort, AZ 16477', 'Apt. 458', 'Ramon Farrell', 'Businessman', '(980) 995-4540', 'student1137@example.com', '1137', 'Albertha Rau', 'Businesswoman', '+1.701.215.9005', 'student1138@example.com', '1138', 'Jerrod White', '262.343.8081', 'student1139@example.com', '1139', 'Uncle', 1, 27, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:00', '2025-12-06 07:05:35'),
 (229, 'Gilbert', 'Volkman', '2002-06-04', 'Other', 'B-', 'Other', 'Bangladeshi', '1141', '530-344-5329', 'student1142@example.com', '$2y$12$9DRQn/WKpBARVAYsrDQ0s.A3KS3j5/uM2bh9v0AIWPlIEyR6dJLpG', '772 Brandy Park\nAmyafort, AK 07769', 'Apt. 862', 'Kaleigh Altenwerth', 'Teacher', '+1.623.679.2751', 'student1142@example.com', '1142', 'Bridgette Kunde III', 'Housewife', '(440) 345-2068', 'student1143@example.com', '1143', 'Sydni Ortiz', '1-272-407-8423', 'student1144@example.com', '1144', 'Uncle', 1, 28, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:01', '2025-12-06 07:05:35'),
 (230, 'Elva', 'Streich', '1994-04-11', 'Male', 'AB-', 'Islam', 'Bangladeshi', '1146', '307.761.1072', 'student1147@example.com', '$2y$12$SveBTbGEHOK3yml.nnnIpu4j62uLadaR3BB3HuBG.Dgyt7eFDK3A6', '6954 Kunze Bypass\nWittingstad, PA 59384-7336', 'Suite 206', 'Prof. Emmanuel Pagac MD', 'Doctor', '(346) 352-3079', 'student1147@example.com', '1147', 'Anissa Witting', 'Businesswoman', '828.959.3468', 'student1148@example.com', '1148', 'Eliezer Beahan III', '785.249.2266', 'student1149@example.com', '1149', 'Uncle', 1, 20, 11, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:01', '2025-12-06 07:05:35'),
@@ -648,7 +786,7 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (259, 'Anabelle', 'Langosh', '1970-07-26', 'Male', 'AB-', 'Other', 'Bangladeshi', '1291', '+1-689-655-7250', 'student1292@example.com', '$2y$12$duxr8uA.zUvnORdOs6he6.tLfkUCPYez5KUWt7ps69yeaZCMYtsdS', '627 Carter Overpass Apt. 418\nPort Erlingstad, NE 56815-3357', 'Suite 129', 'Devante Schmidt', 'Businessman', '+1-469-993-5922', 'student1292@example.com', '1292', 'Vincenza Hoppe', 'Nurse', '1-425-283-1064', 'student1293@example.com', '1293', 'Ethyl Quitzon', '1-616-489-4234', 'student1294@example.com', '1294', 'Aunt', 1, 19, 3, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:06', '2025-12-06 07:05:35'),
 (260, 'Bethel', 'Wolf', '2018-09-02', 'Other', 'O-', 'Hindu', 'Bangladeshi', '1296', '+17795363822', 'student1297@example.com', '$2y$12$YgliGP34ffJc1m50JICi2ONS8HXPvAYY74anIBPLvFLf8pImro0Om', '262 Sam Mount Apt. 479\nKleinburgh, NH 82767-9632', 'Suite 083', 'Dante Kutch', 'Farmer', '+1-703-737-0462', 'student1297@example.com', '1297', 'Ms. Daphne Lowe', 'Doctor', '562.639.7888', 'student1298@example.com', '1298', 'Giles King', '463.993.2521', 'student1299@example.com', '1299', 'Sister', 1, 18, 7, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:06', '2025-12-06 07:05:35'),
 (261, 'Jasper', 'Upton', '1984-11-14', 'Male', 'O+', 'Hindu', 'Bangladeshi', '1301', '1-337-820-0513', 'student1302@example.com', '$2y$12$td.xkSm7/4utVmNtTLRLHepYyRbcC2bFwKZpPKHAMj6wxjG.KXwYu', '85657 Abigayle Drive\nWest Brianshire, MI 97567', 'Suite 014', 'Prof. Layne Ratke Jr.', 'Farmer', '1-571-931-6012', 'student1302@example.com', '1302', 'Leanna Ullrich', 'Doctor', '+1.361.574.9718', 'student1303@example.com', '1303', 'Lewis Heathcote', '786-221-5778', 'student1304@example.com', '1304', 'Uncle', 1, 20, 3, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:07', '2025-12-06 07:05:35'),
-(262, 'Therese', 'Tillman', '2016-12-23', 'Male', 'O-', 'Christian', 'Bangladeshi', '1306', '541-580-1707', 'student1307@example.com', '$2y$12$DlSn/tNub7MmzOJbfJwrBO6Wuy8uOcNa/giMtRNL8cSQTuR9qo8g2', '4562 Jerel Dale Suite 520\nNew Margaritamouth, WV 68546-6795', 'Apt. 752', 'Blake Howell', 'Teacher', '1-786-297-9890', 'student1307@example.com', '1307', 'Jada Emard', 'Businesswoman', '+18583875838', 'student1308@example.com', '1308', 'Bert Dach', '941.502.6888', 'student1309@example.com', '1309', 'Brother', 1, 16, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:07', '2025-12-06 07:05:35'),
+(262, 'Therese', 'Tillman', '2016-12-23', 'Male', 'O-', 'Christian', 'Bangladeshi', '1306', '541-580-1707', 'student1307@example.com', '$2y$12$DlSn/tNub7MmzOJbfJwrBO6Wuy8uOcNa/giMtRNL8cSQTuR9qo8g2', '4562 Jerel Dale Suite 520\nNew Margaritamouth, WV 68546-6795', 'Apt. 752', 'Blake Howell', 'Teacher', '1-786-297-9890', 'student1307@example.com', '1307', 'Jada Emard', 'Businesswoman', '+18583875838', 'student1308@example.com', '1308', 'Bert Dach', '941.502.6888', 'student1309@example.com', '1309', 'Brother', 1, 16, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:07', '2025-12-06 10:35:15'),
 (263, 'Carmella', 'Feeney', '2013-03-03', 'Female', 'O+', 'Buddhist', 'Bangladeshi', '1311', '+1 (234) 987-7664', 'student1312@example.com', '$2y$12$KTATAlGiH1qqUrq3oNJARuMnI.Xrlfjs0AIKpr1WVNSa7c2R9eFqG', '7636 Haleigh Villages Suite 894\nEmmerichhaven, RI 54254-8907', 'Suite 275', 'Dave Hane', 'Businessman', '+1-283-295-6008', 'student1312@example.com', '1312', 'Dr. Alexa Kris I', 'Nurse', '1-704-863-9057', 'student1313@example.com', '1313', 'Rosella Erdman', '(228) 879-5382', 'student1314@example.com', '1314', 'Uncle', 1, 19, 8, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:07', '2025-12-06 07:05:35'),
 (264, 'Afton', 'Kuvalis', '2023-10-16', 'Female', 'AB-', 'Other', 'Bangladeshi', '1316', '1-320-399-5721', 'student1317@example.com', '$2y$12$Z6.lTSZDKioKNJxgdcXPpe7JkUqbnp6XHHCHg/8yl3pBBlAdDoB7.', '597 Marquardt Road Suite 052\nPort Courtneybury, ND 59237', 'Suite 904', 'Lloyd Bogan', 'Businessman', '1-919-774-2830', 'student1317@example.com', '1317', 'Darlene O\'Connell', 'Teacher', '+1 (364) 917-8400', 'student1318@example.com', '1318', 'Beulah Cartwright', '1-380-690-6927', 'student1319@example.com', '1319', 'Aunt', 1, 21, 3, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:07', '2025-12-06 07:05:35'),
 (265, 'Cordia', 'McGlynn', '1987-06-06', 'Other', 'O-', 'Buddhist', 'Bangladeshi', '1321', '(872) 913-0963', 'student1322@example.com', '$2y$12$hb6j9Y9UufmfNUyC.JPYkeIbY3xISOaTTkJTrRhTEIlB7OM0JCWzi', '92339 Keaton Spring Suite 099\nSchulistshire, CT 00812-2168', 'Suite 114', 'Theodore Corkery', 'Businessman', '+1.726.982.7445', 'student1322@example.com', '1322', 'Keira Leannon', 'Housewife', '+1.458.256.3694', 'student1323@example.com', '1323', 'Mr. Carson Mayert DVM', '1-602-477-5024', 'student1324@example.com', '1324', 'Grandparent', 1, 18, 5, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:07', '2025-12-06 07:05:35'),
@@ -666,13 +804,13 @@ INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood
 (277, 'Lindsay', 'Schowalter', '1990-01-15', 'Other', 'O-', 'Christian', 'Bangladeshi', '1381', '(731) 443-3348', 'student1382@example.com', '$2y$12$RPYbIraGiugRm5fJ0WmLgeOmZ9wscr6EUZL.JEExfVG5JxWO/ej12', '64028 Klein Fords Suite 109\nWest Mylesberg, DC 42388', 'Suite 553', 'Edward Zulauf', 'Businessman', '+1.682.203.8052', 'student1382@example.com', '1382', 'Gretchen Kshlerin', 'Housewife', '+1-586-735-0774', 'student1383@example.com', '1383', 'Colleen Lubowitz', '712.371.5062', 'student1384@example.com', '1384', 'Grandparent', 1, 22, 8, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:09', '2025-12-06 07:05:35'),
 (278, 'Lura', 'Runolfsdottir', '2008-01-08', 'Male', 'B-', 'Islam', 'Bangladeshi', '1386', '+1 (931) 590-7066', 'student1387@example.com', '$2y$12$jI9hzT8uO38x18Q1E0YK0O0E4YVZZ3kTndK1NiGXw7Kj7amQEL3Ue', '518 Herzog Knoll Suite 043\nWest Tito, IA 54485', 'Apt. 295', 'Rex Wilkinson I', 'Engineer', '640.429.5493', 'student1387@example.com', '1387', 'Angelita Reinger', 'Housewife', '+1 (539) 939-3673', 'student1388@example.com', '1388', 'Louisa Turner', '1-941-829-6159', 'student1389@example.com', '1389', 'Brother', 1, 28, 10, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:10', '2025-12-06 07:05:35'),
 (279, 'Sylvan', 'Mills', '1989-10-19', 'Male', 'A+', 'Hindu', 'Bangladeshi', '1391', '484.720.4004', 'student1392@example.com', '$2y$12$GRN.SGCvlEOEZTTtVT/c..bHfvaajRfNF.gDzUvd3ZmWpHxwiSLR.', '62068 Braeden Causeway Suite 375\nPascaleberg, SD 52345', 'Suite 287', 'Ian Connelly IV', 'Doctor', '+1.303.324.0741', 'student1392@example.com', '1392', 'Jaquelin Wyman DDS', 'Teacher', '+1-724-585-0568', 'student1393@example.com', '1393', 'Ms. Zoe Collins', '606.754.3753', 'student1394@example.com', '1394', 'Sister', 1, 23, 8, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:10', '2025-12-06 07:05:35'),
-(280, 'Kailey', 'Ferry', '2007-01-12', 'Male', 'A-', 'Buddhist', 'Bangladeshi', '1396', '+1 (540) 909-5509', 'student1397@example.com', '$2y$12$4UlxpAvQaDLSihy2.umaw.cEBT0olT5j6fA8crfcpZUS5DuFo1MS2', '702 Windler Extension\nNelshaven, NY 68963-3259', 'Suite 673', 'Mathew Toy', 'Teacher', '628.961.0857', 'student1397@example.com', '1397', 'Icie Littel', 'Businesswoman', '(660) 830-7112', 'student1398@example.com', '1398', 'Miss Jordane Schuster DDS', '+1-531-619-6905', 'student1399@example.com', '1399', 'Uncle', 1, 17, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:10', '2025-12-06 07:05:35'),
+(280, 'Kailey', 'Ferry', '2007-01-12', 'Male', 'A-', 'Buddhist', 'Bangladeshi', '1396', '+1 (540) 909-5509', 'student1397@example.com', '$2y$12$4UlxpAvQaDLSihy2.umaw.cEBT0olT5j6fA8crfcpZUS5DuFo1MS2', '702 Windler Extension\nNelshaven, NY 68963-3259', 'Suite 673', 'Mathew Toy', 'Teacher', '628.961.0857', 'student1397@example.com', '1397', 'Icie Littel', 'Businesswoman', '(660) 830-7112', 'student1398@example.com', '1398', 'Miss Jordane Schuster DDS', '+1-531-619-6905', 'student1399@example.com', '1399', 'Uncle', 1, 17, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:10', '2025-12-06 10:35:16'),
 (281, 'Allie', 'Farrell', '1992-08-23', 'Male', 'AB+', 'Hindu', 'Bangladeshi', '1401', '+1.276.918.1353', 'student1402@example.com', '$2y$12$6E7uYCOqPV.VBc.bON/mIOJXQTrcD9201Gg4UqxiBz0FufqfW7GCq', '324 Bednar Estate Suite 079\nWest Kraig, AZ 08321-8337', 'Apt. 518', 'Magnus O\'Reilly', 'Teacher', '(786) 565-7761', 'student1402@example.com', '1402', 'Kailee Senger', 'Businesswoman', '1-281-797-0180', 'student1403@example.com', '1403', 'Lauretta King', '843-268-4126', 'student1404@example.com', '1404', 'Grandparent', 1, 32, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:10', '2025-12-06 07:05:35'),
 (282, 'Audrey', 'Gleichner', '1981-11-17', 'Female', 'A+', 'Islam', 'Bangladeshi', '1406', '(959) 847-9022', 'student1407@example.com', '$2y$12$i1jeuKtdl.E9OKD7uGLoeeAEhNxVFug7P9rRwssRMsMUTgGcyD6X6', '167 Halvorson Junction\nKingborough, AK 03480', 'Apt. 968', 'Mr. Tyshawn Bashirian DVM', 'Farmer', '518-881-6057', 'student1407@example.com', '1407', 'Meagan Ziemann', 'Teacher', '737-881-0772', 'student1408@example.com', '1408', 'Mr. Stevie Lindgren Jr.', '+1-740-587-6519', 'student1409@example.com', '1409', 'Brother', 1, 33, 9, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:10', '2025-12-06 07:05:35'),
 (283, 'Madisen', 'Cormier', '2024-03-08', 'Other', 'O-', 'Other', 'Bangladeshi', '1411', '+1-650-239-7946', 'student1412@example.com', '$2y$12$3Iv.1bfZlMN/XpMk1AKJXumtBhI.0StM7ozsm2GWJdzpsKZkmC6.i', '121 Kris Skyway Suite 047\nEllamouth, KS 01974-6461', 'Apt. 650', 'Kim Bogan', 'Businessman', '253-823-3094', 'student1412@example.com', '1412', 'Araceli Hane', 'Businesswoman', '+1 (323) 686-8310', 'student1413@example.com', '1413', 'Mariam Johnston', '331-525-6888', 'student1414@example.com', '1414', 'Uncle', 1, 26, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:11', '2025-12-06 07:05:35'),
 (284, 'Jeromy', 'Hoeger', '1985-04-16', 'Male', 'B-', 'Other', 'Bangladeshi', '1416', '470.593.5014', 'student1417@example.com', '$2y$12$cADfyGsGFbnsMTq7TEEPHeCZDvKl1Ok2Oxt0WRgBGq/B6B0fVd/We', '186 Goldner Hollow\nNew Dulce, KS 24560-5085', 'Suite 956', 'Cletus Medhurst', 'Doctor', '216-368-6310', 'student1417@example.com', '1417', 'Aida Cremin', 'Teacher', '+15205576643', 'student1418@example.com', '1418', 'Prof. Garnett Schaden', '+1-458-686-9128', 'student1419@example.com', '1419', 'Aunt', 1, 24, 8, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:11', '2025-12-06 07:05:35'),
 (285, 'Jaleel', 'Aufderhar', '1974-12-26', 'Female', 'A+', 'Islam', 'Bangladeshi', '1421', '361-923-3504', 'student1422@example.com', '$2y$12$uPK6aVr34wYCmv0Ronjcd.QqGIBMpWdKF347Wa0CHQOsst80Qj492', '9018 Faye Walks\nNorth Dewayne, IN 05600-8094', 'Suite 561', 'Armand Homenick', 'Farmer', '803.716.5225', 'student1422@example.com', '1422', 'Miss Emmie Gerlach V', 'Doctor', '1-910-768-6681', 'student1423@example.com', '1423', 'Otis Gleichner', '1-223-235-7482', 'student1424@example.com', '1424', 'Brother', 1, 20, 5, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:11', '2025-12-06 07:05:35'),
-(286, 'Hester', 'Ernser', '1985-07-11', 'Other', 'B+', 'Buddhist', 'Bangladeshi', '1426', '234-498-1861', 'student1427@example.com', '$2y$12$a9gvpx3N5zsFgAyPvE3HpOo05hITlVp93ndPuO2WH.tzhhg0zwFZK', '67842 Roslyn Forge\nCrystalburgh, NJ 97800-5625', 'Suite 275', 'Noble Schaden', 'Engineer', '769.625.4030', 'student1427@example.com', '1427', 'Emely Botsford II', 'Nurse', '+1 (828) 581-8870', 'student1428@example.com', '1428', 'Diana Nicolas', '678.310.2405', 'student1429@example.com', '1429', 'Grandparent', 1, 18, 12, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:11', '2025-12-06 07:05:35'),
+(286, 'Hester', 'Ernser', '1985-07-11', 'Other', 'B+', 'Buddhist', 'Bangladeshi', '1426', '234-498-1861', 'student1427@example.com', '$2y$12$a9gvpx3N5zsFgAyPvE3HpOo05hITlVp93ndPuO2WH.tzhhg0zwFZK', '67842 Roslyn Forge\nCrystalburgh, NJ 97800-5625', 'Suite 275', 'Noble Schaden', 'Engineer', '769.625.4030', 'student1427@example.com', '1427', 'Emely Botsford II', 'Nurse', '+1 (828) 581-8870', 'student1428@example.com', '1428', 'Diana Nicolas', '678.310.2405', 'student1429@example.com', '1429', 'Grandparent', 1, 18, 12, '2025-12-07', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:11', '2025-12-06 10:35:17'),
 (287, 'Timmy', 'Medhurst', '2007-10-21', 'Male', 'AB+', 'Other', 'Bangladeshi', '1431', '1-971-508-3366', 'student1432@example.com', '$2y$12$fPNbuLc.sXEKjhbgEewb0u6uY0yShLqTF3BlnjldZcAFu7fmJ0mFS', '26575 Don Branch Suite 537\nLake Jessycaland, IL 65631-1298', 'Suite 598', 'David Gleichner', 'Businessman', '573.722.2882', 'student1432@example.com', '1432', 'Tiara Dickinson', 'Businesswoman', '+18054476083', 'student1433@example.com', '1433', 'Mr. Damian Bechtelar', '386-565-2058', 'student1434@example.com', '1434', 'Sister', 1, 21, 5, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:11', '2025-12-06 07:05:35'),
 (288, 'Pete', 'Schaden', '1995-03-24', 'Other', 'AB-', 'Hindu', 'Bangladeshi', '1436', '+1.724.240.0761', 'student1437@example.com', '$2y$12$ltssuCoCW9g9jYfspI8wauJNf11ZR.VyAraR6AeWNC5IrNk641UPK', '74639 Willms Vista Suite 489\nWest Raeberg, AZ 67397-7967', 'Apt. 671', 'Donavon Waters', 'Businessman', '283.442.3940', 'student1437@example.com', '1437', 'Bria Okuneva MD', 'Doctor', '+1-283-692-5130', 'student1438@example.com', '1438', 'Virginia Roberts IV', '754.416.8312', 'student1439@example.com', '1439', 'Brother', 1, 27, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:11', '2025-12-06 07:05:35'),
 (289, 'Barry', 'Adams', '1981-11-22', 'Female', 'O-', 'Hindu', 'Bangladeshi', '1441', '+1-248-567-4631', 'student1442@example.com', '$2y$12$1.DFrJao7fRRC3yQFGNOc.v6apVOjmZ2/AIlfCG2cBUbrKAp9j.hW', '15945 Callie Wells\nOlafview, OR 08373', 'Suite 092', 'Reilly Hill PhD', 'Doctor', '+14702863201', 'student1442@example.com', '1442', 'Kitty Hyatt', 'Nurse', '+1.989.688.7714', 'student1443@example.com', '1443', 'Anjali Romaguera', '+1.907.862.4670', 'student1444@example.com', '1444', 'Grandparent', 1, 28, 1, '2025-12-06', 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-06 06:39:12', '2025-12-06 07:05:35'),
@@ -712,7 +850,11 @@ INSERT INTO `student_subjects` (`id`, `student_id`, `subject_id`, `created_at`, 
 (5, 1, 20, '2025-12-06 07:33:40', '2025-12-06 07:33:40'),
 (6, 1, 18, '2025-12-06 07:33:41', '2025-12-06 07:33:41'),
 (7, 1, 17, '2025-12-06 07:39:51', '2025-12-06 07:39:51'),
-(8, 1, 19, '2025-12-06 07:39:55', '2025-12-06 07:39:55');
+(8, 1, 19, '2025-12-06 07:39:55', '2025-12-06 07:39:55'),
+(9, 36, 131, '2025-12-06 10:36:28', '2025-12-06 10:36:28'),
+(10, 41, 131, '2025-12-06 10:36:33', '2025-12-06 10:36:33'),
+(11, 95, 123, '2025-12-06 10:36:36', '2025-12-06 10:36:36'),
+(12, 48, 131, '2025-12-06 10:36:40', '2025-12-06 10:36:40');
 
 -- --------------------------------------------------------
 
@@ -977,6 +1119,28 @@ ALTER TABLE `exam_names`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `excategories`
+--
+ALTER TABLE `excategories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `expenses`
+--
+ALTER TABLE `expenses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `expenses_catid_foreign` (`catId`),
+  ADD KEY `expenses_subcatid_foreign` (`subcatId`),
+  ADD KEY `expenses_userid_foreign` (`userId`);
+
+--
+-- Indexes for table `exsubcategories`
+--
+ALTER TABLE `exsubcategories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `exsubcategories_cat_id_foreign` (`cat_id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -1019,6 +1183,13 @@ ALTER TABLE `marks`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notices`
+--
+ALTER TABLE `notices`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notices_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `password_resets`
@@ -1095,7 +1266,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `class_schedules`
@@ -1107,13 +1278,31 @@ ALTER TABLE `class_schedules`
 -- AUTO_INCREMENT for table `exams`
 --
 ALTER TABLE `exams`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `exam_names`
 --
 ALTER TABLE `exam_names`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `excategories`
+--
+ALTER TABLE `excategories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `expenses`
+--
+ALTER TABLE `expenses`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `exsubcategories`
+--
+ALTER TABLE `exsubcategories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1143,13 +1332,19 @@ ALTER TABLE `fee_structures`
 -- AUTO_INCREMENT for table `marks`
 --
 ALTER TABLE `marks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+
+--
+-- AUTO_INCREMENT for table `notices`
+--
+ALTER TABLE `notices`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -1173,7 +1368,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `student_subjects`
 --
 ALTER TABLE `student_subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `subjects`
@@ -1220,6 +1415,20 @@ ALTER TABLE `exams`
   ADD CONSTRAINT `exams_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`);
 
 --
+-- Constraints for table `expenses`
+--
+ALTER TABLE `expenses`
+  ADD CONSTRAINT `expenses_catid_foreign` FOREIGN KEY (`catId`) REFERENCES `excategories` (`id`),
+  ADD CONSTRAINT `expenses_subcatid_foreign` FOREIGN KEY (`subcatId`) REFERENCES `exsubcategories` (`id`),
+  ADD CONSTRAINT `expenses_userid_foreign` FOREIGN KEY (`userId`) REFERENCES `teachers` (`id`);
+
+--
+-- Constraints for table `exsubcategories`
+--
+ALTER TABLE `exsubcategories`
+  ADD CONSTRAINT `exsubcategories_cat_id_foreign` FOREIGN KEY (`cat_id`) REFERENCES `excategories` (`id`);
+
+--
 -- Constraints for table `fee_payments`
 --
 ALTER TABLE `fee_payments`
@@ -1240,6 +1449,12 @@ ALTER TABLE `marks`
   ADD CONSTRAINT `marks_exam_id_foreign` FOREIGN KEY (`exam_id`) REFERENCES `exams` (`id`),
   ADD CONSTRAINT `marks_student_id_foreign` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
   ADD CONSTRAINT `marks_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`);
+
+--
+-- Constraints for table `notices`
+--
+ALTER TABLE `notices`
+  ADD CONSTRAINT `notices_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `teachers` (`id`);
 
 --
 -- Constraints for table `rooms`

@@ -217,6 +217,58 @@
 
 
 
+                <!-- Notice start -->
+                <li class="pc-item pc-caption">
+                    <label>Notice</label>
+                    <i data-feather="feather"></i>
+                </li>
+                <li class="pc-item pc-hasmenu">
+                    <a href="#!" class="pc-link"><span class="pc-micon"> <i class="fa-solid fa-bell"></i> </span><span
+                    class="pc-mtext">Notice</span><span class="pc-arrow"><i class="ti ti-chevron-right"></i></span></a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item pc-hasmenu">
+                            <a href="{{url('/notice')}}" class="pc-link">
+                                <span class="pc-micon"><i class="fa-regular fa-bell"></i></span>
+                                <span class="pc-mtext">Notice Records</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Notice end -->
+
+
+
+
+
+
+
+
+
+
+                <!-- Expenses start -->
+                <li class="pc-item pc-caption">
+                    <label>Expenses</label>
+                    <i data-feather="feather"></i>
+                </li>
+                <li class="pc-item pc-hasmenu">
+                    <a href="#!" class="pc-link"><span class="pc-micon"> <i class="fa-solid fa-money-bill-wave"></i> </span><span
+                    class="pc-mtext">Expenses</span><span class="pc-arrow"><i class="ti ti-chevron-right"></i></span></a>
+                    <ul class="pc-submenu">
+                        <li class="pc-item pc-hasmenu">
+                            <a href="{{url('/expense')}}" class="pc-link">
+                                <span class="pc-micon"><i class="fa-solid fa-money-bill-transfer"></i></span>
+                                <span class="pc-mtext">Expenses Records</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Expenses end -->
+
+
+
+
+
+
 
 
 

@@ -17,6 +17,8 @@ use App\Http\Controllers\StudentPortal\StudentPortalController;
 use App\Http\Controllers\Room\ClassController;
 use App\Http\Controllers\Finance\FinanceController;
 use App\Http\Controllers\Finance\FinanceReportController;
+use App\Http\Controllers\Notice\NoticeController;
+use App\Http\Controllers\Expenses\ExpensesController;
 
 Auth::routes();
 
@@ -181,5 +183,20 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/student-payment-history', [StudentPortalController::class, 'feeHistory'])->name('payment-history');
     Route::get('/student-enrollment', [StudentPortalController::class, 'enrollment'])->name('student-enrollment');
     Route::post('/student-subject-enrollment', [StudentPortalController::class, 'enrollmentStore']);
+
+
+    // ======================================================= Notice Board Route =======================================================
+    Route::get('/notice', [NoticeController::class, 'index'])->name('notice-create-view');
+    Route::post('/create-notice', [NoticeController::class, 'create'])->name('create-new-notice');
+    Route::get('/notice/view/{file}', [NoticeController::class, 'attachView'])->name('view-attachment');
+    Route::get('/delete/notice/{id}', [NoticeController::class, 'delete'])->name('delete-notice');
+    Route::get('/view/notice/{id}', [NoticeController::class, 'viewNotice'])->name('view-notice');
+
+
+
+    // ======================================================= expense Board Route =======================================================
+    Route::get('/expense', [ExpensesController::class, 'index'])->name('expenses-view');
+    Route::get('/get-subcategories/{id}', [ExpensesController::class, 'getSubCategory']);
+    Route::post('/create-expenses', [ExpensesController::class, 'store']);
 
 });

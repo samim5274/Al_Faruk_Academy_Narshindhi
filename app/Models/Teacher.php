@@ -61,4 +61,14 @@ class Teacher extends Authenticatable
     public function classSchedule() {
         return $this->hasMany(ClassSchedule::class);
     }
+
+    public function notice()
+    {
+        return $this->hasMany(Notice::class, 'user_id');
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expenses::class, 'userId', 'id');
+    }
 }
