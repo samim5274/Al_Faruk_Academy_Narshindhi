@@ -157,6 +157,7 @@ Route::group(['middleware' => ['admin']], function(){
     Route::post('/insert-fee-structure', [FinanceController::class, 'insertFeeStructure']);
     Route::get('/finance-fee-payment', [FinanceController::class, 'financeFeePayment'])->name('finance-fee-payment');
     Route::post('/fee-payments', [FinanceController::class, 'confirmPayment']);
+    Route::get('/fee-payment-show/{id}', [FinanceController::class, 'showPayment'])->name('show-specific-student-payment');
 
     Route::get('/students/{class_id}', [FinanceController::class, 'getStudentsByClass']);
     Route::get('/fee-structures/{class_id}', [FinanceController::class, 'getFeeStructuresByClass']);
@@ -198,5 +199,17 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/expense', [ExpensesController::class, 'index'])->name('expenses-view');
     Route::get('/get-subcategories/{id}', [ExpensesController::class, 'getSubCategory']);
     Route::post('/create-expenses', [ExpensesController::class, 'store']);
+    Route::get('/delete/Expense/{id}', [ExpensesController::class, 'delete']);
+    Route::get('/expenses-view/{id}', [ExpensesController::class, 'expensesView']);
+    Route::get('/expenses-edit/{id}', [ExpensesController::class, 'edit']);
+    Route::post('/modify-expenses/{id}', [ExpensesController::class, 'update']);
+    Route::get('/expenses-print/{id}', [ExpensesController::class, 'print']);
+    // Expenses report Route
+    Route::get('/date-wise-expenses', [ExpensesController::class, 'dateExpenses']);
+    Route::get('/expenses-data-filter', [ExpensesController::class, 'filterExpenses']);
+    Route::get('/category-wise-expenses', [ExpensesController::class, 'categroyExpenses']);
+    Route::get('/expenses-category-data-filter', [ExpensesController::class, 'filterCatExpen']);
+    Route::get('/sub-category-wise-expenses', [ExpensesController::class, 'subCategoyExpenses']);
+    Route::get('/expenses-sub-category-data-filter', [ExpensesController::class, 'filterSubCatExpen']);
 
 });

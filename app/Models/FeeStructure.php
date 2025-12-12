@@ -26,8 +26,8 @@ class FeeStructure extends Model
         return $this->belongsTo(FeeCategory::class, 'fee_cat_id'); // fee category relation
     }
 
-    public function payments()
+    public function paymentItems()
     {
-        return $this->hasMany(FeePayment::class, 'fee_structure_id'); // related payments
+        return $this->hasMany(FeePaymentItem::class, 'fee_structure_id');
     }
 }

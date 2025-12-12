@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
+use App\Models\Company;
 use App\Models\Room;
 use App\Models\Student;
 use App\Models\Subject;
@@ -25,14 +26,16 @@ class ClassController extends Controller
     }
 
     public function index(){
+        $company = Company::first();
         $classes = Room::all();
-        return view('room.class-details', compact('classes'));
+        return view('room.class-details', compact('classes','company'));
     }
 
     public function addNew(){
+        $company = Company::first();
         $teachers = Teacher::all();
         $classes = Room::all();
-        return view('room.new-class', compact('teachers','classes'));
+        return view('room.new-class', compact('teachers','classes','company'));
     }
 
     public function insertClass(Request $request){
@@ -60,9 +63,10 @@ class ClassController extends Controller
     }
 
     public function assignTeacehr(){
+        $company = Company::first();
         $teachers = Teacher::all();
         $classes = Room::all();
-        return view('room.assign-teacher', compact('teachers','classes'));
+        return view('room.assign-teacher', compact('teachers','classes','company'));
     }
 
     public function update(Request $request){
@@ -87,13 +91,14 @@ class ClassController extends Controller
         return redirect()->back()->with('success', 'Teacher updated successfully!');
     }
 
-    public function classSchedule(){        
+    public function classSchedule(){  
+        $company = Company::first();      
         $teachers = Teacher::all();
         $subjects = Subject::all();
         $classes  = Room::all();
         $days     = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
         $schedules = ClassSchedule::all();
-        return view('room.schedule.class-schedule', compact('classes','teachers','subjects','days','schedules'));
+        return view('room.schedule.class-schedule', compact('classes','teachers','subjects','days','schedules','company'));
     }
 
     public function store(Request $request) {
@@ -160,20 +165,23 @@ class ClassController extends Controller
     }
 
     public function modifySchedule(){
+        $company = Company::first();
         $classes  = Room::all();
         $days     = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
         $schedules = ClassSchedule::all();
-        return view('room.schedule.modify-class-schedule', compact('classes','days','schedules'));
+        return view('room.schedule.modify-class-schedule', compact('classes','days','schedules','company'));
     }
 
     public function searchSchedule(Request $request){
+        $company = Company::first();
         $classes  = Room::all();
         $days     = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
         $schedules = ClassSchedule::where('class_id', $request->class_id)->where('day', $request->day)->get();
-        return view('room.schedule.modify-class-schedule', compact('classes','days','schedules'));
+        return view('room.schedule.modify-class-schedule', compact('classes','days','schedules','company'));
     }
 
     public function editSchedule($scheduleId){
+        $company = Company::first();
         $schedules = classSchedule::where('id', $scheduleId)->first();
 
         $teachers = Teacher::all();
@@ -181,7 +189,7 @@ class ClassController extends Controller
         $classes  = Room::all();
         $days     = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
 
-        return view('room.schedule.class-schedule-edit', compact('classes','teachers','subjects','days','schedules'));
+        return view('room.schedule.class-schedule-edit', compact('classes','teachers','subjects','days','schedules','company'));
     }
 
     public function updateClassSchedule(Request $request, $id){

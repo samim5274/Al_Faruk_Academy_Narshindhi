@@ -17,53 +17,62 @@ use App\Models\FeeStructure;
 use App\Models\FeePayment;
 use App\Models\ClassSchedule;
 use Auth;
+use App\Models\Company;
 
 class StudentPortalController extends Controller
 {
     public function stdDashboard(){
-        return view('studentPortal.std-dashboard');
+        $company = Company::first();
+        return view('studentPortal.std-dashboard', compact('company'));
     }
 
     public function profile(){
+        $company = Company::first();
         $student = $student = Auth::guard('student')->user();
-        return view('studentPortal.profile.student-profile', compact('student'));
+        return view('studentPortal.profile.student-profile', compact('student','company'));
     }
 
     public function myClass(){
+        $company = Company::first();
         $student = $student = Auth::guard('student')->user();
         $routine = ClassSchedule::where('class_id', $student->class_id)->get();
-        return view('studentPortal.classes.student-class', compact('student','routine'));
+        return view('studentPortal.classes.student-class', compact('student','routine','company'));
     }
 
     public function attendance(){
+        $company = Company::first();
         $date = Carbon::today()->format('Y-m-d');
         $student = $student = Auth::guard('student')->user();
         $attendance = Attendance::where('student_id', $student->id)->where('attendance_date', $date)->paginate(30);
-        return view('studentPortal.attendance.student-attendance', compact('student','attendance'));
+        return view('studentPortal.attendance.student-attendance', compact('student','attendance','company'));
     }
 
     public function getAttedance(Request $request){
+        $company = Company::first();
         $start = $request->input('start_date', '');
         $end = $request->input('end_date', '');
 
         $student = $student = Auth::guard('student')->user();
         $attendance = Attendance::where('student_id', $student->id)->whereBetween('attendance_date', [$start, $end])->paginate(30);
-        return view('studentPortal.attendance.student-attendance', compact('student','attendance'));
+        return view('studentPortal.attendance.student-attendance', compact('student','attendance','company'));
     }
 
     public function examList(){
+        $company = Company::first();
         $student = $student = Auth::guard('student')->user();
         $exams = Exam::where('class_id', $student->class_id)->get();
-        return view('studentPortal.exam.student-exam', compact('student','exams'));
+        return view('studentPortal.exam.student-exam', compact('student','exams','company'));
     }
 
     public function results(){
+        $company = Company::first();
         $student = $student = Auth::guard('student')->user();
         $marks = Mark::where('student_id', $student->id)->get();
-        return view('studentPortal.exam.student-marks', compact('student','marks'));
+        return view('studentPortal.exam.student-marks', compact('student','marks','company'));
     }
 
     public function feeDetails(){
+        $company = Company::first();
         $student = $student = Auth::guard('student')->user();
         $structures = FeeStructure::where('class_id', $student->class_id)->get();
         $payments = FeePayment::where('student_id', $student->id)->get();
@@ -89,23 +98,25 @@ class StudentPortalController extends Controller
             $previousDue += max($due, 0);
         }
 
-        return view('studentPortal.fee.student-fee-details', compact('student','structures','groupedPayments','previousDue'));
+        return view('studentPortal.fee.student-fee-details', compact('student','structures','groupedPayments','previousDue','company'));
     }
 
     public function feeHistory(){
+        $company = Company::first();
         $student = $student = Auth::guard('student')->user();
         $payment = FeePayment::where('student_id', $student->id)->orderBy('id', 'desc')->paginate(15);
         $paid = FeePayment::where('student_id', $student->id)->sum('amount_paid');
         $discount = FeePayment::where('student_id', $student->id)->sum('discount');
         $due = FeePayment::where('student_id', $student->id)->sum('due_amount');
-        return view('studentPortal.fee.student-fee-history', compact('student','payment','paid','discount','due'));
+        return view('studentPortal.fee.student-fee-history', compact('student','payment','paid','discount','due','company'));
     }
 
     public function enrollment(){
+        $company = Company::first();
         $student = Auth::guard('student')->user(); 
         $subjects = Subject::where('class_id', $student->class_id)->get();
         $enrollmented = StudentSubject::where('student_id', $student->id)->get(); 
-        return view('studentPortal.enrollment.student-enrollment', compact('subjects','student','enrollmented'));
+        return view('studentPortal.enrollment.student-enrollment', compact('subjects','student','enrollmented','company'));
     }
 
     public function enrollmentStore(Request $request){

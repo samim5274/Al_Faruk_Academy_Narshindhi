@@ -8,16 +8,19 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Teacher;
+use App\Models\Company;
 
 class TeacherController extends Controller
 {
     public function teacherList(){
+        $company = Company::first();
         $teacher = Teacher::all();
-        return view('teacher.teacher', compact('teacher'));
+        return view('teacher.teacher', compact('teacher','company'));
     }
 
     public function addTeacherView(){
-        return view('teacher.add-teacher');
+        $company = Company::first();
+        return view('teacher.add-teacher', compact('company'));
     }
 
     private function uploadPhoto($file, $folder, $fileName)
@@ -115,8 +118,9 @@ class TeacherController extends Controller
     }
 
     public function editTeacherView($id){
+        $company = Company::first();
         $teacher = Teacher::where('id', $id)->first();
-        return view('teacher.edit-teacher', compact('teacher'));
+        return view('teacher.edit-teacher', compact('teacher','company'));
     }
 
     public function editTeacher(Request $request, $id)

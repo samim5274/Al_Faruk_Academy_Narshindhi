@@ -5,10 +5,6 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-
-use App\Models\Student;
-use App\Models\Room;
-
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -23,10 +19,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(TeacherSeeder::class);
-        $this->call(RoomSeeder::class);
-        $this->call(StudentSeeder::class);
-        $this->call(SubjectSeeder::class);
-        $this->call(FeeCategroySeeder::class);
+        $this->call(
+            TeacherSeeder::class,
+            RoomSeeder::class,
+            StudentSeeder::class,
+            SubjectSeeder::class,
+            FeeCategroySeeder::class,
+            ExcategorySeeder::class,
+            ExsubcategorySeeder::class,
+        );
     }
 }

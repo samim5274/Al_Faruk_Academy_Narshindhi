@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Teacher;
+use App\Models\Company;
 
 class TeacherReportController extends Controller
 {
@@ -30,8 +31,8 @@ class TeacherReportController extends Controller
         if ($request->filled('blood_group')) {
             $query->where('blood_group', $request->blood_group);
         }
-
+        $company = Company::first();
         $teacher = $query->paginate(45)->appends($request->all());
-        return view('teacher.report.teacher-report', compact('teacher'));
+        return view('teacher.report.teacher-report', compact('teacher','company'));
     }
 }

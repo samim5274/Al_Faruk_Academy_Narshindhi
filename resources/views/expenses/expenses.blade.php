@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expenses - (SMS)</title>
+    <title>Expenses - {{ $company->name }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -194,8 +194,14 @@
                             <td class="px-4 py-3 text-center flex justify-center gap-3">
 
                                 <!-- View -->
-                                <a href="#" class="text-blue-600 hover:text-blue-800">
+                                <a href="{{ url('/expenses-view/'. $val->id) }}"  class="text-blue-600 hover:text-blue-800">
                                     <i class="fa-solid fa-eye"></i>
+                                </a>
+
+
+                                <!-- print -->
+                                 <a href="{{ url('/expenses-print/'.$val->id) }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                    <i class="fa-solid fa-print"></i>
                                 </a>
 
                                 <!-- Delete -->
@@ -214,6 +220,11 @@
                             </td>
                         </tr>
                         @endforelse
+                        <tr>
+                            <td colspan="4" class="px-4 py-3 text-center text-xs font-semibold text-gray-600 uppercase">Total:</td>
+                            <td class="px-4 py-3 text-xs font-semibold text-gray-600 uppercase">৳{{ $expenses->sum('amount') }}/-</td>
+                            <td colspan="2"></td>
+                        </tr>
 
                     </tbody>
                 </table>
@@ -263,7 +274,7 @@
                         dataType: 'json',
                         success: function(data) {
                             $('#subcategory_id').empty();
-                            $('#subcategory_id').append('<option value="">-- Select Sub category --</option>');
+                            $('#subcategory_id').append('<option value="">-- Select Sub Category --</option>');
                             $.each(data, function(key, value) {
                                 $('#subcategory_id').append('<option value="'+ value.id +'">'+ value.name +'</option>');
                             });

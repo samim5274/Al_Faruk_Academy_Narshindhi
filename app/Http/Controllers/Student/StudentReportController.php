@@ -12,14 +12,16 @@ use App\Models\Student;
 use App\Models\Room;
 use App\Models\Subject;
 use App\Models\Mark;
+use App\Models\Company;
 
 class StudentReportController extends Controller
 {
     public function genderReport(){
+        $company = Company::first();
         $findData = Student::paginate(45);
         $classes = Room::all();
         $students = Student::all();
-        return view('student.report.student-report', compact('findData','classes', 'students'));
+        return view('student.report.student-report', compact('findData','classes', 'students','company'));
     }
 
     public function findGenderReport(Request $request){

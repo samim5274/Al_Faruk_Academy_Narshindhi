@@ -23,6 +23,7 @@ use App\Models\Mark;
 use App\Models\Attendance;
 use App\Models\Room;
 use App\Models\StudentSubject;
+use App\Models\Company;
 
 class DashboardController extends Controller
 {
@@ -34,6 +35,8 @@ class DashboardController extends Controller
     }
 
     public function index(){
+        $company = Company::first();
+
         $totalStudent = Student::count();        
         $maleStudent = Student::where('gender', 'Male')->count();
         $femaleStudent = Student::where('gender', 'Female')->count();
@@ -46,7 +49,19 @@ class DashboardController extends Controller
         $totalTeacher = Teacher::count();
         $maleTeacher = Teacher::where('gender', 'Male')->count();
         $femaleTeacher = Teacher::where('gender', 'Female')->count();
-        return view('welcome', compact('totalStudent','maleStudent','femaleStudent','otherStudent','totalAttendance', 'totalAbsent','class','totalTeacher','maleTeacher','femaleTeacher')); 
+        return view('welcome', compact(
+            'totalStudent',
+            'maleStudent',
+            'femaleStudent',
+            'otherStudent',
+            'totalAttendance', 
+            'totalAbsent',
+            'class',
+            'totalTeacher',
+            'maleTeacher',
+            'femaleTeacher',
+            'company'
+        )); 
     }
 
     public function dbBackup(){

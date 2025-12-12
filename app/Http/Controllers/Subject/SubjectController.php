@@ -12,13 +12,15 @@ use App\Models\Subject;
 use App\Models\Exam;
 use App\Models\Mark;
 use App\Models\SubjectStudent;
+use App\Models\Company;
 
 class SubjectController extends Controller
 {
     public function subjectView(){
+        $company = Company::first();
         $subjects = Subject::with('room')->get();
         $rooms = Room::all();
-        return view('subject.subject-list', compact('subjects', 'rooms'));
+        return view('subject.subject-list', compact('subjects', 'rooms','company'));
     }
 
     public function addSubject(Request $request){

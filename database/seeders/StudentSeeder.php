@@ -20,7 +20,7 @@ class StudentSeeder extends Seeder
 
         for ($i = 1; $i <= 1500; $i++) {
 
-            $classId = $faker->numberBetween(1, 12);
+            $classId = $faker->numberBetween(1, 10);
 
             if (!isset($rollCounters[$classId])) {
                 $rollCounters[$classId] = 1;
@@ -64,7 +64,7 @@ class StudentSeeder extends Seeder
                 'status'          => 1, // active
                 'roll_number'     => $rollCounters[$classId], // sequential roll per class
                 'class_id'        => $classId,
-                'attend_date'     => '2025-01-14',
+                'attend_date'     => '2025-12-12',
                 'remark'          => 'N/A',
             ]);
         }

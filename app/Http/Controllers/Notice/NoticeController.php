@@ -11,6 +11,7 @@ use Auth;
 use Session;
 use App\Models\Teacher;
 use App\Models\Notice;
+use App\Models\Company;
 
 class NoticeController extends Controller
 {
@@ -22,8 +23,9 @@ class NoticeController extends Controller
     }
 
     public function index(){
+        $company = Company::first();
         $notice = Notice::with('user')->orderBy('id', 'desc')->get();
-        return view('notice.notice', compact('notice'));
+        return view('notice.notice', compact('notice','company'));
     }
 
     public function create(Request $request){
@@ -84,10 +86,11 @@ class NoticeController extends Controller
     }
 
     public function viewNotice($id){
+        $company = Company::first();
         $notice = Notice::where('id', $id)->with('user')->first();
         if(!$notice){
             return redirect()->back()->with('warning','Notice not found. Please try again. Thank You!');
         }
-        return view('notice.notice-view', compact('notice'));
+        return view('notice.notice-view', compact('notice','company'));
     }
 }

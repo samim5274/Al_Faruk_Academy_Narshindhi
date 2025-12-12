@@ -11,24 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fee_payments', function (Blueprint $table) {
+        Schema::create('fee_payment_items', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('fee_payment_id')->constrained('fee_payment_details')->onDelete('restrict');
             $table->foreignId('student_id')->constrained('students')->onDelete('restrict');
             $table->foreignId('fee_structure_id')->constrained('fee_structures')->onDelete('restrict');
 
-            $table->decimal('amount_paid', 10, 2)->default(0);
+            $table->decimal('amount', 10, 2);
+            $table->decimal('paid', 10, 2);     // paid for this item
             $table->decimal('discount', 10, 2)->default(0);
-            $table->decimal('due_amount', 10, 2)->default(0);
-
+            $table->decimal('due', 10, 2)->default(0);
             $table->date('payment_date');
-            $table->integer('month');
-            $table->integer('year');
 
-            $table->string('payment_method')->default('Cash');
-            $table->string('status')->default('Pending');
-            $table->string('receipt_no')->nullable();
-            
             $table->timestamps();
         });
     }
@@ -38,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fee_payments');
+        Schema::dropIfExists('fee_payment_items');
     }
 };

@@ -1,0 +1,8 @@
+gmail pass:Milons2488
+alfarukacademy98@gmail.com
+alfarukacademy
+
+
+https://bdia.btcl.com.bd/GetClientForView.do?entityID=2412043&moduleID=1
+
+INSERT INTO `companies` (`id`, `name`, `address`, `email`, `phone`, `website`, `created_at`, `updated_at`) VALUES (NULL, 'Al-Faruk Academy & High School', '213/1, East Brahmondhi, Narsingdi. EIIN - 112668', 'info@alfarukacademy.edu.bd', '01700000000', 'www.alfarukacademy.edu.bd', '2025-12-12 11:15:24', '2025-12-12 11:15:24');

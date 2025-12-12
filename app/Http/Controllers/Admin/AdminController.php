@@ -12,6 +12,7 @@ use Carbon\Carbon;
 
 use Auth;
 use Session;
+use App\Models\Company;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Mail\OtpMail;
@@ -23,7 +24,8 @@ class AdminController extends Controller
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
-        return view('admin.login');
+        $company = Company::first();
+        return view('admin.login', compact('company'));
     }
 
     public function userLogin(Request $request){
@@ -66,7 +68,8 @@ class AdminController extends Controller
     }
 
     public function changePassView(){
-        return view('admin.change-password');
+        $company = Company::first();
+        return view('admin.change-password', compact('company'));
     }
 
     public function updateUpdate(Request $request){
@@ -104,19 +107,23 @@ class AdminController extends Controller
     }
 
     public function profile(){
-        return view('profile.my-account');
+        $company = Company::first();
+        return view('profile.my-account', compact('company'));
     }
 
     public function setting(){
-        return view('profile.setting');
+        $company = Company::first();
+        return view('profile.setting', compact('company'));
     }
 
     public function support(){
-        return view('profile.support');
+        $company = Company::first();
+        return view('profile.support', compact('company'));
     }
 
     public function forgetPass(){
-        return view('admin.auth.forget-password');
+        $company = Company::first();
+        return view('admin.auth.forget-password', compact('company'));
     }
 
     public function findAccount(Request $request){
@@ -147,7 +154,8 @@ class AdminController extends Controller
     }
 
     public function otpConfirm(){
-        return view('admin.auth.otp');
+        $company = Company::first();
+        return view('admin.auth.otp', compact('company'));
     }
 
     public function otpVarify(Request $request){
@@ -179,7 +187,8 @@ class AdminController extends Controller
     }
 
     public function createNewPass(){
-        return view('admin.auth.new-password-form');
+        $company = Company::first();
+        return view('admin.auth.new-password-form', compact('company'));
     }
 
     public function createPassword(Request $request){

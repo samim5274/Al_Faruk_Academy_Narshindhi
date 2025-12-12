@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Room;
 use App\Models\Student;
 use App\Models\Attendance;
+use App\Models\Company;
 
 class AttendanceController extends Controller
 {
@@ -20,11 +21,14 @@ class AttendanceController extends Controller
     }
 
     public function classList(){
+        $company = Company::first();
         $room = Room::all();
-        return view('attendance.class-list', compact('room'));
+        return view('attendance.class-list', compact('room','company'));
     }
 
     public function attendanceView($class_id){
+        $company = Company::first();
+
         $student = Student::with('room')->where('class_id', $class_id)->where('attend_date', $this->date)->get();        
         
         $totalStudent = Student::where('class_id', $class_id)->count(); 
@@ -41,7 +45,7 @@ class AttendanceController extends Controller
             ->where('attendance_date', $this->date)
             ->count();
         
-        return view('attendance.attendance-list', compact('student','totalStudent','attend','present','absent'));
+        return view('attendance.attendance-list', compact('student','totalStudent','attend','present','absent','company'));
     }
 
     public function stdPresent($id){
@@ -106,41 +110,47 @@ class AttendanceController extends Controller
     }
 
     public function dailyAttendet(){
+        $company = Company::first();
+
         $attend = Attendance::with('student')->where('attendance_date', $this->date)->paginate(45);
 
         $totalStudent = Student::count(); 
         $present = Attendance::where('status', 'Present')->where('attendance_date', $this->date)->count();
         $absent = Attendance::where('status', 'Absent')->where('attendance_date', $this->date)->count();
 
-        return view('attendance.daily-student-list', compact('attend','totalStudent','present','absent'));
+        return view('attendance.daily-student-list', compact('attend','totalStudent','present','absent','company'));
     }
 
     public function searchAttendView(){
+        $company = Company::first();
         $start = $this->date;
         $end = $this->date;
         $findData = Attendance::with('student')->whereBetween('attendance_date', [$start, $end])->paginate(45);
         $totalStudent = Student::count(); 
         $present = Attendance::where('status', 'Present')->where('attendance_date', $this->date)->count();
         $absent = Attendance::where('status', 'Absent')->where('attendance_date', $this->date)->count();
-        return view('attendance.find-student-list', compact('findData','totalStudent','present','absent'));
+        return view('attendance.find-student-list', compact('findData','totalStudent','present','absent','company'));
     }
 
     public function searchAttendStudent(Request $request){
+        $company = Company::first();
         $start = $request->input('start_date', '');
         $end = $request->input('end_date', '');
         $findData = Attendance::with('student')->whereBetween('attendance_date', [$start, $end])->paginate(45);
-        return view('attendance.find-student-list', compact('findData'));
+        return view('attendance.find-student-list', compact('findData','company'));
     }
 
     public function classListAttend(){
+        $company = Company::first();
         $start = $this->date;
         $end = $this->date;
         $classes = Room::all();
         $findData = Attendance::with('student')->whereBetween('attendance_date', [$start, $end])->paginate(45);
-        return view('attendance.find-class-student-list', compact('findData','classes'));
+        return view('attendance.find-class-student-list', compact('findData','classes','company'));
     }
 
     public function findClassAttend(Request $request){
+        $company = Company::first();
         $request->validate([
             'class_id' => ['required'],
         ]);
@@ -150,19 +160,22 @@ class AttendanceController extends Controller
         $class_id = $request->input('class_id', '');
         $classes = Room::all();
         $findData = Attendance::with('student')->where('class_id', $class_id)->whereBetween('attendance_date', [$start, $end])->paginate(45);
-        return view('attendance.find-class-student-list', compact('findData','classes'));
+        return view('attendance.find-class-student-list', compact('findData','classes','company'));
     }
 
     public function studentAttend(){
+        $company = Company::first();
         $start = $this->date;
         $end = $this->date;
         $classes = Room::all();
         $students = Student::all();
         $findData = Attendance::with('student')->whereBetween('attendance_date', [$start, $end])->paginate(45);
-        return view('attendance.find-student-attendance', compact('findData','classes','students'));
+        return view('attendance.find-student-attendance', compact('findData','classes','students','company'));
     }
 
     public function findStudentAttend(Request $request){
+        $company = Company::first();
+
         $request->validate([
             'class_id' => ['required'],
             'student_id' => ['required'],
@@ -182,7 +195,7 @@ class AttendanceController extends Controller
             ->whereBetween('attendance_date', [$start, $end])
             ->paginate(45);
 
-        return view('attendance.find-student-attendance', compact('findData','classes','students'));
+        return view('attendance.find-student-attendance', compact('findData','classes','students','company'));
     }
 
 }

@@ -24,8 +24,6 @@ class RoomSeeder extends Seeder
             ['name' => 'Class 8',  'section' => 'A', 'class_teacher_id' => '8',     'capacity' => 54],
             ['name' => 'Class 9',  'section' => 'A', 'class_teacher_id' => '9',   'capacity' => 56],
             ['name' => 'Class 10', 'section' => 'A', 'class_teacher_id' => '10',    'capacity' => 58],
-            ['name' => 'Class 11', 'section' => 'A', 'class_teacher_id' => '11',  'capacity' => 60],
-            ['name' => 'Class 12', 'section' => 'A', 'class_teacher_id' => '12',    'capacity' => 62],
         ];
 
 

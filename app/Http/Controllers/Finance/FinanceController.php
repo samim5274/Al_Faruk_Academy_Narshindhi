@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
+use Auth;
+use App\Models\Company;
 use App\Models\Room;
 use App\Models\Student;
 use App\Models\FeeCategory;
 use App\Models\FeeStructure;
-use App\Models\FeePayment;
+use App\Models\feePaymentDetails;
+use App\Models\FeePaymentItem;
 
 class FinanceController extends Controller
 {
@@ -24,17 +28,19 @@ class FinanceController extends Controller
 
     public function FeeCollection(){
         $classes = Room::all();
-        return view('finance.finance-structure', compact('classes'));
+        $company = Company::first();
+        return view('finance.finance-structure', compact('classes','company'));
     }
 
     public function StudentList($class_id){
+        $company = Company::first();
         $student = Student::with('room')->where('class_id', $class_id)->get();
         
         if ($student->isEmpty()){
             return redirect('class-list')->with('error','This class no student available now.');
         }
 
-        return view('finance.finance-student-list', compact('class_id','student'));
+        return view('finance.finance-student-list', compact('class_id','student','company'));
     }
 
     public function feeView($class_id, $student_id){
@@ -43,7 +49,8 @@ class FinanceController extends Controller
 
     public function financeManagement(){
         $category = FeeCategory::paginate(10);
-        return view('finance.finance-management', compact('category'));
+        $company = Company::first();
+        return view('finance.finance-management', compact('category','company'));
     }
 
     public function store(Request $request)
@@ -62,10 +69,11 @@ class FinanceController extends Controller
     }
 
     public function financeFeeStructure(){
+        $company = Company::first();
         $category = FeeCategory::all();
         $classes = Room::all();
         $feeStructure = FeeStructure::paginate(10);
-        return view('finance.finance-fee-structure', compact('category','classes','feeStructure'));
+        return view('finance.finance-fee-structure', compact('category','classes','feeStructure','company'));
     }
 
     public function insertFeeStructure(Request $request){
@@ -95,17 +103,18 @@ class FinanceController extends Controller
     }
 
     public function financeFeePayment(){
+        $company = Company::first();
         $category = FeeCategory::all();
-        $student = Student::all();
+        $student = Student::where('status', 1)->get();
         $classes = Room::all();
         $feeStructure = FeeStructure::all();
-        $feePayment = FeePayment::where('payment_date', now()->toDateString())->paginate(10);
-        return view('finance.finance-fee-payment', compact('category','classes','feeStructure','student','feePayment'));
+        $feePayment = feePaymentDetails::where('payment_date', now()->toDateString())->paginate(10);
+        return view('finance.finance-fee-payment', compact('category','classes','feeStructure','student','feePayment','company'));
     }
 
     public function getStudentsByClass($class_id)
     {
-        $students = Student::where('class_id', $class_id)->get();
+        $students = Student::where('class_id', $class_id)->where('status', 1)->get();
         return response()->json($students);
     }
 
@@ -114,149 +123,145 @@ class FinanceController extends Controller
         $feeStructures = FeeStructure::with('category', 'room')->where('class_id', $class_id)->get();
         return response()->json($feeStructures);
     }
-
-    // public function confirmPayment(Request $request){
-
-    //     $request->validate([ 
-    //         'student_id'      => 'required|exists:students,id', 
-    //         'fee_structure'   => 'required|array|min:1', 
-    //         'fee_structure.*' => 'exists:fee_structures,id', 
-    //         'amount_paid'     => 'required|numeric|min:0',
-    //         'discount'        => 'nullable|numeric|min:0',
-    //         'payment_method'  => 'required|string|in:Cash,Card,Bank Transfer,Mobile Banking', 
-    //     ]);
-
-    //     $month = Carbon::now()->format('m');
-    //     $year  = Carbon::now()->format('Y');
-
-    //     $feeStructures = FeeStructure::whereIn('id', $request->fee_structure)->get();
-
-    //     $totalAmount = $feeStructures->sum('amount');
-
-    //     $totalPaid     = $request->amount_paid;
-    //     $totalDiscount = $request->discount ?? 0;
-
-    //     foreach ($feeStructures as $feeStructure) {
-
-    //         $weight = $feeStructure->amount / $totalAmount;
-
-    //         $paidForThis = round($totalPaid * $weight, 2);
-    //         $discountForThis = round($totalDiscount * $weight, 2);
-    //         $dueForThis = $feeStructure->amount - $paidForThis - $discountForThis;
-
-    //         $existing = FeePayment::where('student_id', $request->student_id)
-    //                     ->where('fee_structure_id', $feeStructure->id)
-    //                     ->where('month', $month)
-    //                     ->where('year', $year)
-    //                     ->first();
-    //         if ($existing) {
-    //             return redirect()->back()->with('error', 'এই মাসের জন্য "' . $feeStructure->name . '" ফি ইতিমধ্যেই পেমেন্ট করা হয়েছে।');
-    //         }
-
-    //         $payment = new FeePayment();
-    //         $payment->student_id       = $request->student_id;
-    //         $payment->fee_structure_id = $feeStructure->id;
-    //         $payment->amount_paid      = $paidForThis;
-    //         $payment->discount         = $discountForThis;
-    //         $payment->due_amount       = $dueForThis;
-    //         $payment->month            = $month;
-    //         $payment->year             = $year;
-    //         $payment->payment_date     = $request->payment_date ?? now()->toDateString();
-    //         $payment->payment_method   = $request->payment_method ?? 'Cash';
-    //         $payment->status           = $dueForThis > 0 ? 'Due' : 'Paid';
-
-    //         do {
-    //             $receipt = strtoupper(Str::random(8));
-    //         } while (FeePayment::where('receipt_no', $receipt)->exists());
-
-    //         $payment->receipt_no = $receipt;
-    //         $payment->save();
-    //     }
-
-    //     return redirect()->back()->with('success', 'ফি পেমেন্ট সফলভাবে রেকর্ড করা হয়েছে!');
-    // }
-
+    
     public function confirmPayment(Request $request){
-
-        $request->validate([ 
-            'student_id'      => 'required|exists:students,id', 
-            'fee_structure'   => 'required|array|min:1', 
-            'fee_structure.*' => 'exists:fee_structures,id', 
+        
+        $request->validate([
+            'student_id'      => 'required|exists:students,id',
+            'fee_structure'   => 'required|array|min:1',
+            'fee_structure.*' => 'exists:fee_structures,id',
             'amount_paid'     => 'required|numeric|min:0',
             'discount'        => 'nullable|numeric|min:0',
-            'payment_method'  => 'required|string|in:Cash,Card,Bank Transfer,Mobile Banking', 
+            'payment_method'  => 'required|in:Cash,Card,Bank Transfer,Mobile Banking',
         ]);
 
-        $month = Carbon::now()->format('m');
-        $year  = Carbon::now()->format('Y');
-
-        $feeStructures = FeeStructure::whereIn('id', $request->fee_structure)->get();
-        $totalFee = $feeStructures->sum('amount');
-
-        $paid = min($request->amount_paid, $totalFee);
-        $discount = $request->discount ?? 0;
-
-        $remaining = max($totalFee - $discount, 0);
-
-        $paid = min($paid, $remaining);
-
-        $due = max($remaining - $paid, 0);
-
-        $accPaid = 0;
-        $accDiscount = 0;
-        $accDue = 0;
-        $count = $feeStructures->count();
-        $i = 0;
-
-        foreach ($feeStructures as $feeStructure) {
-            $i++;
-
-            $weight = $feeStructure->amount / $totalFee;
-
-            $paidForThis = round($paid * $weight, 2);
-            $discountForThis = round($discount * $weight, 2);
-            $dueForThis = round($due * $weight, 2);
-
-            if ($i === $count) {
-                $paidForThis = $paid - $accPaid;
-                $discountForThis = $discount - $accDiscount;
-                $dueForThis = $due - $accDue;
-            }
-
-            $existing = FeePayment::where('student_id', $request->student_id)
-                ->where('fee_structure_id', $feeStructure->id)
-                ->where('month', $month)
-                ->where('year', $year)
-                ->first();
-            if ($existing) {
-                return redirect()->back()->with('error', $feeStructure->name . 'Fees for this month have already been paid.');
-            }
-
-            $payment = new FeePayment();
-            $payment->student_id       = $request->student_id;
-            $payment->fee_structure_id = $feeStructure->id;
-            $payment->amount_paid      = $paidForThis;
-            $payment->discount         = $discountForThis;
-            $payment->due_amount       = $dueForThis > 0 ? $dueForThis : 0;
-            $payment->month            = $month;
-            $payment->year             = $year;
-            $payment->payment_date     = $request->payment_date ?? now()->toDateString();
-            $payment->payment_method   = $request->payment_method ?? 'Cash';
-            $payment->status           = $dueForThis > 0 ? 'Partial' : 'Paid';
-
-            do {
-                $receipt = strtoupper(Str::random(8));
-            } while (FeePayment::where('receipt_no', $receipt)->exists());
-            $payment->receipt_no = $receipt;
-
-            $payment->save();
-
-            $accPaid += $paidForThis;
-            $accDiscount += $discountForThis;
-            $accDue += $dueForThis;
+        if ($request->amount_paid <= '0') {
+            return back()->with('error', 'Full due payment not exceed. Thank You!');
         }
 
-        return redirect()->back()->with('success', 'Fee payment has been recorded successfully!');
+        $month = now()->format('m');
+        $year  = now()->format('Y');
+
+        $feeStructures = FeeStructure::whereIn('id', $request->fee_structure)->get();
+
+        $totalAmount   = $feeStructures->sum('amount');
+        if ($totalAmount <= 0) {
+            return back()->with('error', 'Invalid fee amount configuration.');
+        }
+
+        $discount      = $request->discount ?? 0;
+        $netPayable    = max($totalAmount - $discount, 0);
+
+        if ($request->amount_paid > $netPayable) {
+            return back()->with('error', 'Paid amount cannot exceed payable amount.');
+        }
+
+        $paidAmount    = min($request->amount_paid, $netPayable);
+        $dueAmount     = $netPayable - $paidAmount;
+
+        // Duplicate Protection
+        foreach ($feeStructures as $fee) {
+            $exists = FeePaymentItem::where('student_id', $request->student_id)
+                ->where('fee_structure_id', $fee->id)
+                ->whereMonth('payment_date', $month)
+                ->whereYear('payment_date', $year)
+                ->exists();
+
+            if ($exists) {
+                return back()->with('error', $fee->category->name . ' already paid this month & year.');
+            }
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            // Generate Receipt & Invoice
+            do { $receipt = strtoupper(Str::random(10)); }
+            while (FeePaymentDetails::where('receipt_no', $receipt)->exists());
+
+            do { $invoice = 'INV-' . rand(10000, 99999); }
+            while (FeePaymentDetails::where('invoice_no', $invoice)->exists());
+
+            // Store Master Invoice
+            $payment = FeePaymentDetails::create([
+                'student_id'    => $request->student_id,
+                'user_id'       => Auth::guard('teacher')->user()->id,
+                'total_amount'  => $totalAmount,
+                'total_paid'    => $paidAmount,
+                'total_discount'=> $discount,
+                'total_due'     => $dueAmount,
+                'payment_date'  => $request->payment_date ?? now(),
+                'month'         => $month,
+                'year'          => $year,
+                'payment_method'=> $request->payment_method,
+                'status'        => $dueAmount > 0 ? 'Partial' : 'Paid',
+                'receipt_no'    => $receipt,
+                'invoice_no'    => $invoice,
+            ]);
+
+            // Distribute Amount Per Fee
+            $accPaid = 0;
+            $accDiscount = 0;
+            $accDue = 0;
+            $i = 0;
+            $count = $feeStructures->count();
+
+            foreach ($feeStructures as $fee) {
+                $i++;
+                $weight = $fee->amount / $totalAmount;
+
+                $paid  = round($paidAmount * $weight, 2);
+                $disc  = round($discount * $weight, 2);
+                $due   = round(($fee->amount - $paid - $disc), 2);
+
+                if ($i == $count) {
+                    $paid = $paidAmount - $accPaid;
+                    $disc = $discount - $accDiscount;
+                    $due = $fee->amount - ($paid + $disc);
+                }
+
+                FeePaymentItem::create([
+                    'fee_payment_id'  => $payment->id,
+                    'student_id'      => $request->student_id,
+                    'fee_structure_id'=> $fee->id,
+                    'amount'          => $fee->amount,
+                    'paid'            => $paid,
+                    'discount'        => $disc,
+                    'due'             => $due,
+                    'payment_date'    => $this->date,
+                ]);
+
+                $accPaid += $paid;
+                $accDiscount += $disc;
+                $accDue += $due;
+            }
+
+            DB::commit();
+
+            return back()->with('success', 'Fee payment successfully recorded.');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with('error', 'Payment failed: ' . $e->getMessage());
+        }
+    }
+
+    public function showPayment($id){
+        $company = Company::first();
+        $feeStructures = FeePaymentItem::with(['student', 'feeStructure','payment'])->where('fee_payment_id', $id)->get();
+        if ($feeStructures->isEmpty()) {
+            return redirect()->back()
+                ->with('error', 'Payment history not found. Please try again.');
+        }
+
+        $payment = feePaymentDetails::with('student','items','teacher')->findOrFail($id);
+
+        // dd($feeStructures, $payment);
+
+        return view('finance.fee-payment-structure-show', compact('feeStructures', 'payment','company'));
     }
 
 }

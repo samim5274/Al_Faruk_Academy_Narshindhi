@@ -47,28 +47,6 @@ class SubjectSeeder extends Seeder
                 // Arts Group
                 'History of Bangladesh & World Civilization', 'Civics & Citizenship', 'Geography & Environment', 'Economics'
             ],
-
-            // Class 11-12 (Science, Commerce, Arts)
-            11 => [
-                // Compulsory
-                'Bangla', 'English', 'ICT', 'Physical Education',
-                // Science Group
-                'Physics', 'Chemistry', 'Biology', 'Higher Mathematics',
-                // Commerce Group
-                'Accounting', 'Business Organization & Management', 'Finance, Banking & Insurance', 'Production Management & Marketing',
-                // Arts Group
-                'Logic', 'History', 'Civics', 'Economics', 'Islamic Studies', 'Sociology', 'Social Work', 'Geography'
-            ],
-            12 => [
-                // Compulsory
-                'Bangla', 'English', 'ICT', 'Physical Education',
-                // Science Group
-                'Physics', 'Chemistry', 'Biology', 'Higher Mathematics',
-                // Commerce Group
-                'Accounting', 'Business Organization & Management', 'Finance, Banking & Insurance', 'Production Management & Marketing',
-                // Arts Group
-                'Logic', 'History', 'Civics', 'Economics', 'Islamic Studies', 'Sociology', 'Social Work', 'Geography'
-            ],
         ];
 
         foreach ($subjects as $class => $subs) {

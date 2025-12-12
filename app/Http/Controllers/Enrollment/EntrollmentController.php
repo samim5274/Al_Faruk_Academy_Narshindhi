@@ -13,25 +13,29 @@ use App\Models\Subject;
 use App\Models\Exam;
 use App\Models\Mark;
 use App\Models\StudentSubject;
+use App\Models\Company;
 
 class EntrollmentController extends Controller
 {
     
     public function enrollmentClass(){
+        $company = Company::first();
         $classes = Room::with('teachers')->get();        
-        return view('subject.enrollment', compact('classes'));
+        return view('subject.enrollment', compact('classes','company'));
     }
 
     public function enrollmentClassStudent($class){
+        $company = Company::first();
         $students = Student::where('class_id', $class)->get();
-        return view('subject.enrollment-class-student', compact('students', 'class'));
+        return view('subject.enrollment-class-student', compact('students', 'class','company'));
     }
 
     public function enClaStdSubject($class, $student){
+        $company = Company::first();
         $subjects = Subject::where('class_id', $class)->get();
         $students = Student::where('id', $student)->first();
         $enrollmented = StudentSubject::where('student_id', $student)->get();
-        return view('subject.enrollment-class-student-subject', compact('subjects','student', 'students', 'class','enrollmented'));
+        return view('subject.enrollment-class-student-subject', compact('subjects','student', 'students', 'class','enrollmented','company'));
     }
 
     public function enrollment(Request $request ,$class, $student, $subject){

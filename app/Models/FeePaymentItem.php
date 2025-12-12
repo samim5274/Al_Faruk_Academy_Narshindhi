@@ -5,35 +5,34 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FeePayment extends Model
+class FeePaymentItem extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'fee_payment_id',
         'student_id',
         'fee_structure_id',
-        'amount_paid',
+
+        'amount',
+        'paid',
         'discount',
-        'due_amount',
+        'due',
         'payment_date',
-        'month',
-        'year',
-        'payment_method',
-        'status',
-        'receipt_no',
     ];
 
-    protected $casts = [
-        'payment_date' => 'date',
-    ];
+    public function payment()
+    {
+        return $this->belongsTo(feePaymentDetails::class, 'fee_payment_id');
+    }
 
     public function student()
     {
-        return $this->belongsTo(Student::class); 
+        return $this->belongsTo(Student::class,'student_id');
     }
 
     public function feeStructure()
     {
-        return $this->belongsTo(FeeStructure::class, 'fee_structure_id');
+        return $this->belongsTo(FeeStructure::class,'fee_structure_id');
     }
 }
