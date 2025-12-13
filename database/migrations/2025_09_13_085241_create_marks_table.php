@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('students')->onDelete('restrict');
             $table->foreignId('subject_id')->constrained('subjects')->onDelete('restrict');
             $table->foreignId('exam_id')->constrained('exams')->onDelete('restrict');
-            $table->integer('marks_obtained'); 
+            $table->decimal('marks_obtained', 12, 2); 
             $table->string('grade')->nullable();
             $table->integer('gpa')->nullable();
             $table->string('remarks')->nullable();

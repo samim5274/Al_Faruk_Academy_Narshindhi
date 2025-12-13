@@ -18,14 +18,24 @@ class Student extends Authenticatable
         'dob',
         'gender',
         'blood_group',
+
         'religion',
         'nationality',
         'national_id',
         'contact_number',
+
         'email',
         'password',
+
         'address1',
         'address2',
+
+        'admission_no',
+        'admission_date',
+        'section',
+        'group',
+        'session_year',
+        'previous_school',
 
         'father_name',
         'father_profession',
@@ -60,6 +70,12 @@ class Student extends Authenticatable
 
         'otp',
         'otp_expires_at',
+
+        'email_verified_at',
+        'last_login_at',
+        'last_login_ip',
+        'is_profile_completed'
+        
     ];
 
     protected $hidden = [
@@ -70,6 +86,9 @@ class Student extends Authenticatable
     protected $casts = [
         'dob' => 'date',
         'attend_date' => 'date',
+        'email_verified_at' => 'datetime',
+        'last_login_at' => 'datetime',
+        'otp_expires_at' => 'datetime',
     ];
 
     public function room()

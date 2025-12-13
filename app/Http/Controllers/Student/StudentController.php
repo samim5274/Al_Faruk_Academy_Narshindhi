@@ -12,6 +12,7 @@ use App\Models\Room;
 use App\Models\Subject;
 use App\Models\Mark;
 use App\Models\Company;
+use App\Models\Group;
 
 class StudentController extends Controller
 {
@@ -24,14 +25,15 @@ class StudentController extends Controller
 
     public function studentList(){
         $company = Company::first();
-        $student = Student::paginate(20);
+        $student = Student::paginate(50);
         return view('student.student-list', compact('student','company'));
     }
 
     public function addStudentView(){
         $company = Company::first();
         $room = Room::all();
-        return view('student.add-student' , compact('room','company'));
+        $groups = Group::all();
+        return view('student.add-student' , compact('room','company','groups'));
     }
 
     // helper function inside your controller
@@ -63,37 +65,41 @@ class StudentController extends Controller
         $validated = $request->validate([
             'first_name'         => 'required|string|max:100',
             'last_name'          => 'required|string|max:100',
-            'dob'                => 'nullable|date',
-            'gender'             => 'nullable|in:Male,Female,Other',
+            'dob'                => 'required|date',
+            'gender'             => 'required|in:Male,Female,Other',
             'blood_group'        => 'nullable|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
             'religion'           => 'nullable|string|max:50',
             'nationality'        => 'nullable|string|max:50',
             'national_id'        => 'nullable|string|max:50',
 
-            'contact_number'     => 'nullable|numeric|digits_between:8,15',
-            'email'              => 'nullable|email|unique:students,email',
+            'contact_number'     => 'required|numeric|digits_between:8,15',
+            'email'              => 'required|email|unique:students,email',
             'password'           => 'nullable|string|min:6',
 
-            'address1'           => 'nullable|string|max:255',
-            'address2'           => 'nullable|string|max:255',
+            'present_address'    => 'required|string|max:255',
+            'permanent_address'  => 'nullable|string|max:255',
+            
+            'cbxSection'         => 'required|string|max:255',
+            'cbxGroup'           => 'required|string|max:255',
+            'previous_school'    => 'nullable|string|max:255',
 
             'b_reg_no'           => 'nullable|string|max:255',
             'b_roll_no'          => 'nullable|string|max:255',
 
             'father_name'        => 'nullable|string|max:100',
             'father_profession'  => 'nullable|string|max:100',
-            'father_contact'     => 'nullable|numeric|digits_between:8,15',
+            'father_contact'     => 'required|numeric|digits_between:8,15',
             'father_email'       => 'nullable|email',
             'father_nid'         => 'nullable|string|max:50',
 
             'mother_name'        => 'nullable|string|max:100',
             'mother_profession'  => 'nullable|string|max:100',
-            'mother_contact'     => 'nullable|numeric|digits_between:8,15',
+            'mother_contact'     => 'required|numeric|digits_between:8,15',
             'mother_email'       => 'nullable|email',
             'mother_nid'         => 'nullable|string|max:50',
 
             'guardian_name'      => 'nullable|string|max:100',
-            'guardian_contact'   => 'nullable|numeric|digits_between:8,15',
+            'guardian_contact'   => 'required|numeric|digits_between:8,15',
             'guardian_email'     => 'nullable|email',
             'guardian_nid'       => 'nullable|string|max:50',
             'guardian_relationship' => 'nullable|string|max:50',
@@ -106,6 +112,21 @@ class StudentController extends Controller
         if($findStudent){
             return redirect()->back()->with('error', 'Email id already taken. Please try to another email. Thank You.');
         }
+
+        $admissionDate = $request->attend_date ?? now();
+        $year = date('Y', strtotime($admissionDate));
+        $month = date('m', strtotime($admissionDate));
+
+        if ($month >= 6) {
+            $startYear = $year;
+            $endYear = $year + 1;
+        } else {
+            $startYear = $year - 1;
+            $endYear = $year;
+        }
+
+        do { $admission_no = rand(100000, 999999); }
+        while (Student::where('admission_no', $admission_no)->exists());
 
         $student = new Student();
 
@@ -123,6 +144,14 @@ class StudentController extends Controller
         $student->password       = Hash::make('123456789'); // default password
         $student->address1       = $request->present_address;
         $student->address2       = $request->permanent_address;
+
+        $student->admission_no   = $admission_no;
+        $student->admission_date = $admissionDate;
+
+        $student->section        = $request->cbxSection;
+        $student->group          = $request->cbxGroup;
+        $student->session_year   = $startYear . $endYear;
+        $student->previous_school= $request->previous_school;
 
         // Father Info
         $student->father_name       = $request->father_name;
@@ -187,7 +216,8 @@ class StudentController extends Controller
         $company = Company::first();
         $student = Student::findOrFail($id);
         $room = Room::all();
-        return view('student.edit-student', compact('student','room','company'));
+        $groups = Group::all();
+        return view('student.edit-student', compact('student','room','company','groups'));
     }
 
     public function editStudent(Request $request, $id)
@@ -214,6 +244,10 @@ class StudentController extends Controller
             'present_address'  => 'required|string|max:255',
             'permanent_address'=> 'nullable|string|max:255',
             'class_id'         => 'required',
+
+            'cbxSection'       => 'required|string|max:255',
+            'cbxGroup'         => 'required|string|max:255',
+            'previous_school'  => 'nullable|string|max:255',
 
             // Guardian / Parent Information
             'father_name'       => 'required|string|max:100',
@@ -278,6 +312,10 @@ class StudentController extends Controller
 
         // Others
         $student->class_id = $request->class_id;
+
+        $student->section        = $request->cbxSection;
+        $student->group          = $request->cbxGroup;
+        $student->previous_school= $request->previous_school;
 
         $student->b_reg_no = $request->b_reg_no;
         $student->b_roll_no = $request->b_roll_no;

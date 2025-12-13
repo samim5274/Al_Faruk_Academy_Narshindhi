@@ -39,6 +39,10 @@ class Teacher extends Authenticatable
 
         'status',
         'remark',
+        'email_verified_at',
+        'last_login_at',
+        'last_login_ip',
+        'is_profile_completed',
 
         'otp',
         'otp_expires_at',

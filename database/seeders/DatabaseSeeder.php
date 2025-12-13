@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(
+        $this->call([
             TeacherSeeder::class,
             RoomSeeder::class,
             StudentSeeder::class,
@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             FeeCategroySeeder::class,
             ExcategorySeeder::class,
             ExsubcategorySeeder::class,
-        );
+            GroupSeeder::class,
+        ]);
+
     }
 }

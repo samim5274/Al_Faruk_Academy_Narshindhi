@@ -263,4 +263,12 @@ class ExamController extends Controller
         $data->save();
         return redirect()->back()->with('success', 'New exam created successfully!');
     }
+
+    public function updateExam(Request $request, $id){
+        $name = $request->input('exam_name','');
+        $data = ExamName::where('id', $id)->first();
+        $data->exam_name = $name;
+        $data->update();
+        return redirect()->back()->with('success', 'New exam created successfully!');
+    }
 }

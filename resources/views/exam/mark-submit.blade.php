@@ -119,7 +119,7 @@
                                 <input type="hidden" name="class_id" value="{{ $room->id }}">
                                 <input type="hidden" name="exam_id" value="{{ $exam->id }}">
 
-                                <input type="number" name="marks_obtained" min="0" max="{{$exam->max_marks}}" required
+                                <input type="number" name="marks_obtained" min="0" max="{{$exam->max_marks}}" required step="0.01"
                                     class="w-full sm:w-28 border border-gray-300 rounded-md px-3 py-2 text-gray-800 
                                         placeholder-gray-400 focus:outline-none focus:ring-2 
                                         focus:ring-green-500 focus:border-green-500"

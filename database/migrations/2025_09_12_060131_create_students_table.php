@@ -21,14 +21,21 @@ return new class extends Migration
 
             $table->string('religion')->nullable();
             $table->string('nationality')->nullable();
-
             $table->string('national_id')->nullable();
             $table->string('contact_number')->nullable();
+            
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
 
             $table->text('address1')->nullable();
             $table->text('address2')->nullable();
+
+            $table->string('admission_no')->unique()->nullable();
+            $table->date('admission_date')->nullable();
+            $table->string('section')->nullable();
+            $table->string('group')->nullable(); // Science / Arts / Commerce
+            $table->string('session_year')->nullable(); // 2024–2025
+            $table->string('previous_school')->nullable();
             
             $table->string('father_name')->nullable();
             $table->string('father_profession')->nullable();
@@ -57,12 +64,18 @@ return new class extends Migration
             $table->bigInteger('b_reg_no')->nullable()->unique();
             $table->bigInteger('b_roll_no')->nullable()->unique();
 
+            // Photos
             $table->string('photo')->nullable();
             $table->string('father_photo')->nullable();
             $table->string('mother_photo')->nullable();
 
             $table->string('otp')->nullable();
             $table->timestamp('otp_expires_at')->nullable();
+
+            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
+            $table->boolean('is_profile_completed')->default(false);
             
             $table->rememberToken();
             $table->timestamps();

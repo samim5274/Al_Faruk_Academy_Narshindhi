@@ -133,7 +133,6 @@
                                 <!-- Modal Body (Form) -->
                                 <form action="{{ url('/update-exam/'.$val->id) }}" method="POST" class="space-y-6">
                                     @csrf
-                                    @method('PUT')
                                     
                                     <div>
                                         <label for="exam_name_{{$val->id}}" class="font-medium">Exam name</label>

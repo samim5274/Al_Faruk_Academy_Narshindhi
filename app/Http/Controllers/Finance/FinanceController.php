@@ -68,6 +68,32 @@ class FinanceController extends Controller
         return redirect()->route('finance-management')->with('success', 'Fee category created successfully.');
     }
 
+    public function editCategory($id){
+        $category = FeeCategory::find($id);
+        if(!$category){
+            return redirect()->back()->with('error', 'Finance category not found. Please try again. Thank you!');
+        }
+        $company = Company::first();
+        return view('finance.edit-finance-category', compact('category','company'));
+    }
+
+    public function updateCategory(Request $request, $id){
+        $request->validate([
+            'category_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $category = FeeCategory::find($id);
+        if(!$category){
+            return redirect()->back()->with('error', 'Finance category not found. Please try again. Thank you!');
+        }
+
+        $category->name = $request->category_name;
+        $category->description = $request->description;
+        $category->update();
+        return redirect()->route('finance-management')->with('success', 'Fee category updated successfully');
+    }
+
     public function financeFeeStructure(){
         $company = Company::first();
         $category = FeeCategory::all();

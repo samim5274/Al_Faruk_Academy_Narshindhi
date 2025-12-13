@@ -126,6 +126,7 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/total-result-report/class/{class}', [ExamController::class, 'totalResult'])->name('total-result-report');
     Route::get('/create-exam', [ExamController::class, 'createExam'])->name('create-exam-view');
     Route::post('/create-new-exam', [ExamController::class, 'createNewExam']);
+    Route::post('/update-exam/{id}', [ExamController::class, 'updateExam']);
 
 
 
@@ -153,6 +154,8 @@ Route::group(['middleware' => ['admin']], function(){
 
     Route::get('/finance-management', [FinanceController::class, 'financeManagement'])->name('finance-management');
     Route::post('/add-new-finance-category', [FinanceController::class, 'store']);
+    Route::get('/edit-finance-category/{id}', [FinanceController::class, 'editCategory']);
+    Route::post('/update-finance-category/{id}', [FinanceController::class, 'updateCategory']);
     Route::get('/finance-fee-structure', [FinanceController::class, 'financeFeeStructure'])->name('finance-fee-structure');
     Route::post('/insert-fee-structure', [FinanceController::class, 'insertFeeStructure']);
     Route::get('/finance-fee-payment', [FinanceController::class, 'financeFeePayment'])->name('finance-fee-payment');
@@ -184,6 +187,11 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/student-payment-history', [StudentPortalController::class, 'feeHistory'])->name('payment-history');
     Route::get('/student-enrollment', [StudentPortalController::class, 'enrollment'])->name('student-enrollment');
     Route::post('/student-subject-enrollment', [StudentPortalController::class, 'enrollmentStore']);
+    Route::get('/student-support', [StudentPortalController::class, 'stdSupport'])->name('student-support');
+    Route::get('/edit-profile', [StudentPortalController::class, 'editProfile'])->name('student-edit-profile');
+    Route::post('/modify-student-information', [StudentPortalController::class, 'modifyProfile']);
+    Route::get('/student/change-password', [StudentPortalController::class, 'passChange'])->name('student-password-change-view');
+    Route::post('/update-password', [StudentPortalController::class, 'updatePass']);
 
 
     // ======================================================= Notice Board Route =======================================================

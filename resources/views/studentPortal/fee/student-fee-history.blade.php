@@ -39,112 +39,150 @@
     <!-- [ Main Content ] start -->
     <div class="pc-container">
         <div class="pc-content">
-            <!-- Fee Payment History -->
-            <div class="bg-white shadow-lg rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-xl mt-8">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-gray-800">Fee Payment History</h3>
+            <div class="bg-white shadow-lg rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-xl">
+                <div class="p-6">                    
+
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-bold text-gray-700 uppercase mb-4">
+                            Payment Summary
+                        </h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            
+                            <!-- Total Amount -->
+                            <div class="bg-white rounded-lg p-4 border">
+                                <p class="text-xs text-gray-500 uppercase">Total Amount</p>
+                                <p class="text-lg font-bold text-gray-800">
+                                    ৳ {{ number_format($payment->sum('amount'), 2) }}
+                                </p>
+                            </div>
+
+                            <!-- Discount -->
+                            <div class="bg-yellow-50 rounded-lg p-4 border border-yellow-200">
+                                <p class="text-xs text-yellow-700 uppercase">Discount</p>
+                                <p class="text-lg font-bold text-yellow-800">
+                                    ৳ {{ number_format($payment->sum('discount'), 2) }}
+                                </p>
+                            </div>
+
+                            <!-- Paid -->
+                            <div class="bg-green-50 rounded-lg p-4 border border-green-200">
+                                <p class="text-xs text-green-700 uppercase">Paid</p>
+                                <p class="text-lg font-bold text-green-800">
+                                    ৳ {{ number_format($payment->sum('paid'), 2) }}
+                                </p>
+                            </div>
+
+                            <!-- Due -->
+                            <div class="bg-red-50 rounded-lg p-4 border border-red-200">
+                                <p class="text-xs text-red-700 uppercase">Due</p>
+                                <p class="text-lg font-bold text-red-800">
+                                    ৳ {{ number_format($payment->sum('due'), 2) }}
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full border-collapse">
-                            <thead class="bg-gray-50">
-                                <tr>
+
+                    <div class="flex justify-between items-center my-4">
+                        <h3 class="text-xl font-bold text-gray-800">Fee Payment History</h3><hr>
+                    </div>
+
+                    <div class="overflow-x-auto overflow-y-auto max-h-screen">
+                        <table class="min-w-full border-collapse border border-gray-200 rounded">
+                            <thead class="bg-gray-100 sticky top-0 z-10">
+                                <tr class="bg-gray-100 font-bold text-gray-800 border-t sticky bottom-0 z-10">
                                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">#</th>
-                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Payment Date</th>
                                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Purpose</th>
-                                    <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Discount</th>
-                                    <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Due</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Date</th>
                                     <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Discount</th>
+                                    <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Paid</th>
+                                    <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Due</th>
                                     <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
                                 </tr>
                             </thead>
+
                             <tbody class="divide-y divide-gray-200">
+                                @php
+                                    $totalDiscount = 0;
+                                    $totalDue = 0;
+                                    $totalPaid = 0;
+                                    $totalAmount = 0;
+                                @endphp
                                 @forelse($payment as $index => $fee)
-                                <tr class="hover:bg-gray-50 transition-colors duration-200">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $index + 1 }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $fee->payment_date->format('d M, Y') }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $fee->feeStructure->category->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-yellow-600 text-right"> ৳ {{ number_format($fee->discount, 2) }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-red-600 text-right"> ৳ {{ number_format($fee->due_amount, 2) }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-green-600 text-right"> ৳ {{ number_format($fee->amount_paid, 2) }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
-                                        @if($fee->status == 'Paid')
-                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                Paid
-                                            </span>
-                                        @elseif($fee->status == 'Partial')
-                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-200 text-red-800">
-                                                Partial
-                                            </span>
-                                        @else
-                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                Unpaid
-                                            </span>
-                                        @endif
-                                    </td>
-                                </tr>
+                                    @php
+                                        $totalDiscount += $fee->discount;
+                                        $totalDue      += $fee->due;
+                                        $totalPaid     += $fee->paid;
+                                        $totalAmount   += $fee->amount;
+                                    @endphp
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $index + 1 }}</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">
+                                            {{ $fee->feeStructure->category->name }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-semibold text-gray-600 text-left">
+                                            {{ \Carbon\Carbon::parse($fee->payment_date)->format('d M Y') }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-semibold text-gray-600 text-right">
+                                            ৳ {{ number_format($fee->amount, 2) }}
+                                        </td>                                        
+                                        <td class="px-6 py-4 text-sm font-semibold text-yellow-600 text-right">
+                                            ৳ {{ number_format($fee->discount, 2) }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-semibold text-green-600 text-right">
+                                            ৳ {{ number_format($fee->paid, 2) }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-semibold text-red-600 text-right">
+                                            ৳ {{ number_format($fee->due, 2) }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-center">
+                                            @if($fee->due == '0')
+                                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Paid
+                                                </span>
+                                            @elseif($fee->status >= '0')
+                                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-200 text-yellow-800">
+                                                    Partial
+                                                </span>
+                                            @else
+                                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                                                    Unpaid
+                                                </span>
+                                            @endif
+                                        </td>
+                                    </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="4" class="px-6 py-4 text-center text-gray-400 text-sm">No payment history available</td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="7" class="px-6 py-4 text-center text-gray-400 text-sm">
+                                            No payment history available
+                                        </td>
+                                    </tr>
                                 @endforelse
-                                <tr class="bg-gray-50 font-semibold text-gray-800">
-                                    <td colspan="3" class="px-6 py-4 text-center">Total:</td>
-                                    <td class="px-6 py-4 text-right">৳ {{ number_format($discount, 2) }}</td>
-                                    <td class="px-6 py-4 text-right">৳ {{ number_format($due, 2) }}</td>
-                                    <td class="px-6 py-4 text-right">৳ {{ number_format($paid, 2) }}</td>
-                                    <td></td>
+                                <tr class="bg-gray-100 font-bold text-gray-800 border-t">
+                                    <td colspan="3" class="px-6 py-4 text-right">Total:</td>
+                                    <td class="px-6 py-4 text-right">
+                                        ৳ {{ number_format($totalAmount, 2) }}
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        ৳ {{ number_format($totalDiscount, 2) }}
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        ৳ {{ number_format($totalPaid, 2) }}
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        ৳ {{ number_format($totalDue, 2) }}
+                                    </td>
+                                    <td colspan="2"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- paginatior -->
-                    @if ($payment->hasPages())
-                        <div class="flex flex-wrap items-center justify-center mt-4 space-x-2">
-
-                            {{-- Previous Button --}}
-                            @if ($payment->onFirstPage())
-                                <span class="px-2 py-1 text-sm md:text-base bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">
-                                    &laquo;
-                                </span>
-                            @else
-                                <a href="{{ $payment->previousPageUrl() }}" class="px-2 py-1 text-sm md:text-base bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors">
-                                    &laquo;
-                                </a>
-                            @endif
-
-                            {{-- Page Numbers --}}
-                            @php
-                                $start = max(2, $payment->currentPage() - 2);
-                                $end = min($payment->lastPage(), $payment->currentPage() + 2);
-                            @endphp
-
-                            @for ($i = $start; $i <= $end; $i++)
-                                @if ($i == $payment->currentPage())
-                                    <span class="px-2 py-1 text-sm md:text-base bg-[#3F4D67] text-white rounded-lg">{{ $i }}</span>
-                                @else
-                                    <a href="{{ $payment->url($i) }}" class="px-2 py-1 text-sm md:text-base bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors">{{ $i }}</a>
-                                @endif
-                            @endfor
-
-                            {{-- Next Button --}}
-                            @if ($payment->hasMorePages())
-                                <a href="{{ $payment->nextPageUrl() }}" class="px-2 py-1 text-sm md:text-base bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors">
-                                    &raquo;
-                                </a>
-                            @else
-                                <span class="px-2 py-1 text-sm md:text-base bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">
-                                    &raquo;
-                                </span>
-                            @endif
-                        </div>
-                    @endif
                 </div>
             </div>
-
         </div>
     </div>
-
     <!-- [ Main Content ] end -->
 
     @include('layouts.footer')
