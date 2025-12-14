@@ -37,6 +37,8 @@ class Teacher extends Authenticatable
         'father_photo',
         'mother_photo',
 
+        'role',
+
         'status',
         'remark',
         'email_verified_at',

@@ -45,6 +45,8 @@ class TeacherSeeder extends Seeder
                 'status' => 1,
                 'remark' => 'N/A',
 
+                'role' => 'Admin',
+
                 // system fields
                 'email_verified_at'    => now(),
                 'last_login_at'        => now(),

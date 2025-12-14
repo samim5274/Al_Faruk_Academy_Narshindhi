@@ -43,6 +43,8 @@ return new class extends Migration
             $table->string('father_photo')->nullable();
             $table->string('mother_photo')->nullable();
 
+            $table->string('role')->default('Admin');
+
             // System Info
             $table->integer('status')->default(1); // Active by default
             $table->string('remark')->nullable();
