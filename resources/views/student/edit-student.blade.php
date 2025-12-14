@@ -273,6 +273,16 @@
                                                 <label class="block text-gray-600 mb-1" for="guardian_relationship">Relationship with Student</label>
                                                 <input type="text" id="guardian_relationship" name="guardian_relationship" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500" value="{{$student->guardian_relationship}}">
                                             </div>
+
+                                            <div>
+                                                <label class="block text-gray-600 mb-1" for="status">Status</label>
+                                                <select id="status" name="status" 
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                    <option disabled selected>--Select Status--</option>
+                                                    <option value="1" {{ $student->status == '1' ? 'selected' : '' }}>Active</option>
+                                                    <option value="0" {{ $student->status == '0' ? 'selected' : '' }}>De-Active</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
 

@@ -270,6 +270,7 @@ class StudentController extends Controller
             'guardian_email'        => 'nullable|email',
             'guardian_nid'          => 'nullable|string|max:50',
             'guardian_relationship' => 'nullable|string|max:50',
+            'status'                => 'nullable',
         ]);
 
 
@@ -311,7 +312,8 @@ class StudentController extends Controller
         $student->guardian_relationship = $request->guardian_relationship;
 
         // Others
-        $student->class_id = $request->class_id;
+        $student->class_id       = $request->class_id;
+        $student->status         = $request->status;
 
         $student->section        = $request->cbxSection;
         $student->group          = $request->cbxGroup;
