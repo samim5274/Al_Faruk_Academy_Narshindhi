@@ -148,6 +148,8 @@ Route::group(['middleware' => ['admin']], function(){
 
 
     Route::get('/fee-structure', [FinanceController::class, 'stuctureSetup'])->name('structure-management');
+    Route::get('/fee-structure-edit/{id}', [FinanceController::class, 'updateStructre']);
+    Route::post('/modify-fee-structure/{id}', [FinanceController::class, 'editStructre']);
     Route::get('/fee-collection', [FinanceController::class, 'FeeCollection'])->name('fee-collection-view');
     Route::get('/class-finance/{class_id}', [FinanceController::class, 'StudentList'])->name('class-and student-list');
     Route::get('/class/student/{class_id}/{student_id}', [FinanceController::class, 'feeView'])->name('student-class-fee-view');

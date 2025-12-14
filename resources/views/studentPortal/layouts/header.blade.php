@@ -204,7 +204,7 @@
                                             <span>Share</span>
                                         </span>
                                     </a> -->
-                                    <a href="{{ url('/change-password') }}" class="dropdown-item">
+                                    <a href="{{ url('/student/change-password') }}" class="dropdown-item">
                                         <span>
                                             <svg class="pc-icon text-muted me-2 inline-block">
                                             <use xlink:href="#custom-lock-outline"></use>

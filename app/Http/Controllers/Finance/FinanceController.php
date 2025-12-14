@@ -128,6 +128,49 @@ class FinanceController extends Controller
         return redirect()->back()->with('success', 'Fee Structure added successfully!');
     }
 
+    public function updateStructre($id){
+        $company = Company::first();
+        $category = FeeCategory::all();
+        $classes = Room::all();
+        $feeStructure = FeeStructure::find($id);
+        if(!$feeStructure){
+            return redirect()->back()->with('error', 'Finance fee structure not found. Please try again. Thank you!');
+        }
+        return view('finance.edit-finance-fee-structure', compact('category','classes','feeStructure','company'));
+    }
+
+    public function editStructre(Request $request, $id){
+        $request->validate([
+            'fee_category_id' => 'required',
+            'class_id'        => 'required',
+            'amount'          => 'required|numeric|min:1',
+        ]);
+
+        $feeStructure = FeeStructure::findOrFail($id);
+
+        // 🔹 Check if class/category actually changed
+        $isChanged = $feeStructure->class_id != $request->class_id || $feeStructure->fee_cat_id != $request->fee_category_id;
+
+        // 🔹 Only check duplicate if changed
+        if ($isChanged) {
+            $exists = FeeStructure::where('class_id', $request->class_id)
+                ->where('fee_cat_id', $request->fee_category_id)
+                ->exists();
+
+            if ($exists) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('warning', 'This class and fee category already exists.');
+            }
+        }
+
+        $feeStructure->fee_cat_id   = $request->fee_category_id;
+        $feeStructure->class_id     = $request->class_id;
+        $feeStructure->amount       = $request->amount;
+        $feeStructure->update();
+        return redirect()->back()->with('success', 'Finance fee structure updated successfully.');
+    }
+
     public function financeFeePayment(){
         $company = Company::first();
         $category = FeeCategory::all();

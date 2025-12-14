@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 13, 2025 at 02:00 PM
+-- Generation Time: Dec 14, 2025 at 06:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -73,6 +73,13 @@ CREATE TABLE `companies` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `companies`
+--
+
+INSERT INTO `companies` (`id`, `name`, `address`, `email`, `phone`, `website`, `created_at`, `updated_at`) VALUES
+(1, 'Al-Faruk Academy & High School', '213/1, East Brahmondhi, Narsingdi. EIIN - 112668', 'info@alfarukacademy.edu.bd', '01700000000', 'www.alfarukacademy.edu.bd', '2025-12-12 05:15:24', '2025-12-12 05:15:24');
 
 -- --------------------------------------------------------
 
@@ -289,6 +296,13 @@ CREATE TABLE `fee_payment_details` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `fee_payment_details`
+--
+
+INSERT INTO `fee_payment_details` (`id`, `student_id`, `user_id`, `total_amount`, `total_paid`, `total_discount`, `total_due`, `payment_date`, `month`, `year`, `payment_method`, `status`, `receipt_no`, `invoice_no`, `created_at`, `updated_at`) VALUES
+(1, 55, 2, 220.00, 220.00, 0.00, 0.00, '2025-12-14', '12', '2025', 'Cash', 'Paid', 'JLW8XPVIDA', 'INV-70227', '2025-12-14 04:39:28', '2025-12-14 04:39:28');
+
 -- --------------------------------------------------------
 
 --
@@ -330,8 +344,8 @@ CREATE TABLE `fee_structures` (
 --
 
 INSERT INTO `fee_structures` (`id`, `class_id`, `fee_cat_id`, `amount`, `due_date`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 20.00, '2026-01-13', '2025-12-13 12:35:46', '2025-12-13 12:35:46'),
-(2, 1, 3, 200.00, '2026-01-13', '2025-12-13 12:35:52', '2025-12-13 12:35:52');
+(3, 1, 1, 200.00, '2026-01-14', '2025-12-14 05:08:55', '2025-12-14 05:08:55'),
+(4, 2, 1, 250.00, '2026-01-14', '2025-12-14 05:09:00', '2025-12-14 05:10:06');
 
 -- --------------------------------------------------------
 
@@ -599,7 +613,7 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood_group`, `religion`, `nationality`, `national_id`, `contact_number`, `email`, `password`, `address1`, `address2`, `admission_no`, `admission_date`, `section`, `group`, `session_year`, `previous_school`, `father_name`, `father_profession`, `father_contact`, `father_email`, `father_nid`, `mother_name`, `mother_profession`, `mother_contact`, `mother_email`, `mother_nid`, `guardian_name`, `guardian_contact`, `guardian_email`, `guardian_nid`, `guardian_relationship`, `status`, `roll_number`, `class_id`, `attend_date`, `remark`, `b_reg_no`, `b_roll_no`, `photo`, `father_photo`, `mother_photo`, `otp`, `otp_expires_at`, `email_verified_at`, `last_login_at`, `last_login_ip`, `is_profile_completed`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Joe', 'Turcotte', '2019-01-19', 'Other', 'B+', 'Islam', 'Bangladeshi', '9877392261315', '01612023229', 'student1@example.com', '$2y$12$lJQum8zDHzxwMQU34ed69Osy8bhwlP3t.ooUBMeO/G6MK7YSJbtGK', '346 Salvador Mills\nFayton, AZ 02757-8357', '998 Kling Plain\nJanyfurt, UT 37925', 'ADM-00001', '1978-06-11', 'C', 'Science', '2025-2026', 'Mante LLC School', 'Sven Feil', 'Doctor', '01917401483', 'father1@example.com', '1035159556979', 'Dina Bechtelar', 'Housewife', '01851007087', 'mother1@example.com', '0020825504346', 'Dr. Caesar Sauer', '01710771857', 'guardian1@example.com', '0424456824832', 'Sister', 1, 1, 7, '2025-12-13', NULL, 2025000001, 900001, NULL, NULL, NULL, NULL, NULL, '2025-12-13 12:28:01', '2025-12-13 12:28:01', '127.0.0.1', 1, NULL, '2025-12-13 12:28:01', '2025-12-13 12:28:01'),
-(2, 'Kyler', 'Hickle', '1974-10-21', 'Male', 'O-', 'Islam', 'Bangladeshi', '0263997098682', '01499808366', 'student2@example.com', '$2y$12$ggU66ZY/wNO9p/GKvHGL1uG6cWBbR74TbNDkCr2rDwbPPY7NvNH0K', '50163 Pfannerstill Keys Apt. 187\nRollinberg, SC 44281', '185 Harvey Extension Suite 681\nKalebfurt, WY 85894-0302', 'ADM-00002', '2004-07-14', 'A', 'Commerce', '2025-2026', 'Hartmann-Murray School', 'Issac Metz', 'Teacher', '01904343957', 'father2@example.com', '4299063856200', 'Mrs. Annabel Gaylord III', 'Doctor', '01817990251', 'mother2@example.com', '3462984234862', 'Demarcus Runolfsdottir', '01804508004', 'guardian2@example.com', '8955774479419', 'Sister', 1, 1, 5, '2025-12-13', NULL, 2025000002, 900002, NULL, NULL, NULL, NULL, NULL, '2025-12-13 12:28:01', '2025-12-13 12:28:01', '127.0.0.1', 1, NULL, '2025-12-13 12:28:01', '2025-12-13 12:28:01'),
+(2, 'Kyler', 'Hickle', '1974-10-21', 'Male', 'O-', 'Islam', 'Bangladeshi', '0263997098682', '01499808366', 'student2@example.com', '$2y$12$ggU66ZY/wNO9p/GKvHGL1uG6cWBbR74TbNDkCr2rDwbPPY7NvNH0K', '50163 Pfannerstill Keys Apt. 187\nRollinberg, SC 44281', '185 Harvey Extension Suite 681\nKalebfurt, WY 85894-0302', 'ADM-00002', '2004-07-14', 'A', 'Commerce', '2025-2026', 'Hartmann-Murray School', 'Issac Metz', 'Teacher', '01904343957', 'father2@example.com', '4299063856200', 'Mrs. Annabel Gaylord III', 'Doctor', '01817990251', 'mother2@example.com', '3462984234862', 'Demarcus Runolfsdottir', '01804508004', 'guardian2@example.com', '8955774479419', 'Sister', 1, 1, 5, '2025-12-13', NULL, 2025000002, 900002, NULL, NULL, NULL, NULL, NULL, '2025-12-13 12:28:01', '2025-12-14 05:16:04', '127.0.0.1', 1, 'Onl4oPnC47B02GRC6wNfd9ur8dH5RJjR7yxZpWs8wRbZnoiwqPLpLOlcGDhn', '2025-12-13 12:28:01', '2025-12-14 05:16:04'),
 (3, 'Leda', 'Zemlak', '1974-01-18', 'Female', 'A-', 'Other', 'Bangladeshi', '6375841450220', '01463151197', 'student3@example.com', '$2y$12$gJUNyPae.9JTfgNS6cTzDuSHV5d0iqi3shIkIhcHiX3NeiuWFCQLm', '6203 Zemlak Island\nPort Christop, AR 95619-9376', '82039 Candelario Skyway Apt. 777\nNew Alia, ID 51637', 'ADM-00003', '2004-04-04', 'C', 'Science', '2025-2026', 'Becker Group School', 'Rey D\'Amore', 'Engineer', '01673225480', 'father3@example.com', '8076117377507', 'Dr. Hattie Reichel Jr.', 'Nurse', '01705607330', 'mother3@example.com', '4999574040300', 'Cleora O\'Connell', '01461541594', 'guardian3@example.com', '0108655488098', 'Uncle', 1, 1, 9, '2025-12-13', NULL, 2025000003, 900003, NULL, NULL, NULL, NULL, NULL, '2025-12-13 12:28:02', '2025-12-13 12:28:02', '127.0.0.1', 1, NULL, '2025-12-13 12:28:02', '2025-12-13 12:28:02'),
 (4, 'Willard', 'Torphy', '2008-05-24', 'Male', 'O+', 'Christian', 'Bangladeshi', '6803441126241', '01432579079', 'student4@example.com', '$2y$12$44SJ7CS9PfKeRi.9UXUwPerCdDSI5JNdXER3SMxb8OSBXz.iRFK8W', '2512 Herzog Club\nPort Mathilde, NE 44576-0996', '38696 Rusty Extensions Apt. 176\nEast Brisa, NM 88672-5673', 'ADM-00004', '1979-03-07', 'B', 'Science', '2025-2026', 'Reynolds Ltd School', 'Jace Daniel', 'Doctor', '01901898903', 'father4@example.com', '9205390885887', 'Joana Nicolas', 'Housewife', '01993493028', 'mother4@example.com', '4821548227882', 'Marcelle Stroman', '01357277006', 'guardian4@example.com', '3574404727877', 'Uncle', 1, 1, 6, '2025-12-13', NULL, 2025000004, 900004, NULL, NULL, NULL, NULL, NULL, '2025-12-13 12:28:02', '2025-12-13 12:28:02', '127.0.0.1', 1, NULL, '2025-12-13 12:28:02', '2025-12-13 12:28:02'),
 (5, 'Dayne', 'Schmitt', '1989-06-01', 'Other', 'B-', 'Other', 'Bangladeshi', '8369727071808', '01547140483', 'student5@example.com', '$2y$12$Tv609A5YnQkYoIcqIsvRR.vIc0IAnzxMwXGkt78bQ.a5RlwezJPSG', '151 Reina Islands\nPort Wallacetown, MT 29541-9284', '1294 Schultz Mount Suite 273\nNew Moisesberg, MI 12557-9472', 'ADM-00005', '1980-03-01', 'B', 'Commerce', '2025-2026', 'Hickle, Hickle and Emard School', 'Dr. Devin Mayert I', 'Engineer', '01981866392', 'father5@example.com', '1506750201281', 'Mrs. Carissa Gleason', 'Housewife', '01401269541', 'mother5@example.com', '1787260805006', 'Nathanial Hand', '01402011353', 'guardian5@example.com', '0054760703006', 'Uncle', 1, 1, 2, '2025-12-13', NULL, 2025000005, 900005, NULL, NULL, NULL, NULL, NULL, '2025-12-13 12:28:02', '2025-12-13 12:28:02', '127.0.0.1', 1, NULL, '2025-12-13 12:28:02', '2025-12-13 12:28:02'),
@@ -1087,7 +1101,7 @@ CREATE TABLE `teachers` (
 
 INSERT INTO `teachers` (`id`, `first_name`, `last_name`, `dob`, `gender`, `blood_group`, `national_id`, `contact_number`, `email`, `password`, `designation`, `address`, `father_name`, `father_contact`, `mother_name`, `mother_contact`, `guardian_name`, `guardian_contact`, `guardian_relationship`, `photo`, `father_photo`, `mother_photo`, `status`, `remark`, `email_verified_at`, `last_login_at`, `last_login_ip`, `is_profile_completed`, `otp`, `otp_expires_at`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Esmeralda', 'Carroll', '1981-04-29', 'Male', 'B+', '5979944510722', '01754016006', 'teacher0@example.com', '$2y$12$qe91QQNC5vVjySN8sp2GwuZ6lF4vWm7XFN1b2uWOOc7XI/FnDV2Rq', 'Head of Department', '32731 Murphy Row Suite 707\nBechtelarshire, NV 68260-5997', 'Bernardo Homenick Sr.', '01465208158', 'Lupe Crooks PhD', '01945295017', 'Marilou Rau II', '01379761485', 'Aunt', NULL, NULL, NULL, 1, 'N/A', '2025-12-13 12:27:56', '2025-12-13 12:27:56', '127.0.0.1', 1, NULL, NULL, NULL, '2025-12-13 12:27:56', '2025-12-13 12:27:56'),
-(2, 'Mason', 'Frami', '1969-01-05', 'Female', 'O+', '0810852372889', '01624574833', 'teacher1@example.com', '$2y$12$oRqCacqkT.F4Emi2dyvfcu6hlvLOegkOQehbEeQTjJztoFBDgEFPy', 'Head of Department', '9599 Ullrich Track Suite 131\nPort Javon, IA 46683-6798', 'Dean Morar', '01876501540', 'Clara Romaguera', '01508793635', 'Dock Parker', '01531125177', 'Grandparent', NULL, NULL, NULL, 1, 'N/A', '2025-12-13 12:27:56', '2025-12-13 12:27:56', '127.0.0.1', 1, NULL, NULL, NULL, '2025-12-13 12:27:56', '2025-12-13 12:27:56'),
+(2, 'Mason', 'Frami', '1969-01-05', 'Female', 'O+', '0810852372889', '01624574833', 'teacher1@example.com', '$2y$12$oRqCacqkT.F4Emi2dyvfcu6hlvLOegkOQehbEeQTjJztoFBDgEFPy', 'Head of Department', '9599 Ullrich Track Suite 131\r\nPort Javon, IA 46683-6798', 'Dean Morar', '01876501540', 'Clara Romaguera', '01508793635', 'Dock Parker', '01531125177', 'Grandparent', 'tch-Mason-1765690011.jpg', 'ftr-Mason-Dean Morar-1765690011.jpg', 'mtr-Mason-Clara Romaguera-1765690011.jpg', 1, 'N/A', '2025-12-13 12:27:56', '2025-12-14 05:18:12', '127.0.0.1', 1, NULL, NULL, 'L2VuvnuGhgtUrCgkUZH7nWodvlKguyIgWmzsSIB9AaJb83CYhCAIlGbLTIJw', '2025-12-13 12:27:56', '2025-12-14 05:26:51'),
 (3, 'Alysa', 'Herman', '1998-04-05', 'Male', 'B+', '8553358231052', '01593325173', 'teacher2@example.com', '$2y$12$UMv5jmU/2e3Uuo.JSAiSn.dU0hJEZwsGRZHkTeDgoQrVLMOtbq/we', 'Assistant Professor', '90544 Stuart Corners Apt. 311\nEast Lisandro, NV 77650', 'Jesse Pfannerstill Jr.', '01696124881', 'Elisa Zemlak', '01551746950', 'Mrs. Pattie Brekke', '01866294342', 'Aunt', NULL, NULL, NULL, 1, 'N/A', '2025-12-13 12:27:56', '2025-12-13 12:27:56', '127.0.0.1', 1, NULL, NULL, NULL, '2025-12-13 12:27:56', '2025-12-13 12:27:56'),
 (4, 'Lexus', 'Borer', '1987-05-16', 'Female', 'O+', '4039960114644', '01799590686', 'teacher3@example.com', '$2y$12$NBLe9ueaRD1hnvrPMsDsAuyUJ7PIFkU0fiq7fkLH/X/s6Aat45ep.', 'Head of Department', '68659 Frami Motorway\nPort Wainoton, SC 44410-2679', 'Felipe Adams', '01991581829', 'Mya Cormier II', '01982359687', 'Prof. Diana Batz III', '01690479132', 'Aunt', NULL, NULL, NULL, 1, 'N/A', '2025-12-13 12:27:56', '2025-12-13 12:27:56', '127.0.0.1', 1, NULL, NULL, NULL, '2025-12-13 12:27:56', '2025-12-13 12:27:56'),
 (5, 'Thad', 'Predovic', '1996-10-28', 'Male', 'O+', '5412927866870', '01863401133', 'teacher4@example.com', '$2y$12$RKnR60j3TQMVT/Jl8f0lS.OLnIJIeCAznFNHL.CUgudKq3Gj/4KIi', 'Assistant Professor', '201 Huels Fork\nJustusmouth, WV 55001', 'Dr. Grayce Tremblay Jr.', '01793667717', 'Caleigh Buckridge MD', '01535663454', 'Mrs. Delores Brown III', '01897716224', 'Brother', NULL, NULL, NULL, 1, 'N/A', '2025-12-13 12:27:56', '2025-12-13 12:27:56', '127.0.0.1', 1, NULL, NULL, NULL, '2025-12-13 12:27:56', '2025-12-13 12:27:56'),
@@ -1354,7 +1368,7 @@ ALTER TABLE `class_schedules`
 -- AUTO_INCREMENT for table `companies`
 --
 ALTER TABLE `companies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `exams`
@@ -1402,19 +1416,19 @@ ALTER TABLE `fee_categories`
 -- AUTO_INCREMENT for table `fee_payment_details`
 --
 ALTER TABLE `fee_payment_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `fee_payment_items`
 --
 ALTER TABLE `fee_payment_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `fee_structures`
 --
 ALTER TABLE `fee_structures`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `groups`

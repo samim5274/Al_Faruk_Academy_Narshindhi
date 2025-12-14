@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance - (SMS)</title>
+    <title>Finance - {{ $company->name ?? 'N/A'}}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -107,8 +107,8 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{$val->category->name}}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{$val->amount}}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                        <a href="#" class="text-red-600 hover:text-red-900 ml-4">Delete</a>
+                                        <a href="{{ url('/fee-structure-edit/'. $val->id) }}" class="text-indigo-600 hover:text-gray-900">Edit</a>
+                                        <!-- <a href="#" class="text-red-600 hover:text-red-900 ml-4">Delete</a> -->
                                     </td>
                                 </tr>
                                 @endforeach
