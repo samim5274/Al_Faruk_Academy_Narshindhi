@@ -176,8 +176,8 @@ class FinanceController extends Controller
         $category = FeeCategory::all();
         $student = Student::where('status', 1)->get();
         $classes = Room::all();
-        $feeStructure = FeeStructure::all();
-        $feePayment = feePaymentDetails::where('payment_date', now()->toDateString())->paginate(10);
+        $feeStructure = FeeStructure::with('room','category','paymentItems')->get();
+        $feePayment = feePaymentDetails::with('student','teacher','items')->where('payment_date', now()->toDateString())->paginate(10);
         return view('finance.finance-fee-payment', compact('category','classes','feeStructure','student','feePayment','company'));
     }
 
