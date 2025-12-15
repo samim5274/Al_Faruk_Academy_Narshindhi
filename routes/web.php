@@ -164,6 +164,7 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/finance-fee-payment', [FinanceController::class, 'financeFeePayment'])->name('finance-fee-payment');
     Route::post('/fee-payments', [FinanceController::class, 'confirmPayment']);
     Route::get('/fee-payment-show/{id}', [FinanceController::class, 'showPayment'])->name('show-specific-student-payment');
+    Route::get('/print-pay-invoice/{receipt}', [FinanceController::class, 'feePayPrintReceipt']);
 
     Route::get('/students/{class_id}', [FinanceController::class, 'getStudentsByClass']);
     Route::get('/fee-structures/{class_id}', [FinanceController::class, 'getFeeStructuresByClass']);
@@ -174,6 +175,8 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/find-category-payment-report', [FinanceReportController::class, 'findCategoryFeeReport']);
     Route::get('/student-wise-payment-report', [FinanceReportController::class, 'studentFeeReport'])->name('student-fee-report');
     Route::get('/find-student-fee-payment', [FinanceReportController::class, 'findStudentFeeReport']);
+    Route::get('/fee-payment-hisoty', [FinanceReportController::class, 'paymentHistory']);
+    Route::get('/find-payment-history', [FinanceReportController::class,'findPaymentHistory']);
 
 
 
