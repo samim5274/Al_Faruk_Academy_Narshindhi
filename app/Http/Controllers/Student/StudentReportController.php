@@ -18,39 +18,48 @@ class StudentReportController extends Controller
 {
     public function genderReport(){
         $company = Company::first();
-        $findData = Student::paginate(45);
-        $classes = Room::all();
-        $students = Student::all();
+        $findData = Student::with('room')->paginate(45);
+        $classes = Room::select('id','name','section')->get();
+        $students = Student::with('room:id,name,section')
+            ->paginate(45);
         return view('student.report.student-report', compact('findData','classes', 'students','company'));
     }
 
     public function findGenderReport(Request $request){
-        $classes = Room::all();
-        $students = Student::all();
-
-        $query = Student::query();
+        $classes = Room::select('id','name','section')->get();
+        $students = Student::with('room:id,name,section')
+            ->select(
+                'id',
+                'first_name',
+                'last_name',
+                'gender',
+                'class_id',
+                'status',
+                'religion',
+                'blood_group'
+            );
 
         if ($request->filled('gender_id')) {
-            $query->where('gender', $request->gender_id);
+            $students->where('gender', $request->gender_id);
         }
 
         if ($request->filled('class_id')) {
-            $query->where('class_id', $request->class_id);
+            $students->where('class_id', $request->class_id);
         }
 
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            $students->where('status', $request->status);
         }
 
         if ($request->filled('religion')) {
-            $query->where('religion', $request->religion);
+            $students->where('religion', $request->religion);
         }
 
         if ($request->filled('blood_group')) {
-            $query->where('blood_group', $request->blood_group);
+            $students->where('blood_group', $request->blood_group);
         }
 
-        $findData = $query->paginate(45)->appends($request->all());
+        $findData = $students->paginate(45)->appends($request->all());
 
         return view('student.report.student-report', compact('findData', 'classes', 'students'));
     }

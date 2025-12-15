@@ -15,6 +15,7 @@ use App\Models\Exam;
 use App\Models\Mark;
 use App\Models\StudentSubject;
 use App\Models\ClassSchedule;
+use Auth;
 
 class ClassController extends Controller
 {
@@ -94,10 +95,10 @@ class ClassController extends Controller
     public function classSchedule(){  
         $company = Company::first();      
         $teachers = Teacher::all();
-        $subjects = Subject::all();
+        $subjects = Subject::with('room:id,name,section')->get();
         $classes  = Room::all();
         $days     = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
-        $schedules = ClassSchedule::all();
+        $schedules = ClassSchedule::with(['teacher','subject','classRoom'])->get();
         return view('room.schedule.class-schedule', compact('classes','teachers','subjects','days','schedules','company'));
     }
 
@@ -130,7 +131,7 @@ class ClassController extends Controller
             $class_id   = $request->class_id;
 
             // Teacher conflict check
-            $teacherConflict = ClassSchedule::where('teacher_id', $teacher_id)
+            $teacherConflict = ClassSchedule::with('teacher','subject','classRoom')->where('teacher_id', $teacher_id)
                 ->where('day', $day)
                 ->where('period', $period)
                 ->exists();
@@ -140,7 +141,7 @@ class ClassController extends Controller
             }
 
             // Class conflict check (optional, DB constraint exists)
-            $classConflict = ClassSchedule::where('class_id', $class_id)
+            $classConflict = ClassSchedule::with('teacher','subject','classRoom')->where('class_id', $class_id)
                 ->where('day', $day)
                 ->where('period', $period)
                 ->exists();
@@ -168,7 +169,7 @@ class ClassController extends Controller
         $company = Company::first();
         $classes  = Room::all();
         $days     = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
-        $schedules = ClassSchedule::all();
+        $schedules = ClassSchedule::with('teacher','subject','classRoom')->get();
         return view('room.schedule.modify-class-schedule', compact('classes','days','schedules','company'));
     }
 
@@ -176,16 +177,16 @@ class ClassController extends Controller
         $company = Company::first();
         $classes  = Room::all();
         $days     = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
-        $schedules = ClassSchedule::where('class_id', $request->class_id)->where('day', $request->day)->get();
+        $schedules = ClassSchedule::with('teacher','subject','classRoom')->where('class_id', $request->class_id)->where('day', $request->day)->get();
         return view('room.schedule.modify-class-schedule', compact('classes','days','schedules','company'));
     }
 
     public function editSchedule($scheduleId){
         $company = Company::first();
-        $schedules = classSchedule::where('id', $scheduleId)->first();
+        $schedules = classSchedule::with('teacher','subject','classRoom')->where('id', $scheduleId)->first();
 
         $teachers = Teacher::all();
-        $subjects = Subject::all();
+        $subjects = Subject::where('class_id', $schedules->classRoom->id)->with('room:id,name,section')->get();
         $classes  = Room::all();
         $days     = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
 
@@ -218,6 +219,7 @@ class ClassController extends Controller
             ->where('day', $day)
             ->where('period', $period)
             ->where('id', '!=', $id)
+            ->with('teacher','subject','classRoom')
             ->exists();
 
         if ($teacherConflict) {
@@ -230,6 +232,7 @@ class ClassController extends Controller
             ->where('day', $day)
             ->where('period', $period)
             ->where('id', '!=', $id)
+            ->with('teacher','subject','classRoom')
             ->exists();
 
         if ($classConflict) {
@@ -252,5 +255,12 @@ class ClassController extends Controller
         $schedule->update();
 
         return redirect()->route('class-schedule-modify-view')->with('success', 'Class schedule updated successfully!');
+    }
+
+    public function mySchedule(){
+        $company = Company::first();
+        $user = Auth::guard('teacher')->user()->id;
+        $schedules = ClassSchedule::with(['subject', 'teacher', 'classRoom'])->where('teacher_id', $user)->get();
+        return view('room.schedule.my-schedule', compact('schedules','company'));
     }
 }

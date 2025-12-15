@@ -124,6 +124,12 @@
                                 <span class="pc-mtext">Assign Teachers</span>
                             </a>
                         </li>
+                        <li class="pc-item">
+                            <a class="pc-link" href="{{url('/my-class-schedule')}}"> 
+                                <span class="pc-micon"> <i class="fa-solid fa-calendar-days"></i>  </span>
+                                <span class="pc-mtext">My Class Schedule</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <!-- <li class="pc-item pc-hasmenu">

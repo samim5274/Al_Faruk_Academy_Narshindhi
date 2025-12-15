@@ -25,7 +25,7 @@ class StudentController extends Controller
 
     public function studentList(){
         $company = Company::first();
-        $student = Student::paginate(50);
+        $student = Student::with('room')->paginate(50);
         return view('student.student-list', compact('student','company'));
     }
 
