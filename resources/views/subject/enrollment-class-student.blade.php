@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enrollment Subject - {{ $company->name ?? "SMS" }}</title>
+    <title>Subject - {{ $company->name }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -31,13 +31,11 @@
     <!-- Header -->
     @include('layouts.header')
 
-    <!-- Flash Message -->
-    @include('layouts.message')
-
     <!-- [ Main Content ] start -->
     <div class="pc-container">
         <div class="pc-content">
-            
+            <!-- Flash Message -->
+            @include('layouts.message')
             <!-- Breadcrumb -->
             <div class="page-header mb-6">
                 <div class="page-block">

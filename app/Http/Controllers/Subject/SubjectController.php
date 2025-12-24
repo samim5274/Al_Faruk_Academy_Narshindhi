@@ -7,25 +7,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 use App\Models\Room;
-use App\Models\Student;
-use App\Models\Subject;
-use App\Models\Exam;
-use App\Models\Mark;
-use App\Models\SubjectStudent;
 use App\Models\Company;
+use App\Models\Subject;
+use App\Models\Group;
 
 class SubjectController extends Controller
 {
     public function subjectView(){
         $company = Company::first();
-        $subjects = Subject::with('room')->get();
+        $subjects = Subject::with(['room','group'])->get();
         $rooms = Room::all();
-        return view('subject.subject-list', compact('subjects', 'rooms','company'));
+        $groups = Group::all();
+        return view('subject.subject-list', compact('subjects', 'rooms','company','groups'));
     }
 
     public function addSubject(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
+            'group_id' => 'required|exists:groups,id',
             'class_id' => 'required|exists:rooms,id',
         ]);
 
@@ -39,6 +38,7 @@ class SubjectController extends Controller
 
         Subject::create([
             'name' => $request->name,
+            'group_id' => $request->group_id,
             'class_id' => $request->class_id,
         ]);
 
@@ -49,5 +49,25 @@ class SubjectController extends Controller
     {
         $subjects = Subject::where('class_id', $classId)->get();
         return response()->json($subjects);
+    }
+
+    public function modify(Request $request, $id){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'class_id' => 'required|exists:rooms,id',
+        ]);
+
+        $subject = $request->input('name', '');
+        $classId = $request->input('class_id', '');
+
+        $data = Subject::where('id', $id)->first();
+        if(!$data){
+            return redirect()->back()->with('error', 'Subject not found. Please try another one. Thank You!');
+        }
+
+        $data->name = $subject;
+        $data->class_id = $classId;
+        $data->update();
+        return redirect()->back()->with('success', 'Subject updated successfully!');
     }
 }

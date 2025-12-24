@@ -12,11 +12,16 @@ class Subject extends Model
 
     protected $fillable = [
         'name', 
+        'group_id',
         'class_id'
     ];
 
     public function room(){
         return $this->belongsTo(Room::class, 'class_id');
+    }
+
+    public function group(){
+        return $this->belongsTo(Group::class, 'group_id');
     }
 
     public function students(): BelongsToMany
@@ -31,6 +36,10 @@ class Subject extends Model
 
     public function classSchedule() {
         return $this->hasMany(ClassSchedule::class);
+    }
+
+    public function attendance(){
+        return $this->hasMany(Subject::class, 'subject_id', 'id');
     }
 
 }

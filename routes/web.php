@@ -122,6 +122,7 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/subject-view', [SubjectController::class, 'subjectView'])->name('subject-vidw');
     Route::post('/add-new-subject', [SubjectController::class, 'addSubject']);
     Route::get('/get-subjects/{classId}', [SubjectController::class, 'getSubjectsByClass']);
+    Route::post('/edit-subject/{id}', [SubjectController::class, 'modify']);
 
 
 
