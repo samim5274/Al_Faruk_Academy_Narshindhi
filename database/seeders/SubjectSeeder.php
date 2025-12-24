@@ -18,40 +18,44 @@ class SubjectSeeder extends Seeder
     public function run(): void
     {
         $subjects = [
-            // Class 11-12 (Science, Commerce, Arts)
+            // Class 1-8 (General)
             1 => [
-                1 => ['Bangla', 'English', 'ICT', 'Physical Education'], // Compulsory
-                2 => ['Physics', 'Chemistry', 'Biology', 'Higher Mathematics'], // Science
-                3 => ['Accounting', 'Business Organization & Management', 'Finance, Banking & Insurance', 'Production Management & Marketing'], // Commerce
-                4 => ['Logic', 'History', 'Civics', 'Economics', 'Islamic Studies', 'Sociology', 'Social Work', 'Geography'], // Arts
+                1 => ['Bangla', 'English', 'Math', 'Science', 'Social Studies', 'Islamic Studies', 'Physical Education'],
             ],
             2 => [
-                1 => ['Bangla', 'English', 'ICT', 'Physical Education'],
-                2 => ['Physics', 'Chemistry', 'Biology', 'Higher Mathematics'],
-                3 => ['Accounting', 'Business Organization & Management', 'Finance, Banking & Insurance', 'Production Management & Marketing'],
-                4 => ['Logic', 'History', 'Civics', 'Economics', 'Islamic Studies', 'Sociology', 'Social Work', 'Geography'],
+                1 => ['Bangla', 'English', 'Math', 'Science', 'Social Studies', 'Islamic Studies', 'Physical Education'],
             ],
-
-            // Degree level subjects
             3 => [
-                1 => ['Bangla', 'English', 'ICT', 'Physical Education'],
-                2 => ['Physics', 'Chemistry', 'Biology', 'Higher Mathematics'],
-                3 => ['Accounting', 'Business Organization & Management', 'Finance, Banking & Insurance', 'Production Management & Marketing'],
-                4 => ['Logic', 'History', 'Civics', 'Economics', 'Islamic Studies', 'Sociology', 'Social Work', 'Geography'],
+                1 => ['Bangla', 'English', 'Math', 'Science', 'Social Studies', 'Islamic Studies', 'Physical Education'],
             ],
-
             4 => [
-                1 => ['Bangla', 'English', 'ICT', 'Physical Education'],
-                2 => ['Physics', 'Chemistry', 'Biology', 'Higher Mathematics'],
-                3 => ['Accounting', 'Business Organization & Management', 'Finance, Banking & Insurance', 'Production Management & Marketing'],
-                4 => ['Logic', 'History', 'Civics', 'Economics', 'Islamic Studies', 'Sociology', 'Social Work', 'Geography'],
+                1 => ['Bangla', 'English', 'Math', 'Science', 'Social Studies', 'Islamic Studies', 'Physical Education'],
+            ],
+            5 => [
+                1 => ['Bangla', 'English', 'Math', 'Science', 'Social Studies', 'Islamic Studies', 'Physical Education'],
+            ],
+            6 => [
+                1 => ['Bangla', 'English', 'Math', 'Science', 'Social Studies', 'Islamic Studies', 'Physical Education'],
+            ],
+            7 => [
+                1 => ['Bangla', 'English', 'Math', 'Science', 'Social Studies', 'Islamic Studies', 'Physical Education'],
+            ],
+            8 => [
+                1 => ['Bangla', 'English', 'Math', 'Science', 'Social Studies', 'Islamic Studies', 'Physical Education'],
             ],
 
-            5 => [
-                1 => ['Bangla', 'English', 'ICT', 'Physical Education'],
-                2 => ['Physics', 'Chemistry', 'Biology', 'Higher Mathematics'],
-                3 => ['Accounting', 'Business Organization & Management', 'Finance, Banking & Insurance', 'Production Management & Marketing'],
-                4 => ['Logic', 'History', 'Civics', 'Economics', 'Islamic Studies', 'Sociology', 'Social Work', 'Geography'],
+            // Class 9-10 (Science, Commerce, Arts)
+            9 => [
+                1 => ['Bangla', 'English', 'ICT', 'Physical Education'], // Compulsory
+                2 => ['Physics', 'Chemistry', 'Biology', 'Higher Mathematics'], // Science
+                3 => ['Accounting', 'Business Studies', 'Finance', 'Economics'], // Commerce
+                4 => ['History', 'Civics', 'Geography', 'Social Work'], // Arts
+            ],
+            10 => [
+                1 => ['Bangla', 'English', 'ICT', 'Physical Education'], // Compulsory
+                2 => ['Physics', 'Chemistry', 'Biology', 'Higher Mathematics'], // Science
+                3 => ['Accounting', 'Business Studies', 'Finance', 'Economics'], // Commerce
+                4 => ['History', 'Civics', 'Geography', 'Social Work'], // Arts
             ],
         ];
 
@@ -60,7 +64,7 @@ class SubjectSeeder extends Seeder
                 foreach ($subs as $subject) {
                     DB::table('subjects')->insert([
                         'class_id' => $classId,
-                        'group_id' => $groupId,  // Added group_id
+                        'group_id' => $groupId,
                         'name' => $subject,
                         'created_at' => now(),
                         'updated_at' => now(),

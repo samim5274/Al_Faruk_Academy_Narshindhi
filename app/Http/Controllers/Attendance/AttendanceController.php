@@ -112,13 +112,36 @@ class AttendanceController extends Controller
     public function dailyAttendet(){
         $company = Company::first();
 
-        $attend = Attendance::with('student','class')->where('attendance_date', $this->date)->paginate(45);
+        $attend = Attendance::with(['student','class'])->where('attendance_date', $this->date)->latest()->get();
 
-        $totalStudent = Student::count(); 
-        $present = Attendance::where('status', 'Present')->where('attendance_date', $this->date)->count();
-        $absent = Attendance::where('status', 'Absent')->where('attendance_date', $this->date)->count();
+        $studentWise = $attend->groupBy('student_id');
+        $classWise = $attend->groupBy('class_id');
 
-        return view('attendance.daily-student-list', compact('attend','totalStudent','present','absent','company'));
+        $totalStudent = Student::count();
+        $present = Attendance::whereDate('attendance_date', $this->date)
+            ->where('status','Present')->count();
+        $absent = Attendance::whereDate('attendance_date', $this->date)
+            ->where('status','Absent')->count();
+
+        return view('attendance.daily-student-list', compact(
+            'attend',
+            'studentWise',
+            'classWise',
+            'totalStudent',
+            'present',
+            'absent',
+            'company'
+        ));
+    }
+
+    public function editStudentAttendance(Request $request, $id){
+        $data = Attendance::find($id);
+        if(!$data){
+            return redirect()->back()->with('warning','Attendance not found. Please try another. Thank You!');
+        }
+        $data->status = $request->attendanceStatus;
+        $data->update();
+        return redirect()->back()->with('success','Student attendance update successfully.');
     }
 
     public function searchAttendView(){

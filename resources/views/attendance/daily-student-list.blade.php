@@ -53,125 +53,147 @@
             </div>
 
             <!-- Card -->
-            <div class="card rounded-lg border shadow-sm">             
-                <div class="card-body">  
+            <!-- CLASS WISE ATTENDANCE -->
+            <div class="card rounded-xl border shadow-sm">
 
+                <div class="card rounded-xl border shadow-sm p-6 mb-6">
                     <div class="flex flex-wrap items-center justify-between mb-4 gap-3">
-                        <!-- Title -->
                         <h2 class="text-xl font-bold text-gray-700 flex items-center gap-2">
-                            📌 Student Attendance
+                            📌 Student Attendance - {{ \Carbon\Carbon::now()->format('d-M-Y') }}
                         </h2>
-
-                        <!-- Badges -->
                         <div class="flex flex-wrap gap-3">
-                            
                             <span class="text-black bg-green-200 px-4 py-2 rounded-full font-medium shadow hover:bg-green-300 transition-colors duration-300">
                                 Total: {{ $totalStudent }}
                             </span>
-
                             <span class="text-black bg-blue-200 px-4 py-2 rounded-full font-medium shadow hover:bg-blue-300 transition-colors duration-300">
                                 Present: {{ $present }}
                             </span>
-
                             <span class="text-black bg-yellow-200 px-4 py-2 rounded-full font-medium shadow hover:bg-yellow-300 transition-colors duration-300">
                                 Absent: {{ $absent }}
                             </span>
                         </div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm text-left text-gray-600 border border-gray-200 rounded-lg">
-                            <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+                </div>
+
+                <div class="card rounded-xl border shadow-sm p-6 mb-6">
+                    <div class="overflow-y-auto border rounded-lg" style="max-height:650px;">
+                        <table class="min-w-full text-sm text-gray-700">
+                            <thead class="bg-gray-100 sticky top-0">
                                 <tr>
-                                    <th class="px-4 py-3 border text-center" style="width: 50px">#</th>
-                                    <th class="px-4 py-3 border">Student Name</th>
-                                    <th class="px-4 py-3 border text-center" style="width: 150px">Date</th>
-                                    <th class="px-4 py-3 border text-center" style="width: 150px">Class</th>
-                                    <th class="px-4 py-3 border text-center" style="width: 100px">Status</th>
+                                    <th class="px-4 py-3 text-center">#</th>
+                                    <th class="px-4 py-3">Student</th>
+                                    <th class="px-4 py-3 text-center">Class</th>
+                                    <th class="px-4 py-3 text-center">Status</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 text-sm text-gray-700">
-                                @foreach($attend as $val)
-                                <tr class="hover:bg-gray-50 transition">
-                                    <!-- Serial Number -->
-                                    <td class="px-4 py-3 border text-center font-medium text-gray-600">
-                                        {{ $loop->iteration }}
-                                    </td>
-                                    <!-- Student Name -->
-                                    <td class="px-4 py-3 border"> {{ $val->student->first_name }} {{ $val->student->last_name }}</td>
-                                    <!-- Student Name -->
-                                    <td class="px-4 py-3 border text-center"> {{ $val->class->name }} - ({{ $val->class->section }})</td>
-                                    <!-- Attendance Date -->
-                                    <td class="px-4 py-3 border text-center"> {{ \Carbon\Carbon::parse($val->attendance_date)->format('d M, Y') }}</td>
-                                    <!-- Attendance Status -->
-                                    <td class="px-4 py-3 border text-center">
-                                        @if($val->status == 'Present')
-                                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Present</span>
-                                        @else
-                                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">Absent</span>
-                                        @endif
-                                    </td>
-                                </tr>
+                            <tbody class="divide-y">
+                                @foreach($classWise as $classId => $rows)
+                                    @php $class = $rows->first()->class; @endphp
+                                    <!-- Class Header -->
+                                    <tr class="bg-gray-50">
+                                        <td colspan="4" class="px-5 py-3 font-semibold text-gray-800">
+                                            📚 {{ $class->name ?? 'N/A' }} - {{ $class->section ?? 'N/A' }}
+                                        </td>
+                                    </tr>
+
+                                    @foreach($rows as $val)
+                                        <tr class="hover:bg-gray-50 transition">
+                                            <td class="px-4 py-2 text-center">{{ $loop->iteration }}</td>
+                                            <td class="px-4 py-2">{{ $val->student->first_name }} {{ $val->student->last_name }}</td>
+                                            <td class="px-4 py-2 text-center">{{ $val->class->name }} - {{ $val->class->section }}</td>
+                                            <td class="px-4 py-2 text-center">
+                                                <span onclick="openModal({{ $val->id }})"
+                                                    class="cursor-pointer px-3 py-1 rounded-full text-xs font-semibold
+                                                    {{ $val->status === 'Present'
+                                                        ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                                        : 'bg-red-100 text-red-700 hover:bg-red-200' }}">
+                                                    {{ $val->status }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <!-- paginatior -->
-                    @if ($attend->hasPages())
-                        <div class="flex flex-wrap items-center justify-between mt-4 w-full">
-
-                            {{-- Page Info --}}
-                            <div class="text-sm md:text-base text-gray-600">
-                                Page {{ $attend->currentPage() }} of {{ $attend->lastPage() }} 
-                                (Total Records: {{ $attend->total() }})
-                            </div>
-
-                            {{-- Pagination --}}
-                            <div class="flex items-center space-x-2">
-
-                                {{-- Previous Button --}}
-                                @if ($attend->onFirstPage())
-                                    <span class="px-2 py-1 text-sm md:text-base bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">
-                                        &laquo; 
-                                    </span>
-                                @else
-                                    <a href="{{ $attend->previousPageUrl() }}" class="px-2 py-1 text-sm md:text-base bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors">
-                                        &laquo; 
-                                    </a>
-                                @endif
-
-                                {{-- Page Numbers --}}
-                                @php
-                                    $start = max(1, $attend->currentPage() - 2);
-                                    $end = min($attend->lastPage(), $attend->currentPage() + 2);
-                                @endphp
-
-                                @for ($i = $start; $i <= $end; $i++)
-                                    @if ($i == $attend->currentPage())
-                                        <span class="px-2 py-1 text-sm md:text-base bg-[#3F4D67] text-white rounded-lg">{{ $i }}</span>
-                                    @else
-                                        <a href="{{ $attend->url($i) }}" class="px-2 py-1 text-sm md:text-base bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors">{{ $i }}</a>
-                                    @endif
-                                @endfor
-
-                                {{-- Next Button --}}
-                                @if ($attend->hasMorePages())
-                                    <a href="{{ $attend->nextPageUrl() }}" class="px-2 py-1 text-sm md:text-base bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors">
-                                        &raquo;
-                                    </a>
-                                @else
-                                    <span class="px-2 py-1 text-sm md:text-base bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">
-                                        &raquo;
-                                    </span>
-                                @endif
-
-                            </div>
-                        </div>
-                    @endif
-
                 </div>
-            </div>
 
+            </div>
             <!-- Card End -->
+
+
+
+
+            @foreach($classWise as $classId => $rows)
+                @foreach($rows as $val)
+                    <div id="examModal{{ $val->id }}" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 overflow-auto">
+                        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative mx-4 my-8">
+                            
+                            <!-- Header -->
+                            <div class="flex items-center justify-between border-b pb-3 mb-5">
+                                <h5 class="text-lg font-semibold text-gray-700 flex items-center gap-2">
+                                    <span class="text-blue-600">&#128221;</span> Edit Attendance of {{ $val->student->first_name }} {{ $val->student->last_name }}
+                                </h5>
+                                <button onclick="closeModal({{ $val->id }})" class="text-gray-400 hover:text-red-600 transition duration-300 text-2xl">&times;</button>
+                            </div>
+
+                            <!-- Form -->
+                            <form action="{{ url('/edit-attendance/'.$val->id) }}" method="POST" class="space-y-6">
+                                @csrf
+
+                                <!-- Class & Date Card -->
+                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-5 shadow-sm mb-4">
+                                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
+                                        <h5 class="text-base font-semibold text-gray-800 flex items-center gap-2">
+                                            <span class="text-green-600">&#127891;</span> {{ $val->class->name }} ({{ $val->class->section }})
+                                        </h5>
+                                        <h5 class="text-base font-semibold text-gray-700 flex items-center gap-2">
+                                            <span class="text-blue-600">&#128197;</span> Date: {{ \Carbon\Carbon::parse($val->attendance_date)->format('d M, Y') }}
+                                        </h5>
+                                    </div>
+                                    <h5 class="text-base font-semibold text-gray-800 mt-3 flex items-center gap-2">
+                                        <span class="text-purple-600">&#128218;</span> Teacher: {{ $val->class->teachers->first_name ?? '-' }} {{ $val->class->teachers->last_name ?? '-' }}
+                                    </h5>
+                                </div>
+
+                                <!-- Attendance Status -->
+                                <div>
+                                    <label class="font-medium mb-2 block text-gray-700">Attendance Status</label>
+                                    <div class="flex flex-col sm:flex-row gap-4 mt-2">
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="attendanceStatus" value="Present"
+                                                class="h-5 w-5 border-gray-400 focus:ring-2 focus:ring-green-400"
+                                                {{ $val->status === 'Present' ? 'checked' : '' }} required>
+                                            <span class="text-gray-700 font-medium hover:text-green-700 transition duration-200">Present</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="attendanceStatus" value="Absent"
+                                                class="h-5 w-5 border-gray-400 focus:ring-2 focus:ring-red-400"
+                                                {{ $val->status === 'Absent' ? 'checked' : '' }}>
+                                            <span class="text-gray-700 font-medium hover:text-red-700 transition duration-200">Absent</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="text-center">
+                                    <button type="submit"
+                                        class="bg-green-500 hover:bg-green-600 transition duration-300 text-white w-full rounded-lg py-2 px-6 font-medium shadow-sm hover:shadow-md">
+                                        Update Attendance
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
+            @endforeach
+
+
+
+
+
+
+
         </div>
     </div>
     <!-- [ Main Content ] end -->
@@ -203,6 +225,16 @@
                 }, 3000);
             }
         });
+
+        function openModal(id) {
+            document.getElementById('examModal'+ id).classList.remove('hidden');
+            document.getElementById('examModal'+ id).classList.add('flex');
+        }
+
+        function closeModal(id) {
+            document.getElementById('examModal'+ id).classList.remove('flex');
+            document.getElementById('examModal'+ id).classList.add('hidden');
+        }
     </script>
 
     <script> layout_change('false'); </script>
