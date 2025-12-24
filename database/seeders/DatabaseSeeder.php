@@ -23,11 +23,13 @@ class DatabaseSeeder extends Seeder
             TeacherSeeder::class,
             RoomSeeder::class,
             StudentSeeder::class,
+            GroupSeeder::class,
             SubjectSeeder::class,
             FeeCategroySeeder::class,
             ExcategorySeeder::class,
             ExsubcategorySeeder::class,
-            GroupSeeder::class,
+            IncomeCategorySeeder::class,
+            IncomeSubCategorySeeder::class,
         ]);
 
     }

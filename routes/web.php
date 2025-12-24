@@ -19,6 +19,8 @@ use App\Http\Controllers\Finance\FinanceController;
 use App\Http\Controllers\Finance\FinanceReportController;
 use App\Http\Controllers\Notice\NoticeController;
 use App\Http\Controllers\Expenses\ExpensesController;
+use App\Http\Controllers\Bank\BankController;
+use App\Http\Controllers\Income\IncomeController;
 
 Auth::routes();
 
@@ -225,5 +227,64 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/expenses-category-data-filter', [ExpensesController::class, 'filterCatExpen']);
     Route::get('/sub-category-wise-expenses', [ExpensesController::class, 'subCategoyExpenses']);
     Route::get('/expenses-sub-category-data-filter', [ExpensesController::class, 'filterSubCatExpen']);
+
+
+
+    Route::get('/bank-setting', [BankController::class, 'setting'])->name('bank-setting-view');
+    Route::post('/create-bank', [BankController::class, 'createBank']);
+    Route::get('/edit-bank/{id}', [BankController::class, 'editView'])->name('bank-edit-view');
+    Route::post('/modify-bank/{id}', [BankController::class, 'modifyBank']);
+    Route::post('/delete-bank/{id}', [BankController::class, 'deleteBank']);
+    Route::get('/bank-diposit-view', [BankController::class, 'bankDepositView'])->name('bank-diposit-view');
+    Route::post('/bank-diposit-amount', [BankController::class, 'bankDepositAmount']);
+    Route::get('/edit-bank-deposit/{id}', [BankController::class, 'dipositEdit'])->name('bank-diposit-edit-view');
+    Route::post('/modify-bank-deposit/{id}', [BankController::class, 'dipositModify']);
+    Route::post('/delete-bank-deposit/{id}', [BankController::class, 'deleteDiposit']);
+    Route::get('/bank-withdraw-view', [BankController::class, 'bankWithdrawView'])->name('bank-withdraw-view');
+    Route::post('/bank-withdraw-amount', [BankController::class, 'bankWithdrawAmount']);
+    Route::get('/edit-bank-withdraw/{id}', [BankController::class, 'withdrawEdit'])->name('bank-withdraw-edit-view');
+    Route::post('/modify-bank-withdraw/{id}', [BankController::class, 'withdrawModify']);
+    Route::post('/delete-bank-withdraw/{id}', [BankController::class, 'withdrawDelete']);
+    Route::get('/bank-to-transection-view', [BankController::class, 'bankToTransectionView'])->name('bank-to-transection-view');
+    Route::post('/bank-to-bank-transection', [BankController::class, 'bankToBankTransection']);
+    Route::get('/total-transection-report', [BankController::class, 'totalTransectionReport'])->name('total-transection');
+    Route::get('/filter-transection-date', [BankController::class, 'filterTransectionDate'])->name('filter-transection-date');
+    Route::get('/total-diposit', [BankController::class, 'totalDiposit'])->name('total-diposit');
+    Route::get('/filter-total-diposit-date', [BankController::class, 'filterDipositDate'])->name('filter-total-diposit-date');
+    Route::get('/total-withdraw', [BankController::class, 'totalWithdraw'])->name('total-withdraw');
+    Route::get('/filter-total-Withdraw-date', [BankController::class, 'filterWithdrawDate'])->name('filter-total-Withdraw-date');
+
+
+
+    // ======================================================= income Board Route =======================================================
+    Route::get('/income', [IncomeController::class, 'index'])->name('income-view');
+    Route::get('/get-income-subcategories/{id}', [IncomeController::class, 'getIncomeSubCategory']);
+    Route::post('/create-income', [IncomeController::class, 'store']);
+    Route::get('/income-view/{id}', [IncomeController::class, 'incomeView']);
+    Route::get('/income-delete/{id}', [IncomeController::class, 'delete']);
+    Route::get('/income-print/{id}', [IncomeController::class, 'print']);
+    Route::get('/income-edit/{id}', [IncomeController::class, 'edit']);
+    Route::post('/modify-income/{id}', [IncomeController::class, 'update']);    
+
+    // income setting routes
+    Route::get('/income-setting', [IncomeController::class, 'incomeSetting'])->name('income-setting-view');
+    //category routes
+    Route::post('/create-income-category', [IncomeController::class, 'storeIncomeCategory'])->name('create-income-category');
+    Route::get('/edit-income-category/{id}', [IncomeController::class, 'editIncomeCategory'])->name('income-category-edit-view');
+    Route::post('/modify-income-category/{id}', [IncomeController::class, 'modifyIncomeCategory']);
+    Route::post('/delete-income-category/{id}', [IncomeController::class, 'deleteIncomeCategory']);
+    // subcategory routes
+    Route::post('/create-income-subcategory', [IncomeController::class, 'storeIncomeSubCategory'])->name('create-income-subcategory');
+    Route::get('/edit-income-subcategory/{id}', [IncomeController::class, 'editIncomeSubCategory'])->name('income-subcategory-edit-view');
+    Route::post('/modify-income-subcategory/{id}', [IncomeController::class, 'modifyIncomeSubCategory']);
+    Route::post('/delete-income-subcategory/{id}', [IncomeController::class, 'deleteIncomeSubCategory']);
+
+    // Income report Route
+    Route::get('/date-wise-income', [IncomeController::class, 'dateIncome']);
+    Route::get('/income-data-filter', [IncomeController::class, 'filterIncome']);
+    Route::get('/category-wise-income', [IncomeController::class, 'categroyIncome']);
+    Route::get('/income-category-data-filter', [IncomeController::class, 'filterCatIncome']);
+    Route::get('/sub-category-wise-income', [IncomeController::class, 'subCategoyIncome']);
+    Route::get('/income-sub-category-data-filter', [IncomeController::class, 'filterSubCatIncome']);
 
 });
