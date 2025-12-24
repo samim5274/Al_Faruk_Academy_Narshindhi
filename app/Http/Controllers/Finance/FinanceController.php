@@ -318,6 +318,33 @@ class FinanceController extends Controller
         }
     }
 
+    public function dueCollection(){
+        $company = Company::first();
+        $students = Student::all();
+        $classes = Room::all();
+        return view('finance.due-collection', compact('students','company','classes'));
+    }
+
+    public function paymentInfo($studentId){
+        $payment = feePaymentDetails::where('student_id', $studentId)
+            ->selectRaw('
+                SUM(total_amount) as total_amount,
+                SUM(total_paid) as total_paid,
+                SUM(total_due) as total_due
+            ')
+            ->first();
+
+        return response()->json([
+            'total_amount' => $payment->total_amount ?? 0,
+            'total_paid'   => $payment->total_paid ?? 0,
+            'total_due'    => $payment->total_due ?? 0,
+        ]);
+    }
+
+    public function duePament(Request $request){
+        return redirect()->back()->with('warning','Due collection under maintanance. Please contact with developer. Thank You!');
+    }
+
     public function showPayment($id){
         $company = Company::first();
         $feeStructures = FeePaymentItem::with(['student', 'feeStructure','payment'])->where('fee_payment_id', $id)->get();

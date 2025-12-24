@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Student\StudentController;
@@ -17,6 +17,7 @@ use App\Http\Controllers\StudentPortal\StudentPortalController;
 use App\Http\Controllers\Room\ClassController;
 use App\Http\Controllers\Finance\FinanceController;
 use App\Http\Controllers\Finance\FinanceReportController;
+use App\Http\Controllers\Finance\TotalTransectionController;
 use App\Http\Controllers\Notice\NoticeController;
 use App\Http\Controllers\Expenses\ExpensesController;
 use App\Http\Controllers\Bank\BankController;
@@ -26,16 +27,16 @@ use App\Http\Controllers\Setting\SettingController;
 Auth::routes();
 
 Route::get('/clear', function () {
-        Artisan::call('config:clear');
-        Artisan::call('cache:clear');
-        Artisan::call('view:clear');
-        Artisan::call('route:clear');
-        Artisan::call('optimize:clear');
-        Artisan::call('optimize');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Artisan::call('optimize:clear');
+    Artisan::call('optimize');
 
-        return redirect()->back()->with('success','Caches cleared successfully.');
-    });
-    
+    return redirect()->back()->with('success','Caches cleared successfully.');
+});
+
 // admin login route
 Route::get('/login', [AdminController::class, 'loginView'])->name('login-view');
 Route::post('/user-login', [AdminController::class, 'userLogin']);
@@ -189,8 +190,14 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/fee-payment-show/{id}', [FinanceController::class, 'showPayment'])->name('show-specific-student-payment');
     Route::get('/print-pay-invoice/{receipt}', [FinanceController::class, 'feePayPrintReceipt']);
 
+    Route::get('/due-collection', [FinanceController::class, 'dueCollection'])->name('due-collection');
+    Route::get('/student/payment-info/{student}', [FinanceController::class, 'paymentInfo']);
+    Route::post('/due-collection-payment', [FinanceController::class, 'duePament']);
+
     Route::get('/students/{class_id}', [FinanceController::class, 'getStudentsByClass']);
     Route::get('/fee-structures/{class_id}', [FinanceController::class, 'getFeeStructuresByClass']);
+
+    Route::get('/total-transection-summary', [TotalTransectionController::class, 'totalTransectionSummary']);
 
     Route::get('/student-finance-report', [FinanceReportController::class, 'studentFinanceReport'])->name('student-finance-report-view');
     Route::get('/find-payment-report', [FinanceReportController::class, 'findPaymentReport']);
