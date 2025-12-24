@@ -21,9 +21,22 @@ use App\Http\Controllers\Notice\NoticeController;
 use App\Http\Controllers\Expenses\ExpensesController;
 use App\Http\Controllers\Bank\BankController;
 use App\Http\Controllers\Income\IncomeController;
+use App\Http\Controllers\Setting\SettingController;
 
 Auth::routes();
 
+Route::get('/clear', function () {
+        Artisan::call('config:clear');
+        Artisan::call('cache:clear');
+        Artisan::call('view:clear');
+        Artisan::call('route:clear');
+        Artisan::call('optimize:clear');
+        Artisan::call('optimize');
+
+        return redirect()->back()->with('success','Caches cleared successfully.');
+    });
+    
+// admin login route
 Route::get('/login', [AdminController::class, 'loginView'])->name('login-view');
 Route::post('/user-login', [AdminController::class, 'userLogin']);
 
@@ -39,9 +52,17 @@ Route::group(['middleware' => ['admin']], function(){
 
     Route::get('/change-password', [AdminController::class, 'changePassView'])->name('change-password-view');
     Route::post('/update-password', [AdminController::class, 'updateUpdate']);
-    Route::get('/profile', [AdminController::class, 'profile'])->name('user-profile-view');
-    Route::get('/setting', [AdminController::class, 'setting'])->name('setting-view');
-    Route::get('/support', [AdminController::class, 'support'])->name('support-view');
+
+    Route::get('/profile', [SettingController::class, 'profile'])->name('user-profile-view');
+    Route::get('/edit-teacher-profile', [SettingController::class, 'modifyProfile'])->name('edit-teacher-profile-view');
+    Route::post('/modify-teacher-profile', [SettingController::class, 'modifyTeacherProfile']);
+    Route::get('/setting', [SettingController::class, 'setting'])->name('setting-view');
+    Route::get('/support', [SettingController::class, 'support'])->name('support-view');
+    Route::post('/pofile-edit', [SettingController::class, 'editProfile']);
+    Route::post('/groups/store', [SettingController::class, 'storeGroup'])->name('groups.store');
+    Route::get('/edit-group/{id}', [SettingController::class, 'editGroup'])->name('edit-group');
+    Route::post('/modify-group/{id}', [SettingController::class, 'modifyGroup'])->name('groups.update');
+    Route::post('/delete-group/{id}', [SettingController::class, 'deleteGroup']);
     
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/database-backup', [DashboardController::class, 'dbBackup']);

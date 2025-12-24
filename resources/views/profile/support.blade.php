@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support - {{ $company->name ?? 'SMS' }}</title>
+    <title>{{ $company->name }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -33,14 +33,13 @@
     <!-- [ Header Topbar ] start -->
     @include('layouts.header')
     <!-- [ Header ] end -->
-    
-    <!-- Flash Message -->
-    @include('layouts.message')
 
 
     <!-- [ Main Content ] start -->
     <div class="pc-container">
         <div class="pc-content py-10 px-4 md:px-8 lg:px-16">
+            <!-- Flash Message -->
+            @include('layouts.message')
             <div class="flex flex-col lg:flex-row gap-6">
                 <!-- Left: Contact Support -->
                 <div class="w-full">

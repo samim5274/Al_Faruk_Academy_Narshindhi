@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Account - {{ $company->name ?? 'SMS' }}</title>
+    <title>{{ $company->name }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -33,235 +33,131 @@
     <!-- [ Header Topbar ] start -->
     @include('layouts.header')
     <!-- [ Header ] end -->
-    
-    <!-- Flash Message -->
-    @include('layouts.message')
 
 
     <!-- [ Main Content ] start -->
+    @php
+        $teacher = Auth::guard('teacher')->user();
+    @endphp
+
     <div class="pc-container">
         <div class="pc-content">
-            <!-- [ breadcrumb ] start -->
-            <div class="page-header">
-                <div class="page-block">
-                    <div class="page-header-title">
-                        <h5 class="mb-0 font-medium">Account</h5>
+            <!-- Flash Message -->
+            @include('layouts.message')
+            <div class="max-w-full px-4">
+
+                <!-- [ breadcrumb ] start -->
+                <div class="page-header">
+                    <div class="page-block">
+                        <div class="page-header-title">
+                            <h5 class="mb-0 font-medium">Account</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                            <li class="breadcrumb-item">Setting</li>
+                            <li class="breadcrumb-item"><a href="#">Account</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Profile</li>
+                        </ul>
                     </div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
-                        <li class="breadcrumb-item">Setting</li>
-                        <li class="breadcrumb-item"><a href="#">Account</a></li>
-                        <li class="breadcrumb-item" aria-current="page">Profile</li>
-                    </ul>
                 </div>
-            </div>
-            <!-- [ breadcrumb ] end -->
+                <!-- [ breadcrumb ] end -->
 
-            <!-- [ Main Content ] start -->
-            @php
-                $teacher = Auth::guard('teacher')->user();
-            @endphp
+                <!-- [ Main Content ] start -->
+                <div class="flex items-center justify-center bg-gray-100 py-10 px-4">
+                    <div class="w-full max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
 
-            <div class="bg-gray-100 min-h-screen py-10 px-4">
-                <div class="max-w-6xl mx-auto space-y-6">
+                        <div class="p-6 sm:p-10">
 
-                    <!-- Profile Header -->
-                    <div class="bg-white rounded-xl shadow-md p-6 flex flex-col md:flex-row items-center gap-6">
-                        <img
-                            src="{{ asset('img/teacher/' . ($teacher->photo ?? 'default.png')) }}"
-                            class="w-36 h-36 rounded-full border-4 border-indigo-100 shadow"
-                            alt="Teacher Photo">
+                            <!-- PROFILE HEADER -->
+                            <div class="text-center mb-10">
 
-                        <div class="flex-1 text-center md:text-left">
-                            <h2 class="text-2xl font-semibold text-gray-800">
-                                {{ $teacher->first_name ?? '-' }} {{ $teacher->last_name ?? '' }}
-                            </h2>
-                            <p class="text-indigo-600 font-medium">
-                                {{ $teacher->designation ?? '-' }}
-                            </p>
-                            <p class="text-sm text-gray-500">
-                                {{ $teacher->email ?? '-' }}
-                            </p>
-                        </div>
-
-                        <a href="{{ url('/edit-teacher-view/' . $teacher->id) }}"
-                        class="px-5 py-2 bg-[#3F4D67] hover:bg-[#5b6f94] text-white rounded-md text-sm font-medium">
-                            Edit Profile
-                        </a>
-                    </div>
-
-                    <!-- Personal Information -->
-                    <div class="bg-white rounded-xl shadow-md">
-                        <div class="px-6 py-4 border-b">
-                            <h3 class="text-lg font-semibold text-gray-800">Personal Information</h3>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 text-sm">
-                            <div>
-                                <p class="text-gray-500">First Name</p>
-                                <p class="font-medium">{{ $teacher->first_name ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Last Name</p>
-                                <p class="font-medium">{{ $teacher->last_name ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Date of Birth</p>
-                                <p class="font-medium">{{ $teacher->dob ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Gender</p>
-                                <p class="font-medium">{{ $teacher->gender ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Blood Group</p>
-                                <p class="font-medium">{{ $teacher->blood_group ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">National ID</p>
-                                <p class="font-medium">{{ $teacher->national_id ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Phone</p>
-                                <p class="font-medium">
-                                    {{ $teacher->contact_number ? '0'.$teacher->contact_number : '-' }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Address</p>
-                                <p class="font-medium">{{ $teacher->address ?? '-' }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Family & Guardian Information -->
-                    <div class="bg-white rounded-xl shadow-md">
-                        <div class="px-6 py-4 border-b">
-                            <h3 class="text-lg font-semibold text-gray-800">
-                                Family & Guardian Information
-                            </h3>
-                        </div>
-
-                        <div class="p-6 space-y-8">
-
-                            <!-- Father -->
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                                <div class="text-center">
-                                    <img
-                                        src="{{ asset('img/father/' . ($teacher->father_photo ?? 'default.png')) }}"
-                                        class="w-28 h-28 rounded-full mx-auto border-2 shadow"
-                                        alt="Father Photo">
-                                    <p class="text-sm text-gray-500 mt-2">Father</p>
-                                </div>
-
-                                <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <p class="text-gray-500">Name</p>
-                                        <p class="font-medium">{{ $teacher->father_name ?? '-' }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Contact</p>
-                                        <p class="font-medium">{{ $teacher->father_contact ?? '-' }}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <!-- Mother -->
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                                <div class="text-center">
-                                    <img
-                                        src="{{ asset('img/mother/' . ($teacher->mother_photo ?? 'default.png')) }}"
-                                        class="w-28 h-28 rounded-full mx-auto border-2 shadow"
-                                        alt="Mother Photo">
-                                    <p class="text-sm text-gray-500 mt-2">Mother</p>
-                                </div>
-
-                                <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <p class="text-gray-500">Name</p>
-                                        <p class="font-medium">{{ $teacher->mother_name ?? '-' }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Contact</p>
-                                        <p class="font-medium">{{ $teacher->mother_contact ?? '-' }}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <!-- Guardian -->
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                                <div class="flex items-center justify-center">
-                                    <div class="w-28 h-28 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm border">
-                                        Guardian
+                                <!-- Profile Image -->
+                                <div class="mx-auto flex justify-center">
+                                    <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-lg bg-gray-200">
+                                        <img
+                                            src="{{ $teacher && $teacher->photo
+                                                ? asset('img/teacher/'.$teacher->photo)
+                                                : asset('img/default-user.png') }}"
+                                            class="w-full h-full object-cover"
+                                            alt="Teacher Photo">
                                     </div>
                                 </div>
 
-                                <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <p class="text-gray-500">Name</p>
-                                        <p class="font-medium">{{ $teacher->guardian_name ?? '-' }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Contact</p>
-                                        <p class="font-medium">{{ $teacher->guardian_contact ?? '-' }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Relationship</p>
-                                        <p class="font-medium">{{ $teacher->guardian_relationship ?? '-' }}</p>
-                                    </div>
-                                </div>
+                                <!-- Name -->
+                                @if($teacher)
+                                    <h2 class="mt-5 text-xl sm:text-2xl font-semibold text-gray-800">
+                                        <a href="{{ url('/edit-teacher-view/'.$teacher->id) }}" class="hover:underline">
+                                            {{ $teacher->first_name }} {{ $teacher->last_name }}
+                                        </a>
+                                    </h2>
+
+                                    <!-- Email -->
+                                    <p class="text-gray-600 text-sm sm:text-base">
+                                        {{ $teacher->email }}
+                                    </p>
+
+                                    <!-- Designation -->
+                                    <p class="text-gray-500 text-xs sm:text-sm mt-1">
+                                        {{ $teacher->designation }}
+                                    </p>
+                                @endif
                             </div>
+
+                            <!-- PROFILE DETAILS -->
+                            @if($teacher)
+                            <div class="border-t border-gray-200">
+                                <dl class="divide-y divide-gray-200">
+
+                                    <div class="py-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+                                        <dt class="text-sm font-medium text-gray-500">Full Name</dt>
+                                        <dd class="text-sm sm:col-span-2 text-gray-900 font-semibold">
+                                            {{ $teacher->first_name }} {{ $teacher->last_name }}
+                                            <p class="text-xs text-gray-500">
+                                                ({{ $teacher->designation }})
+                                            </p>
+                                        </dd>
+                                    </div>
+
+                                    <div class="py-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+                                        <dt class="text-sm font-medium text-gray-500">Email Address</dt>
+                                        <dd class="text-sm sm:col-span-2 text-gray-900">
+                                            {{ $teacher->email }}
+                                        </dd>
+                                    </div>
+
+                                    <div class="py-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+                                        <dt class="text-sm font-medium text-gray-500">Phone Number</dt>
+                                        <dd class="text-sm sm:col-span-2 text-gray-900">
+                                            {{ $teacher->contact_number }}
+                                        </dd>
+                                    </div>
+
+                                    <div class="py-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+                                        <dt class="text-sm font-medium text-gray-500">Address</dt>
+                                        <dd class="text-sm sm:col-span-2 text-gray-900">
+                                            {{ $teacher->address }}
+                                        </dd>
+                                    </div>
+
+                                </dl>
+                            </div>
+
+                            <!-- EDIT BUTTON -->
+                            <div class="text-center mt-10">
+                                <a href="{{ url('/edit-teacher-profile') }}"
+                                class="inline-flex items-center gap-2 bg-[#3F4D67] hover:bg-[#2f3b52] transition-colors duration-300 text-white font-medium py-2.5 px-6 rounded-full shadow-md">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    <span>Edit Profile</span>
+                                </a>
+                            </div>
+                            @endif
 
                         </div>
                     </div>
-
-
-                    <!-- System Information -->
-                    <div class="bg-white rounded-xl shadow-md">
-                        <div class="px-6 py-4 border-b">
-                            <h3 class="text-lg font-semibold text-gray-800">System Information</h3>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 text-sm">
-                            <div>
-                                <p class="text-gray-500">Status</p>
-                                <p class="font-medium">
-                                    {{ $teacher->status ? 'Active' : 'Inactive' }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Remark</p>
-                                <p class="font-medium">{{ $teacher->remark ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Email Verified At</p>
-                                <p class="font-medium">{{ $teacher->email_verified_at ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Last Login At</p>
-                                <p class="font-medium">{{ $teacher->last_login_at ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Last Login IP</p>
-                                <p class="font-medium">{{ $teacher->last_login_ip ?? '-' }}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500">Profile Completed</p>
-                                <p class="font-medium">
-                                    {{ $teacher->is_profile_completed ? 'Yes' : 'No' }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
+                <!-- [ Main Content ] end -->
 
-            <!-- [ Main Content ] end -->        
+            </div>
         </div>
     </div>
     <!-- [ Main Content ] end -->
