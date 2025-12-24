@@ -1,5 +1,7 @@
 <div class="pc-container">
     <div class="pc-content">
+        <!-- [ Header ] end -->
+        @include('layouts.message')
         <!-- [ breadcrumb ] start -->
         <div class="page-header">
             <div class="page-block">

@@ -30,13 +30,13 @@
     <!-- [ Sidebar Menu ] end -->
     <!-- [ Header Topbar ] start -->
     @include('layouts.header')
-    <!-- [ Header ] end -->
-    @include('layouts.message')
 
 
       <!-- [ Main Content ] start -->
       <div class="pc-container">
             <div class="pc-content">
+                <!-- [ Header ] end -->
+            @include('layouts.message')
                 <!-- [ breadcrumb ] start -->
                 <div class="page-header">
                     <div class="page-block">
