@@ -112,16 +112,14 @@ class AttendanceController extends Controller
     public function dailyAttendet(){
         $company = Company::first();
 
-        $attend = Attendance::with(['student','class'])->where('attendance_date', $this->date)->latest()->get();
+        $attend = Attendance::with(['student','class.teachers'])->where('attendance_date', $this->date)->latest()->get();
 
         $studentWise = $attend->groupBy('student_id');
         $classWise = $attend->groupBy('class_id');
 
         $totalStudent = Student::count();
-        $present = Attendance::whereDate('attendance_date', $this->date)
-            ->where('status','Present')->count();
-        $absent = Attendance::whereDate('attendance_date', $this->date)
-            ->where('status','Absent')->count();
+        $present = $attend->where('status', 'Present')->count();
+        $absent = $attend->where('status', 'Absent')->count();
 
         return view('attendance.daily-student-list', compact(
             'attend',

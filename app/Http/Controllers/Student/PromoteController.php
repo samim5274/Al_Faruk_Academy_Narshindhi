@@ -26,14 +26,14 @@ class PromoteController extends Controller
 
     public function classList(){
         $company = Company::first();
-        $classes = Room::all();
+        $classes = Room::with('teachers')->get();
         return view('student.class-list', compact('classes','company'));
     }
 
     public function stdList($class){
         $company = Company::first();
         $students = Student::with('room')->where('class_id', $class)->get();
-        $classes = Room::all();
+        $classes = Room::with('teachers')->get();
         return view('student.class-student-list', compact('students','classes','company'));
     }
 

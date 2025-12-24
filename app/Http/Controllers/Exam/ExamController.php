@@ -28,7 +28,7 @@ class ExamController extends Controller
         $company = Company::first();
         $exams = Exam::with('room', 'subject')->orderBy('date', 'asc')->get();
         $subjects = Subject::all();
-        $rooms = Room::all();
+        $rooms = Room::with('teachers')->get();
         $examName = ExamName::all();
         return view('exam.exam-list', compact('subjects', 'rooms', 'exams','examName','company'));
     }
@@ -118,7 +118,7 @@ class ExamController extends Controller
 
     public function classList(){
         $company = Company::first();
-        $classes = Room::all();
+        $classes = Room::with('teachers')->get();
         return view('exam.exam-class-list', compact('classes','company'));
     }
 
@@ -204,7 +204,7 @@ class ExamController extends Controller
 
     public function resultReport(){
         $company = Company::first();
-        $classes = Room::all();
+        $classes = Room::with('teachers')->get();
         return view('exam.report.class-list', compact('classes','company'));
     }
 
@@ -222,7 +222,7 @@ class ExamController extends Controller
 
     public function totalReport(){
         $company = Company::first();
-        $classes = Room::all();
+        $classes = Room::with('teachers')->get();
         return view('exam.report.class-list-2', compact('classes','company'));
     }
 
