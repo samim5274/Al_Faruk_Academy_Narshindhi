@@ -57,30 +57,28 @@
                 <div class="card-body p-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         @foreach($classes as $val)
-                        @if($val->id != 13)
-                            <a href="{{url('/total-result-report/class/'.$val->id)}}">
-                                <div class="border p-5 rounded-md bg-white shadow-md transform transition duration-300 hover:-translate-y-2 hover:shadow-xl">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <h3 class="text-lg font-semibold text-[#3F4D67]">
-                                            {{ $val->name }} - {{ $val->section ?? 'N/A' }}
-                                        </h3>
-                                        <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
-                                            {{ $val->section ?? 'N/A' }}
-                                        </span>
-                                    </div>
-                                    <div class="space-y-2 text-sm text-gray-600">
-                                        <p>
-                                            <i class="fa-solid fa-user-tie mr-2 text-blue-500"></i>
-                                            Teacher: {{ $val->teachers->first_name }} {{ $val->teachers->last_name }}
-                                        </p>
-                                        <p>
-                                            <i class="fa-solid fa-users mr-2 text-purple-500"></i>
-                                            Capacity: {{ $val->capacity }}
-                                        </p>
-                                    </div>
+                        <a href="{{url('/total-result-report/class/'.$val->id)}}">
+                            <div class="border p-5 rounded-md bg-white shadow-md transform transition duration-300 hover:-translate-y-2 hover:shadow-xl">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="text-lg font-semibold text-[#3F4D67]">
+                                        {{ $val->name }} - {{ $val->section ?? 'N/A' }}
+                                    </h3>
+                                    <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
+                                        {{ $val->section ?? 'N/A' }}
+                                    </span>
                                 </div>
-                            </a>
-                        @endif
+                                <div class="space-y-2 text-sm text-gray-600">
+                                    <p>
+                                        <i class="fa-solid fa-user-tie mr-2 text-blue-500"></i>
+                                        Teacher: {{ $val->teachers->first_name }} {{ $val->teachers->last_name }}
+                                    </p>
+                                    <p>
+                                        <i class="fa-solid fa-users mr-2 text-purple-500"></i>
+                                        Capacity: {{ $val->capacity }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
                         @endforeach
                     </div>
                 </div>

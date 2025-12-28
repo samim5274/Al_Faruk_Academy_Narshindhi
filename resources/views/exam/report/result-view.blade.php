@@ -52,67 +52,98 @@
             </div>
 
             <!-- Card -->
-            <div class="card rounded-lg border shadow-sm ">
+            @php
+                $student = optional(optional($marks->first())->first())->student;
+            @endphp
+
+            <div class="card rounded-lg border shadow-sm">
+                <!-- ================= Student Header ================= -->
                 <div class="bg-gray-100 border-b px-4 py-4 sm:py-6 rounded-t-lg">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                        <!-- Student Info -->
+                    <div class="flex items-center justify-between">
                         <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
                             <span class="text-blue-500 text-xl">📌</span>
-                            Student: <span class="text-gray-700">{{ $marks[0]->student->first_name ?? 'N/A' }} {{ $marks[0]->student->first_name ?? 'N/A' }}</span> 
-                            (<span class="text-gray-700">{{ $marks[0]->exam->name ?? 'N/A' }}</span>)
+                            Student:
+                            <span class="text-gray-700">
+                                {{ $student->first_name ?? 'N/A' }}
+                                {{ $student->last_name ?? '' }}
+                            </span>
                         </h2>
                     </div>
                 </div>
+
+                <!-- ================= Table ================= -->
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border rounded-xl shadow-md">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="text-left px-6 py-3 text-md font-semibold text-gray-900">#</th>
-                                <th class="text-left px-6 py-3 text-md font-semibold text-gray-900">Subject</th>
-                                <th class="text-left px-6 py-3 text-md font-semibold text-gray-900">Exam</th>
-                                <th class="px-6 py-3 text-md text-center font-semibold text-gray-900">Marks</th>
-                                <th class="px-6 py-3 text-md text-center font-semibold text-gray-900">Grade</th>
-                                <th class="px-6 py-3 text-md text-center font-semibold text-gray-900">GPA</th>
-                            </tr>
-                        </thead>
                         <tbody class="divide-y divide-gray-200">
-                            @foreach($marks as $val)
-                            <tr class="hover:bg-gray-50 transition">
-                                <td class="px-6 py-4 text-md text-gray-900">{{ $loop->iteration }}</td>
-                                <td class="px-6 py-4 text-md text-gray-900 font-semibold hover:text-blue-600 transition">
-                                    {{ $val->subject->name }}
-                                </td>
-                                @if($val->exam->name == 'Midterm')
-                                <td class="px-6 py-4 text-md text-blue-500 font-medium flex items-center gap-1">
-                                    <i class="fa fa-comments"></i> {{ $val->exam->name }}
-                                </td>
-                                @elseif($val->exam->name == 'Final')
-                                <td class="px-6 py-4 text-md text-green-500 font-medium flex items-center gap-1">
-                                    <i class="fa fa-comments"></i> {{ $val->exam->name }}
-                                </td>
-                                @else 
-                                <td class="px-6 py-4 text-md text-green-500 font-medium flex items-center gap-1">
-                                    <i class="fa fa-comments"></i> No Exam
-                                </td>
-                                @endif
-                                <td class="px-6 py-4 text-md text-center text-gray-600 truncate max-w-[220px]">
-                                    {{ $val->marks_obtained }}
-                                </td>
-                                <td class="px-6 py-4 text-md text-center text-gray-600 truncate max-w-[220px]">
-                                    {{ $val->grade }}
-                                </td>
-                                <td class="px-6 py-4 text-md text-center text-gray-600 truncate max-w-[220px]">
-                                    {{ $val->gpa }}
-                                </td>
-                            </tr>
+
+                            @foreach($marks as $examName => $examMarks)
+
+                                <!-- ===== Exam Title ===== -->
+                                <tr>
+                                    <td colspan="6"
+                                        class="px-6 py-3 bg-gradient-to-r from-indigo-50 to-indigo-100
+                                        text-indigo-500 font-semibold text-lg">
+                                        📘 {{ $examName }} Examination
+                                    </td>
+                                </tr>
+
+                                <!-- ===== Marks Rows ===== -->
+                                @foreach($examMarks as $val)
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-6 py-4 text-md text-gray-900">
+                                            {{ $loop->iteration }}
+                                        </td>
+
+                                        <td class="px-6 py-4 text-md text-gray-900 font-semibold">
+                                            {{ $val->subject->name ?? '-' }}
+                                        </td>
+
+                                        <td class="px-6 py-4 text-md text-center">
+                                            <span class="px-3 py-1 rounded-full text-sm
+                                                {{ str_contains(strtolower($examName),'mid') ? 'bg-blue-100 text-blue-700' :
+                                                (str_contains(strtolower($examName),'final') ? 'bg-green-100 text-green-700' :
+                                                'bg-purple-100 text-purple-700') }}">
+                                                {{ $examName }}
+                                            </span>
+                                        </td>
+
+                                        <td class="px-6 py-4 text-md text-center font-semibold text-gray-700">
+                                            {{ $val->marks_obtained ?? '-' }}
+                                        </td>
+
+                                        <td class="px-6 py-4 text-md text-center">
+                                            <span class="px-3 py-1 rounded-md bg-yellow-100 text-yellow-700 font-semibold">
+                                                {{ $val->grade ?? '-' }}
+                                            </span>
+                                        </td>
+
+                                        <td class="px-6 py-4 text-md text-center">
+                                            <span class="px-3 py-1 rounded-md bg-indigo-100 text-indigo-700 font-semibold">
+                                                {{ $val->gpa ?? '0.00' }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                <!-- ===== Exam Footer ===== -->
+                                <tr>
+                                    <td colspan="6"
+                                        class="px-6 py-3 text-right bg-gray-50 font-semibold text-gray-700">
+                                        🎯 Average GPA:
+                                        <span class="text-indigo-600">
+                                            {{ number_format($examMarks->avg('gpa'), 2) }}
+                                        </span>
+                                    </td>
+                                </tr>
+
                             @endforeach
+
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
-            <!-- Card End -->
+
+            <!-- Card End -->             
         </div>
     </div>
     <!-- [ Main Content ] end -->

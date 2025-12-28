@@ -222,6 +222,8 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/student-exam-list', [StudentPortalController::class, 'examList'])->name('student-exam-list');
     Route::get('/student-results', [StudentPortalController::class, 'results'])->name('student-result');
     Route::get('/student-fee-details', [StudentPortalController::class, 'feeDetails'])->name('student-fee-details');
+    Route::get('/payment-history', [StudentPortalController::class, 'myPaymentHistory'])->name('my-payment-history');
+    Route::get('/student/invoice/{id}', [StudentPortalController::class, 'paymentDetails'])->name('fee-payment-details');
     Route::get('/student-payment-history', [StudentPortalController::class, 'feeHistory'])->name('payment-history');
     Route::get('/student-enrollment', [StudentPortalController::class, 'enrollment'])->name('student-enrollment');
     Route::post('/student-subject-enrollment', [StudentPortalController::class, 'enrollmentStore']);

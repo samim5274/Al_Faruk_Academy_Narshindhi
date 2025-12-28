@@ -74,7 +74,7 @@ class StudentPortalController extends Controller
     public function results(){
         $company = Company::first();
         $student = $student = Auth::guard('student')->user();
-        $marks = Mark::where('student_id', $student->id)->get();
+        $marks = Mark::with(['student','subject','exam'])->where('student_id', $student->id)->get();
         return view('studentPortal.exam.student-marks', compact('student','marks','company'));
     }
 
@@ -84,6 +84,26 @@ class StudentPortalController extends Controller
         $structures = FeeStructure::where('class_id', $student->class_id)->get();
         $payments = feePaymentDetails::where('student_id', $student->id)->get();
         return view('studentPortal.fee.student-fee-details', compact('student','structures','payments','company'));
+    }
+
+    public function myPaymentHistory(){
+        $company = Company::first();
+        $student = $student = Auth::guard('student')->user();
+        $payments = feePaymentDetails::with(['teacher','student','items'])->where('student_id', $student->id)->orderBy('payment_date', 'desc')->paginate(15);
+        return view('studentPortal.fee.my-fee-history', compact('student','payments','company'));
+    }
+
+    public function paymentDetails($id){
+        $company = Company::first();
+        $feeStructures = FeePaymentItem::with(['student', 'feeStructure','payment'])->where('fee_payment_id', $id)->get();
+        if ($feeStructures->isEmpty()) {
+            return redirect()->back()
+                ->with('error', 'Payment history not found. Please try again.');
+        }
+
+        $payment = feePaymentDetails::with(['student','teacher','items.student','items.feeStructure'])->findOrFail($id);
+
+        return view('studentPortal.fee.fee-payment-details', compact('feeStructures', 'payment','company'));
     }
 
     public function feeHistory(){

@@ -275,7 +275,7 @@
                         <li class="pc-item pc-hasmenu">
                             <a href="{{url('/expense')}}" class="pc-link">
                                 <span class="pc-micon"><i class="fa-solid fa-money-bill-transfer"></i></span>
-                                <span class="pc-mtext">Expenses Records</span>
+                                <span class="pc-mtext">Expenses</span>
                             </a>
                         </li>
                     </ul>
@@ -371,18 +371,19 @@
                     <ul class="pc-submenu">
                         <li class="pc-item"><a class="pc-link" href="{{url('/student-list')}}"> <span class="pc-micon"> <i class="fa-solid fa-user-tie"></i></span><span class="pc-mtext">Student List</span></a></li>
                         <li class="pc-item"><a class="pc-link" href="{{url('/add-student-view')}}"> <span class="pc-micon"> <i data-feather="edit"></i></span><span class="pc-mtext">Admission Student</span></a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{ url('/student-report') }}"> <span class="pc-micon"> <i class="fa-solid fa-chart-simple"></i></span><span class="pc-mtext">Student Report's</span></a></li>
                     </ul>
                 </li>                
-                <li class="pc-item pc-hasmenu">
+                <!-- <li class="pc-item pc-hasmenu">
                     <a href="#!" class="pc-link"><span class="pc-micon"> <i data-feather="align-right"></i> </span><span
                     class="pc-mtext">Student Report's</span><span class="pc-arrow"><i class="ti ti-chevron-right"></i></span></a>
                     <ul class="pc-submenu">
                         <li class="pc-item"><a class="pc-link" href="{{ url('/student-report') }}">Student Report's</a></li>
-                        <!-- <li class="pc-item"><a class="pc-link" href="#!">Class Report's</a></li>
+                        <li class="pc-item"><a class="pc-link" href="#!">Class Report's</a></li>
                         <li class="pc-item"><a class="pc-link" href="#!">Section Report's</a></li>
-                        <li class="pc-item"><a class="pc-link" href="#!">Status</a></li> -->
+                        <li class="pc-item"><a class="pc-link" href="#!">Status</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <!-- Student section End -->
 
                 <!-- Teachers section start -->
@@ -392,15 +393,16 @@
                     <ul class="pc-submenu">
                         <li class="pc-item"><a class="pc-link" href="{{url('/teacher-list')}}"> <span class="pc-micon"> <i class="fa-solid fa-user-tie"></i></span><span class="pc-mtext">Teacher List</span></a></li>
                         <li class="pc-item"><a class="pc-link" href="{{url('add-teacher-view')}}"> <span class="pc-micon"> <i data-feather="edit"></i>  </span><span class="pc-mtext">New Teacher</span></a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{url('/teacher-report')}}"> <span class="pc-micon"> <i data-feather="align-right"></i> </span><span class="pc-mtext">Teacher Report's</span></a></li>
                     </ul>
                 </li>
-                <li class="pc-item pc-hasmenu">
+                <!-- <li class="pc-item pc-hasmenu">
                     <a href="#!" class="pc-link"><span class="pc-micon"> <i data-feather="align-right"></i> </span><span
                     class="pc-mtext">Teacher Report's</span><span class="pc-arrow"><i class="ti ti-chevron-right"></i></span></a>
                     <ul class="pc-submenu">
                         <li class="pc-item"><a class="pc-link" href="{{url('/teacher-report')}}">Teacher Report's</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <!-- Teachers section End -->
                 
                 <!-- Notice start -->

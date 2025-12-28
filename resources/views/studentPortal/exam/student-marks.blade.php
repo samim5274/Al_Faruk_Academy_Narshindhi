@@ -40,7 +40,9 @@
     <div class="pc-container">
         <div class="pc-content">
             <!-- Exams Grid -->
-             <div class="card rounded-lg border shadow-sm ">                
+
+             <!-- 1st line change -->
+            <div class="card rounded-lg border shadow-sm">
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border rounded-xl shadow-md">
                         <thead class="bg-gray-100">
@@ -54,43 +56,185 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            @foreach($marks->groupBy('exam.name') as $examName => $examMarks)
-                                <!-- Exam Header Row -->
+
+                            @php
+                                $overallTotal = 0;
+                                $overallGpaSum = 0;
+                                $overallSubjectsCount = 0;
+                            @endphp
+
+                            @foreach($marks->groupBy(function($item){ return optional($item->exam)->name ?? 'No Exam'; }) as $examName => $examMarks)
+                                @php
+                                    $examTotal = $examMarks->sum('marks_obtained');
+                                    $examGpaSum = $examMarks->sum('gpa');
+                                    $examSubjectsCount = $examMarks->count();
+                                    $examAvgGpa = $examSubjectsCount > 0 ? $examGpaSum / $examSubjectsCount : 0;
+
+                                    $overallTotal += $examTotal;
+                                    $overallGpaSum += $examGpaSum;
+                                    $overallSubjectsCount += $examSubjectsCount;
+                                @endphp
+
                                 <tr class="bg-gray-100">
-                                    <td colspan="7" class="px-6 py-3 text-left font-bold text-gray-700 text-lg">
-                                        {{ $examName ?? 'No Exam' }}
+                                    <td colspan="6" class="px-6 py-3 text-left font-bold text-gray-700 text-lg">
+                                        {{ $examName }}
                                     </td>
                                 </tr>
 
-                                <!-- Marks Rows -->
                                 @foreach($examMarks as $val)
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="px-6 py-4 text-md text-gray-900">{{ $loop->iteration }}</td>
-                                    <td class="px-6 py-4 text-md text-gray-900 font-semibold hover:text-blue-600 transition">
-                                        {{ $val->subject->name }}
-                                    </td>
-                                    <td class="px-6 py-4 text-md font-medium flex items-center gap-1
-                                        {{ $val->exam->name == 'Midterm' ? 'text-blue-500' : ($val->exam->name == 'Final' ? 'text-green-500' : 'text-gray-500') }}">
-                                        <i class="fa fa-comments"></i> {{ $val->exam->name ?? 'No Exam' }}
-                                    </td>
-                                    <td class="px-6 py-4 text-md text-center text-gray-600 truncate max-w-[220px]">
-                                        {{ $val->marks_obtained }}
-                                    </td>
-                                    <td class="px-6 py-4 text-md text-center text-gray-600 truncate max-w-[220px]">
-                                        {{ $val->grade }}
-                                    </td>
-                                    <td class="px-6 py-4 text-md text-center text-gray-600 truncate max-w-[220px]">
-                                        {{ $val->gpa }}
-                                    </td>
-                                </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="px-6 py-4 text-md text-gray-900">{{ $loop->iteration }}</td>
+                                        <td class="px-6 py-4 text-md text-gray-900 font-semibold hover:text-blue-600 transition">
+                                            {{ optional($val->subject)->name ?? '-' }}
+                                        </td>
+                                        <td class="px-6 py-4 text-md font-medium flex items-center gap-1
+                                            {{ optional($val->exam)->name == 'Midterm' ? 'text-blue-500' : (optional($val->exam)->name == 'Final' ? 'text-green-500' : 'text-gray-500') }}">
+                                            <i class="fa fa-book"></i> {{ optional($val->exam)->name ?? 'No Exam' }}
+                                        </td>
+                                        <td class="px-6 py-4 text-md text-center text-gray-600 truncate max-w-[220px]">
+                                            {{ $val->marks_obtained ?? '-' }}
+                                        </td>
+                                        <td class="px-6 py-4 text-md text-center text-gray-600 truncate max-w-[220px]">
+                                            {{ $val->grade ?? '-' }}
+                                        </td>
+                                        <td class="px-6 py-4 text-md text-center text-gray-600 truncate max-w-[220px]">
+                                            {{ $val->gpa ?? '0.00' }}
+                                        </td>
+                                    </tr>
                                 @endforeach
+
+                                <tr class="bg-gray-50 font-semibold text-gray-800">
+                                    <td colspan="3" class="text-right px-6 py-2">Exam Total:</td>
+                                    <td class="text-center px-6 py-2">{{ $examTotal }}</td>
+                                    <td class="text-center px-6 py-2">
+                                        Avg Grade: 
+                                        {{-- optional, simple logic: pick most frequent grade --}}
+                                        @php
+                                            $grades = $examMarks->pluck('grade')->filter()->toArray();
+                                            $examAvgGrade = count($grades) ? collect($grades)->countBy()->sortDesc()->keys()->first() : '-';
+                                        @endphp
+                                        {{ $examAvgGrade }}
+                                    </td>
+                                    <td class="text-center px-6 py-2">{{ number_format($examAvgGpa, 2) }}</td>
+                                </tr>
+
                             @endforeach
+
+                            <tr class="bg-gray-200 font-bold text-gray-900">
+                                <td colspan="3" class="text-right px-6 py-3">Overall Total:</td>
+                                <td class="text-center px-6 py-3">{{ $overallTotal }}</td>
+                                <td class="text-center px-6 py-3">
+                                    {{-- Overall avg grade --}}
+                                    @php
+                                        $allGrades = $marks->pluck('grade')->filter()->toArray();
+                                        $overallAvgGrade = count($allGrades) ? collect($allGrades)->countBy()->sortDesc()->keys()->first() : '-';
+                                    @endphp
+                                    {{ $overallAvgGrade }}
+                                </td>
+                                <td class="text-center px-6 py-3">{{ $overallSubjectsCount > 0 ? number_format($overallGpaSum / $overallSubjectsCount, 2) : '0.00' }}</td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
+            <br><br><hr><br><br>
+            <!-- 2nd line change -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-lg shadow-lg p-4 col-span-full border border-indigo-200">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                        
+                        <div class="flex items-center gap-2">
+                            <span class="text-indigo-600 text-xl font-bold">📊</span>
+                            <div>
+                                <p class="text-gray-700 font-semibold text-sm">Overall Total Marks</p>
+                                <p class="text-gray-900 font-bold text-2xl">{{ $overallTotal }}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <span class="text-green-600 text-xl font-bold">🎯</span>
+                            <div>
+                                <p class="text-gray-700 font-semibold text-sm">Overall Avg GPA / Grade</p>
+                                <p class="text-gray-900 font-bold text-2xl">
+                                    {{ $overallSubjectsCount > 0 ? number_format($overallGpaSum / $overallSubjectsCount, 2) : '0.00' }}
+                                    /
+                                    @php
+                                        $allGrades = $marks->pluck('grade')->filter()->toArray();
+                                        $overallAvgGrade = count($allGrades) ? collect($allGrades)->countBy()->sortDesc()->keys()->first() : '-';
+                                    @endphp
+                                    {{ $overallAvgGrade }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @php
+                    $overallTotal = 0;
+                    $overallGpaSum = 0;
+                    $overallSubjectsCount = 0;
+                @endphp
+
+                @foreach($marks->groupBy(function($item){ return optional($item->exam)->name ?? 'No Exam'; }) as $examName => $examMarks)
+                    @php
+                        $examTotal = $examMarks->sum('marks_obtained');
+                        $examGpaSum = $examMarks->sum('gpa');
+                        $examSubjectsCount = $examMarks->count();
+                        $examAvgGpa = $examSubjectsCount > 0 ? $examGpaSum / $examSubjectsCount : 0;
+
+                        $overallTotal += $examTotal;
+                        $overallGpaSum += $examGpaSum;
+                        $overallSubjectsCount += $examSubjectsCount;
+
+                        $grades = $examMarks->pluck('grade')->filter()->toArray();
+                        $examAvgGrade = count($grades) ? collect($grades)->countBy()->sortDesc()->keys()->first() : '-';
+                    @endphp
+
+                    <div class="card rounded-lg border shadow-md overflow-hidden">
+                        
+                        <div class="bg-gradient-to-r from-indigo-100 to-indigo-200 px-4 py-3 font-bold text-indigo-800 text-lg flex justify-between items-center">
+                            <span>{{ $examName }}</span>
+                            <span class="text-sm font-semibold">Total: {{ $examTotal }}</span>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full table-auto">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-3 py-2 text-left text-sm font-semibold text-gray-700">#</th>
+                                        <th class="px-3 py-2 text-left text-sm font-semibold text-gray-700">Subject</th>
+                                        <th class="px-3 py-2 text-center text-sm font-semibold text-gray-700">Marks</th>
+                                        <th class="px-3 py-2 text-center text-sm font-semibold text-gray-700">Grade</th>
+                                        <th class="px-3 py-2 text-center text-sm font-semibold text-gray-700">GPA</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    @foreach($examMarks as $val)
+                                        <tr class="hover:bg-gray-50 transition">
+                                            <td class="px-3 py-2 text-sm text-gray-800">{{ $loop->iteration }}</td>
+                                            <td class="px-3 py-2 text-sm text-gray-900 font-medium">{{ optional($val->subject)->name ?? '-' }}</td>
+                                            <td class="px-3 py-2 text-sm text-center text-gray-700">{{ $val->marks_obtained ?? '-' }}</td>
+                                            <td class="px-3 py-2 text-sm text-center text-gray-700">{{ $val->grade ?? '-' }}</td>
+                                            <td class="px-3 py-2 text-sm text-center text-gray-700">{{ number_format($val->gpa ?? 0, 2) }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                    <tr class="bg-gray-100 font-semibold text-gray-800">
+                                        <td colspan="2" class="px-3 py-2 text-right">Avg GPA / Grade:</td>
+                                        <td colspan="3" class="px-3 py-2 text-center">
+                                            {{ number_format($examAvgGpa, 2) }} / {{ $examAvgGrade }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endforeach
+                
+            </div>
+
             <!-- Exams Grid End -->
         </div>
     </div>

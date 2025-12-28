@@ -113,55 +113,90 @@
             </div> -->
 
             <div class="row g-4">
-                <div class="bg-gray-100 border-b px-4 py-4 sm:py-6 rounded-t-lg">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                        <!-- Student Info -->
-                        <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
-                            <span class="text-blue-500 text-xl">📌</span>
-                            <span class="text-gray-700">{{ $students[0]->room->name ?? 'N/A' }}</span> 
-                            (<span class="text-gray-700">{{ $students[0]->room->section ?? 'N/A' }}</span>)
+
+                <!-- ================= Room Header ================= -->
+                <div class="col-12">
+                    <div class="bg-gray-100 border rounded-lg px-4 py-4 shadow-sm">
+                        <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                            📌 Room:
+                            {{ $students[0]->room->name ?? 'N/A' }}
+                            ({{ $students[0]->room->section ?? 'N/A' }})
                         </h2>
                     </div>
                 </div>
-                @foreach($studentResults as $key => $data)
+
+                <!-- ================= Student Cards ================= -->
+                @foreach($studentResults as $index => $data)
                     <div class="col-md-6 col-lg-4">
-                        <div class="card shadow-md border-0 h-100 rounded-lg">
-                            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                                <h2 class="text-lg">{{ $key + 1 }}. {{ $data['student']->first_name }} {{ $data['student']->last_name }}</h2> 
-                                <!-- <span class="badge bg-light text-dark">Total: {{ $data['total_marks'] }}</span> -->
+                        <div class="card shadow-sm border-0 h-100 rounded-lg">
+
+                            <!-- Student Name -->
+                            <div class="card-header bg-primary text-gray-800">
+                                <h4>
+                                    {{ $index + 1 }}.
+                                    {{ $data['student']->first_name }}
+                                    {{ $data['student']->last_name }}
+                                </h4>
                             </div>
+
+                            <!-- Exam-wise Results -->
                             <div class="card-body p-2">
-                                <div class="table-responsive">
-                                    <table class="table table-sm table-bordered mb-0">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Subject</th>
-                                                <th class="text-center">Marks</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($subjects as $subject)
-                                                @php
-                                                    $result = $data['student']->results->firstWhere('subject_id', $subject->id);
-                                                @endphp
-                                                <tr>
-                                                    <td>{{ $subject->name }}</td>
-                                                    <td class="text-center {{ $result && $result->marks_obtained < 40 ? 'text-danger fw-bold' : '' }}">
-                                                        {{ $result ? $result->marks_obtained : '-' }}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+
+                                @foreach($data['exam_results'] as $exam)
+                                    <div class="mb-3 border rounded">
+
+                                        <!-- Exam Title -->
+                                        <div class="bg-light px-2 py-1 font-semibold text-primary">
+                                            📝 {{ $exam['exam_name'] }}
+                                        </div>
+
+                                        <!-- Subject Table -->
+                                        <table class="table table-sm table-bordered mb-0">
+                                            <tbody>
+                                                @foreach($exam['subjects'] as $subject)
+                                                    <tr>
+                                                        <td>{{ $subject['subject'] }}</td>
+                                                        <td class="text-center">
+                                                            @if($subject['marks'] !== null)
+                                                                <span class="{{ $subject['marks'] < 40 ? 'text-danger fw-bold' : '' }}">
+                                                                    {{ $subject['marks'] }}
+                                                                </span>
+                                                            @else
+                                                                -
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+                                        <!-- Exam Total -->
+                                        <div class="bg-gray-100 text-end px-2 py-1 fw-bold">
+                                            Exam Total:
+                                            <span class="text-primary">
+                                                {{ $exam['total'] }}
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                @endforeach
+
                             </div>
-                            <div class="card-footer bg-light text-center fw-bold">
-                                Final Total: <span class="text-primary">{{ $data['total_marks'] }}</span>
+
+                            <!-- Overall Total -->
+                            <div class="card-footer text-center text-lg font-semibold bg-light">
+                                🎯 Overall Total:
+                                <span class="text-[#3F4D67]">
+                                    {{ $data['overall_total'] }}
+                                </span>
                             </div>
+
                         </div>
                     </div>
                 @endforeach
+
             </div>
+
             <!-- Card End -->
         </div>
     </div>

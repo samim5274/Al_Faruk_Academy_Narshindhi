@@ -216,7 +216,7 @@ class ExamController extends Controller
 
     public function showResult($class, $student){
         $company = Company::first();
-        $marks = Mark::where('student_id', $student)->get();
+        $marks = Mark::with(['student','subject','exam'])->where('student_id', $student)->get()->groupBy(fn ($item) => $item->exam->name);
         return view('exam.report.result-view', compact('marks','class','student','company'));
     }
 
@@ -226,29 +226,98 @@ class ExamController extends Controller
         return view('exam.report.class-list-2', compact('classes','company'));
     }
 
-    public function totalResult($class){
+    // public function totalResult($class){
+    //     $company = Company::first();
+    //     $students = Student::where('class_id', $class)->with('results.subject')->get();
+    //     $subjects = Subject::where('class_id', $class)->get();
+
+    //     $studentResults = [];
+
+    //     foreach ($students as $student) {
+    //         $totalMarks = 0;
+    //         foreach ($subjects as $subject) {
+    //             $result = $student->results->firstWhere('subject_id', $subject->id);
+    //             $totalMarks += $result ? $result->marks_obtained : 0;
+    //         }
+
+    //         $studentResults[] = [
+    //             'student' => $student,
+    //             'total_marks' => $totalMarks
+    //         ];
+    //     }
+        
+    //     //dd($studentResults);
+    //     return view('exam.report.student-result-view', compact('students','subjects','studentResults','company'));
+    // }
+
+    public function totalResult($class)
+    {
         $company = Company::first();
-        $students = Student::where('class_id', $class)->with('results.subject')->get();
+
+        $students = Student::with([
+                'results.subject',
+                'results.exam',
+                'room'
+            ])
+            ->where('class_id', $class)
+            ->get();
+
         $subjects = Subject::where('class_id', $class)->get();
 
         $studentResults = [];
 
         foreach ($students as $student) {
-            $totalMarks = 0;
-            foreach ($subjects as $subject) {
-                $result = $student->results->firstWhere('subject_id', $subject->id);
-                $totalMarks += $result ? $result->marks_obtained : 0;
+
+            // exam wise group
+            $examGroups = $student->results->groupBy(function ($item) {
+                return strtolower($item->exam->name);
+            });
+
+            $examWiseResults = [];
+            $overallTotal = 0;
+
+            foreach ($examGroups as $examId => $results) {
+
+                $examName = optional($results->first()->exam)->name ?? 'Unknown';
+
+                $examTotal = 0;
+                $subjectMarks = [];
+
+                foreach ($subjects as $subject) {
+                    $mark = $results->firstWhere('subject_id', $subject->id);
+                    $obtained = $mark->marks_obtained ?? 0;
+
+                    $examTotal += $obtained;
+
+                    $subjectMarks[] = [
+                        'subject' => $subject->name,
+                        'marks'   => $mark->marks_obtained ?? null
+                    ];
+                }
+
+                $overallTotal += $examTotal;
+
+                $examWiseResults[] = [
+                    'exam_name' => $examName,
+                    'subjects'  => $subjectMarks,
+                    'total'     => $examTotal
+                ];
             }
 
             $studentResults[] = [
-                'student' => $student,
-                'total_marks' => $totalMarks
+                'student'        => $student,
+                'exam_results'   => $examWiseResults,
+                'overall_total'  => $overallTotal,
+                'total_marks'    => $overallTotal,
             ];
         }
-        
-        //dd($studentResults);
-        return view('exam.report.student-result-view', compact('students','subjects','studentResults','company'));
+
+        return view(
+            'exam.report.student-result-view',
+            compact('students','subjects','studentResults','company')
+        );
     }
+
 
     public function createExam(){
         $company = Company::first();
