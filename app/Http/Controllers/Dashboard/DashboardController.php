@@ -82,11 +82,19 @@ class DashboardController extends Controller
 
         $path = $disk->path($latestBackup);
 
-        $user = Auth::guard('teacher')->user();
-        if ($user) {
-            Notification::sendNow($user, new BackupCompleted($latestBackup));
-        }
+        Mail::raw('Here is the latest database backup.', function ($message) use ($path) {
+            $message->to('valobashi.tumake9999@gmail.com') 
+                    ->subject('Database Backup')
+                    ->attach($path);
+        });
+
+        return redirect()->back()->with('success', 'Database backup successfully. Thank You..!');
         
-        return response()->download($path);
+        // $user = Auth::guard('teacher')->user();
+        // if ($user) {
+        //     Notification::sendNow($user, new BackupCompleted($latestBackup));
+        // }
+        
+        // return response()->download($path);
     }
 }
