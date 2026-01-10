@@ -10,7 +10,8 @@
         <div class="m-header flex items-center py-4 px-6 h-header-height">
             <a href="{{url('/')}}" class="b-brand flex items-center gap-3">
                 <!-- ========   Change your logo from here   ============ -->
-                <img src="{{asset('assets/images/logo-white.svg')}}" class="img-fluid logo logo-lg" alt="logo" />
+                <!-- <img src="{{asset('assets/images/logo-white.svg')}}" class="img-fluid logo logo-lg" alt="logo" /> -->
+                <h4 class="text-white font-semibold">Al-Faruk Academy</h4>
                 <img src="{{asset('assets/images/favicon.svg')}}" class="img-fluid logo logo-sm" alt="logo" />
             </a>
         </div>

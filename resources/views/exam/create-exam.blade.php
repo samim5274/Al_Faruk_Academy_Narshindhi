@@ -141,8 +141,11 @@
                                     </div>
 
                                     <div class="text-center">
-                                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 w-full rounded-md shadow-md transition duration-300" onclick="return confirmSubmit(event)">
-                                            Submit
+                                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 w-full rounded-md shadow-md transition duration-300" onclick="return confirm('Are you sure you want to update this Exam?')">
+                                            Update
+                                        </button>
+                                        <button type="submit" name="delete" value="1" class="bg-red-500 hover:bg-red-600 text-white font-semibold mt-2 py-2 px-6 w-full rounded-md shadow-md transition duration-300" onclick="return confirm('Are you sure you want to delet this Exam?')">
+                                            Delete
                                         </button>
                                     </div>
                                 </form>
@@ -181,14 +184,6 @@
                 }, 3000);
             }
         });
-
-        function confirmSubmit(event) {
-            if(!confirm("Are you sure you want to submit?")) {
-                event.preventDefault(); // Cancel form submission
-                return false;
-            }
-            return true; // Proceed with form submission
-        }
 
         function openModal() {
             document.getElementById('examModal').classList.remove('hidden');

@@ -85,9 +85,7 @@
                                         <select name="class_id" id="class_id" class="form-select w-full rounded-md mt-1 border-gray-300 focus:border-green-500 focus:ring-green-500">
                                             <option disabled selected>-- Select Class --</option>
                                             @foreach($rooms as $room)
-                                            @if($room->id != 13)
-                                                <option value="{{$room->id}}">{{$room->name}} - {{$room->section}}</option>
-                                            @endif
+                                                <option value="{{$room->id}}">{{$room->name}} - {{$room->section}}</option>                                            
                                             @endforeach
                                         </select>
                                     </div>
