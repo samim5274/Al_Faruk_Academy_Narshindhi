@@ -19,8 +19,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="main-style-link" />
 
     <!-- Vite (Tailwind last to avoid override) -->
-    @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-gray-50 font-sans">
@@ -190,10 +189,89 @@
             </div> -->
             <!-- Card End -->
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="!grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
                 {{-- LEFT: TABLE --}}
-                <div class="lg:col-span-8">
+                @php $info = $attend->first(); @endphp
+                <div class="lg:!col-span-4 space-y-6">
+                    {{-- Class Details --}}                    
+                    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b bg-gray-50">
+                            <h3 class="text-base font-semibold text-gray-800">Class Details</h3>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm">
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                    <h5 class="text-sm sm:text-base font-semibold text-gray-800 flex items-center gap-2">
+                                        <span class="text-green-600">🎓</span>
+                                        {{ $info->class->name ?? 'N/A' }} ({{ $info->class->section ?? 'N/A' }})
+                                    </h5>
+
+                                    <h5 class="text-sm sm:text-base font-semibold text-gray-700 flex items-center gap-2">
+                                        <span class="text-blue-600">📅</span>
+                                        Date:
+                                        {{ $info ? \Carbon\Carbon::parse($info->attendance_date)->format('d M, Y') : 'N/A' }}
+                                    </h5>
+                                </div>
+
+                                <div class="mt-4">
+                                    <h5 class="text-sm sm:text-base font-semibold text-gray-800 flex items-center gap-2">
+                                        <span class="text-purple-600">📚</span>
+                                        Teacher:
+                                        {{ $info->class->teachers->first_name ?? '-' }}
+                                        {{ $info->class->teachers->last_name ?? '-' }}
+                                    </h5>
+                                </div>
+
+                                {{-- Optional: extra info --}}
+                                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div class="rounded-xl border border-gray-200 bg-white p-4">
+                                        <div class="text-xs text-gray-500">Total Students</div>
+                                        <div class="text-lg font-bold text-gray-800">{{ $totalStudent ?? 0 }}</div>
+                                    </div>
+
+                                    <div class="rounded-xl border border-gray-200 bg-white p-4">
+                                        <div class="text-xs text-gray-500">Attendance Status</div>
+                                        <div class="text-sm font-semibold text-gray-800">
+                                            Present: {{ $present ?? 0 }} • Absent: {{ $absent ?? 0 }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {{-- Totals Card --}}
+                    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b bg-gray-50">
+                            <h3 class="text-base font-semibold text-gray-800">Summary</h3>
+                            <p class="text-xs text-gray-500 mt-1">Today / Selected date overview</p>
+                        </div>
+
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center justify-between bg-green-50 border border-green-200 rounded-xl px-4 py-3">
+                                <span class="text-sm font-semibold text-green-700">✅ Total</span>
+                                <span class="text-sm font-bold text-green-800">{{ $totalStudent ?? 0 }}</span>
+                            </div>
+
+                            <div class="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-xl px-4 py-3">
+                                <span class="text-sm font-semibold text-blue-700">🟢 Present</span>
+                                <span class="text-sm font-bold text-blue-800">{{ $present ?? 0 }}</span>
+                            </div>
+
+                            <div class="flex items-center justify-between bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                                <span class="text-sm font-semibold text-red-700">❌ Absent</span>
+                                <span class="text-sm font-bold text-red-800">{{ $absent ?? 0 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+
+                {{-- RIGHT: CALENDAR + TOTALS --}}
+                <div class="lg:!col-span-8">
                     <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
 
                         {{-- Table Header --}}
@@ -275,89 +353,6 @@
                         </div>
 
                     </div>
-                </div>
-
-
-                {{-- RIGHT: CALENDAR + TOTALS --}}
-                <div class="lg:col-span-4 space-y-6">
-                    {{-- Class Details --}}                    
-                    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-                        <div class="px-6 py-4 border-b bg-gray-50">
-                            <h3 class="text-base font-semibold text-gray-800">Class Details</h3>
-                        </div>
-                        @php
-                            $info = $attend->first(); 
-                        @endphp
-                        <div class="p-6">
-                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm">
-                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                                    <h5 class="text-sm sm:text-base font-semibold text-gray-800 flex items-center gap-2">
-                                        <span class="text-green-600">🎓</span>
-                                        {{ $info->class->name ?? 'N/A' }} ({{ $info->class->section ?? 'N/A' }})
-                                    </h5>
-
-                                    <h5 class="text-sm sm:text-base font-semibold text-gray-700 flex items-center gap-2">
-                                        <span class="text-blue-600">📅</span>
-                                        Date:
-                                        {{ $info ? \Carbon\Carbon::parse($info->attendance_date)->format('d M, Y') : 'N/A' }}
-                                    </h5>
-                                </div>
-
-                                <div class="mt-4">
-                                    <h5 class="text-sm sm:text-base font-semibold text-gray-800 flex items-center gap-2">
-                                        <span class="text-purple-600">📚</span>
-                                        Teacher:
-                                        {{ $info->class->teachers->first_name ?? '-' }}
-                                        {{ $info->class->teachers->last_name ?? '-' }}
-                                    </h5>
-                                </div>
-
-                                {{-- Optional: extra info (যদি থাকে) --}}
-                                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    <div class="rounded-xl border border-gray-200 bg-white p-4">
-                                        <div class="text-xs text-gray-500">Total Students</div>
-                                        <div class="text-lg font-bold text-gray-800">{{ $totalStudent ?? 0 }}</div>
-                                    </div>
-
-                                    <div class="rounded-xl border border-gray-200 bg-white p-4">
-                                        <div class="text-xs text-gray-500">Attendance Status</div>
-                                        <div class="text-sm font-semibold text-gray-800">
-                                            Present: {{ $present ?? 0 }} • Absent: {{ $absent ?? 0 }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    {{-- Totals Card --}}
-                    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-                        <div class="px-6 py-4 border-b bg-gray-50">
-                            <h3 class="text-base font-semibold text-gray-800">Summary</h3>
-                            <p class="text-xs text-gray-500 mt-1">Today / Selected date overview</p>
-                        </div>
-
-                        <div class="p-6 space-y-3">
-                            <div class="flex items-center justify-between bg-green-50 border border-green-200 rounded-xl px-4 py-3">
-                                <span class="text-sm font-semibold text-green-700">✅ Total</span>
-                                <span class="text-sm font-bold text-green-800">{{ $totalStudent ?? 0 }}</span>
-                            </div>
-
-                            <div class="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-xl px-4 py-3">
-                                <span class="text-sm font-semibold text-blue-700">🟢 Present</span>
-                                <span class="text-sm font-bold text-blue-800">{{ $present ?? 0 }}</span>
-                            </div>
-
-                            <div class="flex items-center justify-between bg-red-50 border border-red-200 rounded-xl px-4 py-3">
-                                <span class="text-sm font-semibold text-red-700">❌ Absent</span>
-                                <span class="text-sm font-bold text-red-800">{{ $absent ?? 0 }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    
-
-
                 </div>
             </div>
         </div>
