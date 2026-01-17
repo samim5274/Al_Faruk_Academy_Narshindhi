@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Attendance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Room;
 use App\Models\Student;
@@ -65,7 +67,7 @@ class AttendanceController extends Controller
         $attend->class_id = $student->class_id;
         $attend->attendance_date = $this->date;
         $attend->status = 'Present';
-        $attend->remarks = 'N/A';
+        $attend->remarks = Auth::guard('teacher')->user()->first_name.' '.Auth::guard('teacher')->user()->last_name;
 
         $student->attend_date = Carbon::now()->addDay();
 
@@ -91,7 +93,7 @@ class AttendanceController extends Controller
         $attend->class_id = $student->class_id;
         $attend->attendance_date = $this->date;
         $attend->status = 'Absent';
-        $attend->remarks = 'N/A';
+        $attend->remarks = Auth::guard('teacher')->user()->first_name.' '.Auth::guard('teacher')->user()->last_name;
 
         $student->attend_date = Carbon::now()->addDay();
 
@@ -103,7 +105,20 @@ class AttendanceController extends Controller
     public function attendApply(){
         $students = Student::all();
         foreach($students as $student){
-            $student->attend_date = $this->date;
+            // already attendance done
+            $check = Attendance::where('student_id', $student->id)->where('attendance_date', $this->date)->first();
+
+            if (!$check) {
+                $attend = new Attendance();
+                $attend->student_id = $student->id;
+                $attend->class_id = $student->class_id;
+                $attend->attendance_date = $this->date;
+                $attend->status = 'Present';
+                $attend->remarks = Auth::guard('teacher')->user()->first_name.' '.Auth::guard('teacher')->user()->last_name;
+                $attend->save();
+            }
+                
+            $student->attend_date = Carbon::now()->addDay();
             $student->update();
         }
         return redirect()->back()->with('success','Student attendance apply for all classes. Thank you.');
@@ -137,7 +152,50 @@ class AttendanceController extends Controller
         if(!$data){
             return redirect()->back()->with('warning','Attendance not found. Please try another. Thank You!');
         }
+        $data->remarks = Auth::guard('teacher')->user()->first_name.' '.Auth::guard('teacher')->user()->last_name;
         $data->status = $request->attendanceStatus;
+        
+        if ($request->attendanceStatus == "Absent") {
+
+            $student = Student::with(['room'])->findOrFail($data->student_id);
+
+            $emails = collect([
+                $student->email,
+                $student->father_email,
+                $student->mother_email,
+                $student->guardian_email,
+            ])->filter()->unique()->values()->all();
+
+            $date = $request->attendance_date ?? now()->toDateString();
+
+            if (!empty($emails)) {
+                try {
+                    Mail::to($emails)->send(new \App\Mail\StudentAbsentMail($student, $date));
+                } catch (\Throwable $e) {
+                    $className = optional($student->class)->name ?? 'N/A';
+                    $section   = optional($student->class)->section ?? 'N/A';
+                    $roll      = $student->roll_number ?? 'N/A';
+                    $plainText =
+                        "STUDENT ABSENT NOTICE
+
+                        Student Name : {$student->first_name} {$student->last_name}
+                        Roll No      : {$roll}
+                        Class        : {$className}
+                        Section      : {$section}
+                        Date         : ".Carbon::parse($date)->format('d M, Y')."
+
+                        This student did not attend school today.
+
+                        -- School Management System
+                        ";
+
+                    Mail::raw($plainText, function ($message) {
+                        $message->to('info@alfarukacademy.edu.bd')
+                                ->subject('Fallback Attendance Alert (No Guardian Email)');
+                    });
+                }
+            }
+        }
         $data->update();
         return redirect()->back()->with('success','Student attendance update successfully.');
     }
