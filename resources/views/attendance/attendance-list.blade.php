@@ -311,7 +311,7 @@
                                                         {{ $val->student->first_name ?? '' }} {{ $val->student->last_name ?? '' }}
                                                     </div>
                                                     <div class="text-xs text-red-500 mt-0.5">
-                                                        Blood Group: {{ $val->student->blood_group }}
+                                                        <i class="fa fa-droplet"></i> {{ $val->student->blood_group }}
                                                     </div>
                                                 </td>
 

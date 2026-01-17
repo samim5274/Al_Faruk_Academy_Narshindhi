@@ -196,7 +196,7 @@ class ExamController extends Controller
                 $findData->gpa            = $gpa;
                 $findData->remarks        = 'Updated by ' . Auth::guard('teacher')->user()->first_name .' '.Auth::guard('teacher')->user()->last_name;
                 
-                // $findData->update();
+                $findData->update();
                 return redirect()->back()->with('success', 'Mark updated successfully!');
             }
             // return redirect()->back()->with('warning', 'Mark already submited. Please try another student. Thank you.');

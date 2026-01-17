@@ -53,96 +53,205 @@
 
             <!-- Card -->
             <div class="card rounded-lg border shadow-sm ">
-                <div class="bg-gray-100 border-b px-4 py-4 sm:py-6 rounded-t-lg">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                        <!-- Student Info -->
-                        <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
-                            <span class="text-blue-500 text-xl">📌</span>
-                            Student: <span class="text-gray-700">{{ $students[0]->room->name ?? 'N/A' }}</span> 
-                            (<span class="text-gray-700">{{ $students[0]->room->section ?? 'N/A' }}</span>)
-                        </h2>
-
-                        <!-- Subject Info -->
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
-                            <span class="text-green-500 text-xl">📌</span>
-                            Subject: <span class="text-gray-700">{{ $sub->name }}</span>
-                        </h3>
-                    </div>
-                </div>
-                <div class="space-y-4">                    
-                    @foreach($students as $val)
-                    <div class="bg-white border rounded-xl shadow-sm hover:shadow-lg transition p-5">
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 items-center">
-                            
-                            <!-- Student Info -->
+                
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                    {{-- Header --}}
+                    <div class="px-6 py-5 border-b bg-gray-50">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                             <div>
-                                <a href="{{ url('/edit-student-view/'.$val->id) }}" 
-                                class="text-gray-900 font-semibold text-lg hover:text-blue-600 transition">
-                                    {{ $loop->iteration }}. {{ $val->first_name }} {{ $val->last_name }}
-                                </a>
-                                <div class="flex items-center gap-2 text-sm text-gray-600 mt-1">
-                                    <span class="text-red-500 font-medium">
-                                        <i class="fa fa-droplet"></i> {{ $val->blood_group }}
-                                    </span>
-                                    <span class="text-gray-400">|</span>
-                                    <span class="truncate max-w-[250px]">
-                                        {{ $val->address1 }}
-                                    </span>
+                                <h2 class="text-lg font-bold text-gray-800"><span class="text-green-500 text-xl me-2">📌</span>Result Sheet</h2>
+                                <p class="text-sm text-gray-500 mt-1">
+                                    Class: <span class="font-semibold text-gray-700">{{ $sub->room->name ?? 'N/A' }}</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    Section: <span class="font-semibold text-gray-700">{{ $sub->room->section ?? 'N/A' }}</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    Subject: <span class="font-semibold text-gray-700">{{ $sub->name ?? 'N/A' }}</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    Exam: <span class="font-semibold text-gray-700">{{ $exam->name ?? 'N/A' }}</span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    Max Marks: <span class="font-semibold text-gray-700">{{ $exam->max_marks }}</span>
+                                </p>
+                            </div>
+
+                            {{-- Optional search (frontend only) --}}
+                            <div class="w-full md:w-72">
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔎</span>
+                                    <input id="resultSearch" type="text" placeholder="Search roll/name..."
+                                        class="w-full pl-10 pr-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-300"
+                                        oninput="filterResults(this.value)">
                                 </div>
                             </div>
-
-                            <!-- Marks Display -->
-                            <div class="sm:text-center">
-                                @php
-                                    $studentMarks = $marks->where('student_id', $val->id)->first();
-                                @endphp
-
-                                @if($studentMarks)
-                                    <span class="inline-block px-3 py-1 rounded-full text-sm font-medium 
-                                        {{ $studentMarks->gpa >= 2.0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                                        {{ $studentMarks->marks_obtained }} → ({{ $studentMarks->grade }})
-                                    </span>
-                                @else
-                                    <span class="inline-block px-3 py-1 rounded-full bg-gray-100 text-gray-500 text-sm italic">
-                                        No marks yet
-                                    </span>
-                                @endif
-                            </div>
-
-                            <!-- Marks Input & Submit -->
-                            <form action="{{ url('/submit-mark/'.$val->id) }}" method="POST" 
-                                class="flex flex-col sm:flex-row sm:justify-end items-center gap-3">
-                                @csrf
-                                <input type="hidden" name="subject_id" value="{{ $sub->id }}">
-                                <input type="hidden" name="class_id" value="{{ $room->id }}">
-                                <input type="hidden" name="exam_id" value="{{ $exam->id }}">
-
-                                <input type="number" name="marks_obtained" min="0" max="{{$exam->max_marks}}" required step="0.01"
-                                    class="w-full sm:w-28 border border-gray-300 rounded-md px-3 py-2 text-gray-800 
-                                        placeholder-gray-400 focus:outline-none focus:ring-2 
-                                        focus:ring-green-500 focus:border-green-500"
-                                    placeholder="Enter Mark">
-
-                                @if($studentMarks)                                
-                                <button type="submit" name="edit" value="1" onclick="return confirm('Are you sure want to update this mark?')"
-                                        class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 
-                                            text-white font-semibold text-sm px-4 py-2 rounded-md w-full sm:w-auto 
-                                            transition duration-200 shadow-md hover:shadow-lg">
-                                    <i class="fa-solid fa-pencil me-2"></i> Modify
-                                </button>
-                                @else
-                                <button type="submit" onclick="return confirm('Are you sure want to save this mark?')"
-                                        class="flex items-center justify-center bg-green-500 hover:bg-green-600 
-                                            text-white font-semibold text-sm px-4 py-2 rounded-md w-full sm:w-auto 
-                                            transition duration-200 shadow-md hover:shadow-lg">
-                                    <i class="fa-solid fa-check me-2"></i> Submit
-                                </button>
-                                @endif
-                            </form>
                         </div>
                     </div>
-                    @endforeach
+
+                    {{-- Table Header (desktop) --}}
+                    <div class="hidden lg:block px-6 py-3 bg-white border-b">
+                        <div class="grid grid-cols-12 text-xs font-semibold text-gray-500 uppercase">
+                            <div class="col-span-1">Roll</div>
+                            <div class="col-span-4">Student</div>
+                            <div class="col-span-2 text-center">Marks</div>
+                            <div class="col-span-1 text-center">Grade</div>
+                            <div class="col-span-1 text-center">GPA</div>
+                            <div class="col-span-2">Remarks</div>
+                            <div class="col-span-1 text-right">Action</div>
+                        </div>
+                    </div>
+
+                    {{-- Rows --}}
+                    <div class="p-4 md:p-6 space-y-3" id="resultRows">
+                        @foreach($students as $val)
+                            @php
+                                $studentMarks = $marks->firstWhere('student_id', $val->id);
+                                $hasMarks = (bool) $studentMarks;
+
+                                $marksObtained = $hasMarks ? ($studentMarks->marks_obtained ?? null) : null;
+                                $grade = $hasMarks ? ($studentMarks->grade ?? 'N/A') : '—';
+                                $gpa = $hasMarks ? ($studentMarks->gpa ?? null) : null;
+                                $remarks = $hasMarks ? ($studentMarks->remarks ?? '-') : '-';
+
+                                $isPass = $hasMarks && $gpa !== null ? ($gpa >= 2.0) : false;
+
+                                $name = trim(($val->first_name ?? '').' '.($val->last_name ?? ''));
+                                $roll = $val->roll_number ?? 'N/A';
+                                $blood = $val->blood_group ?? 'N/A';
+                                $address = $val->address1 ?? 'Address not available';
+                            @endphp
+
+                            <div class="group bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition"
+                                data-search="{{ strtolower($roll.' '.$name) }}">
+
+                                <div class="p-4 md:p-5">
+                                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+
+                                        {{-- Roll --}}
+                                        <div class="lg:col-span-1">
+                                            <div class="text-sm font-bold text-gray-800">{{ $roll }}</div>
+                                            <div class="text-xs text-gray-400">Roll</div>
+                                        </div>
+
+                                        {{-- Student --}}
+                                        <div class="lg:col-span-4 min-w-0">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-11 h-11 rounded-xl border border-gray-200 bg-gray-50 overflow-hidden flex items-center justify-center">
+                                                    @if(!empty($val->photo))
+                                                        <img src="{{ asset('img/student/' . $val->photo) }}" class="w-full h-full object-cover" alt="student">
+                                                    @else
+                                                        <span class="text-gray-400 text-sm font-bold">
+                                                            {{ strtoupper(substr($val->first_name ?? 'S',0,1)) }}{{ strtoupper(substr($val->last_name ?? 'T',0,1)) }}
+                                                        </span>
+                                                    @endif
+                                                </div>
+
+                                                <div class="min-w-0">
+                                                    <a href="{{ url('/edit-student-view/'.$val->id) }}"
+                                                    class="block font-semibold text-gray-900 hover:text-blue-600 transition truncate">
+                                                        {{ $name }}
+                                                    </a>
+
+                                                    <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500 mt-1">
+                                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-100">
+                                                            <i class="fa fa-droplet"></i> {{ $blood }}
+                                                        </span>
+                                                        <span class="text-gray-300">•</span>
+                                                        <span class="truncate max-w-[340px]">{{ $address }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- Marks --}}
+                                        <div class="lg:col-span-2 text-center">
+                                            @if($hasMarks)
+                                                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border
+                                                    {{ $isPass ? 'bg-green-50 text-green-700 border-green-200' : 'bg-red-50 text-red-700 border-red-200' }}">
+                                                    <span>{{ $marksObtained }}</span>
+                                                    <span class="text-gray-300">/</span>
+                                                    <span class="text-gray-500">{{ $exam->max_marks }}</span>
+                                                </div>
+                                                <div class="text-[11px] text-gray-400 mt-1">
+                                                    {{ $isPass ? 'Pass' : 'Fail' }}
+                                                </div>
+                                            @else
+                                                <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-gray-50 text-gray-500 border border-gray-200 text-sm">
+                                                    Not set
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        {{-- Grade --}}
+                                        <div class="lg:col-span-1 text-center">
+                                            <div class="text-sm font-bold text-gray-800">{{ $grade }}</div>
+                                            <div class="text-xs text-gray-400">Grade</div>
+                                        </div>
+
+                                        {{-- GPA --}}
+                                        <div class="lg:col-span-1 text-center">
+                                            <div class="text-sm font-bold text-gray-800">{{ $gpa ?? '—' }}</div>
+                                            <div class="text-xs text-gray-400">GPA</div>
+                                        </div>
+
+                                        {{-- Remarks --}}
+                                        <div class="lg:col-span-2">
+                                            @if($remarks != "N/A")
+                                            <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-sm font-semibold">
+                                                {{ $remarks }}
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        {{-- Action --}}
+                                        <div class="lg:col-span-1">
+                                            <form action="{{ url('/submit-mark/'.$val->id) }}" method="POST" class="flex lg:justify-end gap-2">
+                                                @csrf
+                                                <input type="hidden" name="subject_id" value="{{ $sub->id }}">
+                                                <input type="hidden" name="class_id" value="{{ $room->id }}">
+                                                <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+
+                                                <input type="number" name="marks_obtained" min="0" max="{{ $exam->max_marks }}" step="0.01"
+                                                    required value="{{ $hasMarks ? $marksObtained : '' }}"
+                                                    class="w-28 rounded-xl border border-gray-200 px-3 py-2 text-sm text-gray-800
+                                                            focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-300"
+                                                    placeholder="Mark">
+
+                                                @if($hasMarks)
+                                                    <button type="submit" name="edit" value="1"
+                                                            onclick="return confirm('Are you sure want to update this mark?')"
+                                                            class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition">
+                                                        Update
+                                                    </button>
+                                                @else
+                                                    <button type="submit"
+                                                            onclick="return confirm('Are you sure want to save this mark?')"
+                                                            class="px-3 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition">
+                                                        Save
+                                                    </button>
+                                                @endif
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                {{-- Mobile footer labels --}}
+                                <div class="lg:hidden px-4 md:px-5 pb-4">
+                                    <div class="grid grid-cols-2 gap-2 text-xs text-gray-500">
+                                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                                            <div class="text-gray-400">Grade</div>
+                                            <div class="font-bold text-gray-800">{{ $grade }}</div>
+                                        </div>
+                                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                                            <div class="text-gray-400">GPA</div>
+                                            <div class="font-bold text-gray-800">{{ $gpa ?? '—' }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
+
             </div>
             <!-- Card End -->
         </div>
@@ -176,6 +285,15 @@
                 }, 3000);
             }
         });
+
+        // search student
+        function filterResults(q){
+            q = (q || '').toLowerCase().trim();
+            document.querySelectorAll('#resultRows [data-search]').forEach(el => {
+                const hay = el.getAttribute('data-search') || '';
+                el.style.display = hay.includes(q) ? '' : 'none';
+            });
+        }
     </script>
 
     <script> layout_change('false'); </script>
