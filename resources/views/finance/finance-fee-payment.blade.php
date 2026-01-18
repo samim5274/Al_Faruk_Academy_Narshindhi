@@ -180,7 +180,7 @@
                     <!-- Buttons -->
                     <div class="flex justify-end space-x-3">
                         <!-- <a href="{{ url('/fee-payments') }}" class="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">Cancel</a> -->
-                        <button type="submit" class="px-5 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">Save Payment</button>
+                        <button type="submit" id="savePaymentBtn" class="px-5 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">Save Payment</button>
                     </div>
                 </form>
             </div>
@@ -463,12 +463,32 @@
                 const dueAmountInput = document.getElementById('due_amount');
                 const discountInput = document.getElementById('discount');
 
+                const saveBtn = document.getElementById('savePaymentBtn');
+                const overPayMsg = document.getElementById('overPayMsg');
+
+                function validatePayment() {
+                    const total = parseFloat(totalAmountInput.value) || 0;
+                    const paid = parseFloat(amountPaidInput.value) || 0;
+                    const discount = parseFloat(discountInput.value) || 0;
+
+                    // paid + discount > total হলে invalid
+                    const isOverPay = (paid + discount) > total;
+
+                    if (isOverPay) {
+                        saveBtn.disabled = true;
+                        saveBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                        if (overPayMsg) overPayMsg.classList.remove('hidden');
+                    } else {
+                        saveBtn.disabled = false;
+                        saveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        if (overPayMsg) overPayMsg.classList.add('hidden');
+                    }
+                }
+
                 function calculateTotal() {
                     let total = 0;
                     feeCheckboxes.forEach(checkbox => {
-                        if (checkbox.checked) {
-                            total += parseFloat(checkbox.dataset.amount);
-                        }
+                        if (checkbox.checked) total += parseFloat(checkbox.dataset.amount);
                     });
                     totalAmountInput.value = total.toFixed(2);
                     calculateDue();
@@ -478,19 +498,18 @@
                     const total = parseFloat(totalAmountInput.value) || 0;
                     const paid = parseFloat(amountPaidInput.value) || 0;
                     const discount = parseFloat(discountInput.value) || 0;
+
                     const due = total - paid - discount;
                     dueAmountInput.value = due.toFixed(2);
+
+                    validatePayment();
                 }
 
                 feeStructureContainer.addEventListener('change', function(e) {
                     if (e.target.classList.contains('fee-checkbox')) {
                         const checkbox = e.target;
                         const feeItem = checkbox.closest('.fee-item');
-                        if (checkbox.checked) {
-                            feeItem.classList.add('selected-fee-item');
-                        } else {
-                            feeItem.classList.remove('selected-fee-item');
-                        }
+                        feeItem?.classList.toggle('selected-fee-item', checkbox.checked);
                         calculateTotal();
                     }
                 });
@@ -498,7 +517,7 @@
                 amountPaidInput.addEventListener('input', calculateDue);
                 discountInput.addEventListener('input', calculateDue);
 
-                calculateTotal(); // Initial calculation
+                calculateTotal(); // initial
             }
 
             initializeFeeCheckboxEventListeners();

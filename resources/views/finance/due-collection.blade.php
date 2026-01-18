@@ -170,6 +170,14 @@
                         </div>
                     </div>
 
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">Remarks</label>
+                        <textarea name="remarks"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-xl
+                            focus:ring-2 focus:ring-[#3F4D67] focus:outline-none"
+                            placeholder="Optional note..."></textarea>
+                    </div>
+
                     <!-- Actions -->
                     <div class="flex justify-end gap-3 pt-4">
                         <button type="reset"
@@ -221,12 +229,14 @@
             // ================= ELEMENTS =================
             const classIdDropdown = document.getElementById('class_id');
             const studentDropdown = document.getElementById('student_id');
+
             const dueBox = document.getElementById('studentDueBox');
             const dueAmountText = document.getElementById('studentDueAmount');
 
             const paymentInput = document.getElementById('txtPaymentAmount');
             const remainingBox = document.getElementById('remainingDueBox');
             const remainingText = document.getElementById('remainingDueAmount');
+
             const submitBtn = document.querySelector('button[type="submit"]');
 
             let studentDue = 0;
@@ -248,12 +258,11 @@
                             studentDropdown.appendChild(option);
                         });
 
-                        // Reset all
                         resetPaymentUI();
                     });
             });
 
-            // ================= LOAD STUDENT PAYMENT =================
+            // ================= LOAD STUDENT DUE =================
             studentDropdown.addEventListener('change', function () {
                 const studentId = this.value;
 
@@ -261,7 +270,7 @@
                     .then(res => res.json())
                     .then(data => {
 
-                        studentDue = parseFloat(data.total_due) || 0;
+                        studentDue = parseFloat(data.final_total_due) || 0;
 
                         dueBox.classList.remove('hidden');
                         dueAmountText.innerText = `৳ ${studentDue}/-`;
@@ -269,7 +278,6 @@
                         dueAmountText.classList.toggle('text-red-600', studentDue > 0);
                         dueAmountText.classList.toggle('text-[#3F4D67]', studentDue == 0);
 
-                        // Reset payment input & remaining
                         paymentInput.value = '';
                         updateRemaining(studentDue);
                     })

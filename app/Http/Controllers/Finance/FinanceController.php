@@ -16,6 +16,7 @@ use App\Models\FeeCategory;
 use App\Models\FeeStructure;
 use App\Models\feePaymentDetails;
 use App\Models\FeePaymentItem;
+use App\Models\DueCollection;
 
 class FinanceController extends Controller
 {
@@ -335,16 +336,74 @@ class FinanceController extends Controller
                 SUM(total_due) as total_due
             ')
             ->first();
+        
+        $latestRemainingDue = DueCollection::where('student_id', $studentId)->orderBy('id', 'desc')->value('remaining_due');
+
+        $final_total_due = $latestRemainingDue !== null ? (float)$latestRemainingDue : (float)$payment->total_due;
 
         return response()->json([
             'total_amount' => $payment->total_amount ?? 0,
             'total_paid'   => $payment->total_paid ?? 0,
             'total_due'    => $payment->total_due ?? 0,
+            'final_total_due' => (float) $final_total_due,
         ]);
     }
 
     public function duePament(Request $request){
-        return redirect()->back()->with('warning','Due collection under maintanance. Please contact with developer. Thank You!');
+        
+        $request->validate([
+            'class_id'        => ['required', 'integer'],
+            'student_id'      => ['required', 'integer', 'exists:students,id'],
+            'payment_method'  => ['nullable', 'string', 'max:50'],
+            'txtPaymentAmount'=> ['required', 'numeric', 'min:1'],
+        ]);
+        
+        $studentId = (int) $request->student_id;
+        $payAmount = (float) $request->txtPaymentAmount;
+
+        // student total due (from payment_details)
+        $paymentAgg = FeePaymentDetails::where('student_id', $studentId)->selectRaw('COALESCE(SUM(total_due),0) as total_due')->first();
+        
+        // due paid later (from due collections)
+        $duePaidLater = DueCollection::where('student_id', $studentId)->sum('paid_amount');
+        
+        $currentDue = max(0, (float)$paymentAgg->total_due - (float)$duePaidLater);
+                
+        if ($currentDue <= 0) {
+            return redirect()->back()->with('warning', 'No due found for this student.');
+        }
+
+        if ($payAmount > $currentDue) {
+            return redirect()->back()->with('error', 'Payment amount cannot be greater than due amount.');
+        }
+
+        $remainingDue = $currentDue - $payAmount;
+        
+        DB::transaction(function () use ($request, $studentId, $payAmount, $currentDue, $remainingDue) {
+
+            // Generate unique receipt/invoice for due collection
+            do { $receipt = strtoupper(Str::random(10)); }
+            while (DueCollection::where('receipt_no', $receipt)->exists());
+
+            do { $invoice = 'INV-' . rand(10000, 99999); }
+            while (DueCollection::where('invoice_no', $invoice)->exists());
+            
+            // Insert Due Collection
+            DueCollection::create([
+                'receipt_no'      => $receipt,
+                'invoice_no'      => $invoice,
+                'student_id'      => $studentId,
+                'user_id'         => Auth::guard('teacher')->user()->id,
+                'previous_due'    => $currentDue,
+                'paid_amount'     => $payAmount,
+                'remaining_due'   => $remainingDue,
+                'collection_date' => now()->toDateString(),
+                'payment_method'  => $request->payment_method,
+                'remarks'         => $request->remarks ?? 'N/A',
+            ]);            
+        });
+
+        return redirect()->back()->with('success', 'Due payment collected successfully.');
     }
 
     public function showPayment($id){

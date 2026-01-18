@@ -104,3 +104,7 @@ php artisan optimize:clear
 php artisan view:clear
 php artisan route:clear
 php artisan config:cache
+
+// pull korar age 
+git restore public/Other/Al\ Faruk\ Academy\ Info.txt public/Other/other.txt
+git pull origin main

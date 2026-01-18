@@ -91,4 +91,10 @@ class Teacher extends Authenticatable
     {
         return $this->hasMany(Teacher::class, 'user_id');
     }
+
+    public function dueCollections()
+    {
+        return $this->hasMany(FeeDueCollection::class, 'user_id');
+    }
+
 }

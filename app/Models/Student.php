@@ -120,4 +120,9 @@ class Student extends Authenticatable
         return $this->hasMany(FeePaymentItem::class);
     }
 
+    public function dueCollections()
+    {
+        return $this->hasMany(FeeDueCollection::class, 'student_id');
+    }
+
 }
