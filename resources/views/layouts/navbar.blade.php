@@ -51,7 +51,7 @@
                         <li class="pc-item pc-hasmenu">
                             <a href="{{url('/class-list')}}" class="pc-link">
                                 <span class="pc-micon"> <i class="fa-solid fa-clipboard-user"></i></span>
-                                <span class="pc-mtext">Attendance Records</span>
+                                <span class="pc-mtext">Attendance</span>
                             </a>
                         </li>
                         <!-- <li class="pc-item pc-hasmenu">
@@ -251,9 +251,9 @@
                     <a href="#!" class="pc-link"><span class="pc-micon"> <i class="fa-solid fa-money-bill"></i> </span><span
                     class="pc-mtext">Finance Management</span><span class="pc-arrow"><i class="ti ti-chevron-right"></i></span></a>
                     <ul class="pc-submenu">
-                        <li class="pc-item"><a class="pc-link" href="{{url('/finance-management')}}">Fee Category</a></li>
-                        <li class="pc-item"><a class="pc-link" href="{{url('/finance-fee-structure')}}">Fee Structure</a></li>
-                        <li class="pc-item"><a class="pc-link" href="{{url('/finance-fee-payment')}}">Fee Payment</a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{url('/finance-management')}}">Category</a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{url('/finance-fee-structure')}}">Structure</a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{url('/finance-fee-payment')}}">Fee Collection</a></li>
                         <li class="pc-item"><a class="pc-link" href="{{url('/due-collection')}}">Due Collection</a></li>
                     </ul>
                 </li>

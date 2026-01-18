@@ -200,6 +200,8 @@ class FinanceController extends Controller
             'fee_structure'   => 'required|array|min:1',
             'fee_structure.*' => 'exists:fee_structures,id',
             'amount_paid'     => 'required|numeric|min:0',
+            'month'           => 'required',
+            'year'            => 'required',
             'discount'        => 'nullable|numeric|min:0',
             'payment_method'  => 'required|in:Cash,Card,Bank Transfer,Mobile Banking',
         ]);
@@ -208,8 +210,8 @@ class FinanceController extends Controller
             return back()->with('error', 'Full due payment not exceed. Thank You!');
         }
 
-        $month = now()->format('m');
-        $year  = now()->format('Y');
+        $month = $request->month;
+        $year  = $request->year;
 
         $feeStructures = FeeStructure::whereIn('id', $request->fee_structure)->get();
 
