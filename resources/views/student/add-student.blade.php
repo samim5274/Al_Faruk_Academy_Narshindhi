@@ -65,27 +65,38 @@
                                     @csrf
                                     <!-- Personal Information -->
                                     <div class="border-b border-gray-300 pb-4 mb-6">
-                                        
                                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="first_name">First Name</label>
-                                                <input type="text" id="first_name" name="first_name" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="first_name">
+                                                    First Name <span class="text-red-500">*</span>
+                                                </label>
+                                                <input required type="text" id="first_name" name="first_name"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="last_name">Last Name</label>
-                                                <input type="text" id="last_name" name="last_name" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="last_name">
+                                                    Last Name <span class="text-red-500">*</span>
+                                                </label>
+                                                <input required type="text" id="last_name" name="last_name"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="dob">Date of Birth</label>
-                                                <input type="date" id="dob" name="dob" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="dob">
+                                                    Date of Birth <span class="text-red-500">*</span>
+                                                </label>
+                                                <input required type="date" id="dob" name="dob"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="gender">Gender</label>
-                                                <select id="gender" name="gender" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="gender">
+                                                    Gender <span class="text-red-500">*</span>
+                                                </label>
+                                                <select required id="gender" name="gender"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                                     <option selected disabled>--Select Gender--</option>
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
@@ -95,47 +106,67 @@
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="blood_group">Blood Group</label>
-                                                <input type="text" id="blood_group" name="blood_group" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="blood_group" name="blood_group"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="religion">Religion</label>
-                                                <input type="text" id="religion" name="religion" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="religion" name="religion"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="nationality">Nationality</label>
-                                                <input type="text" id="nationality" name="nationality" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="nationality" name="nationality"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="national_id">National ID / Birth Certificate</label>
-                                                <input type="text" id="national_id" name="national_id" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="national_id">
+                                                    National ID / Birth Certificate 
+                                                    <span class="text-red-500">*</span>
+                                                </label>
+                                                <input type="text" id="national_id" name="national_id"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="contact_number">Contact Number</label>
-                                                <input type="text" id="contact_number" name="contact_number" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="contact_number">
+                                                    Contact Number <span class="text-red-500">*</span>
+                                                </label>
+                                                <input required type="text" id="contact_number" name="contact_number"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="email">Email Address</label>
-                                                <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="email">
+                                                    Email Address <span class="text-red-500">*</span>
+                                                </label>
+                                                <input required type="email" id="email" name="email"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
-                                            <div class="">
-                                                <label class="block text-gray-600 mb-1" for="present_address">Present Address</label>
-                                                <textarea id="present_address" name="present_address" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                                            <div>
+                                                <label class="block text-gray-600 mb-1" for="present_address">
+                                                    Present Address <span class="text-red-500">*</span>
+                                                </label>
+                                                <textarea required id="present_address" name="present_address"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
                                             </div>
 
-                                            <div class="">
+                                            <div>
                                                 <label class="block text-gray-600 mb-1" for="permanent_address">Permanent Address</label>
-                                                <textarea id="permanent_address" name="permanent_address" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                                                <textarea id="permanent_address" name="permanent_address"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="Class">Class</label>
-                                                <select id="Class" name="class_id" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="Class">
+                                                    Class <span class="text-red-500">*</span>
+                                                </label>
+                                                <select required id="Class" name="class_id"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                                     <option selected disabled>--Select Class--</option>
                                                     @foreach($room as $val)
                                                     <option value="{{$val->id}}">{{$val->name}}</option>
@@ -143,20 +174,25 @@
                                                 </select>
                                             </div>
 
-                                            <div class="">
+                                            <div>
                                                 <label class="block text-gray-600 mb-1" for="b_reg_no">Board Reg. No</label>
-                                                <input type="number" id="b_reg_no" name="b_reg_no" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
-                                            </div>
-
-                                            <div class="">
-                                                <label class="block text-gray-600 mb-1" for="b_roll_no">Board Roll</label>
-                                                <input type="number" id="b_roll_no" name="b_roll_no" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="number" id="b_reg_no" name="b_reg_no"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="Section">Section</label>
-                                                <select id="Section" name="cbxSection" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
-                                                    <option selected disabled>--Select Section--</option>                                                    
+                                                <label class="block text-gray-600 mb-1" for="b_roll_no">Board Roll</label>
+                                                <input type="number" id="b_roll_no" name="b_roll_no"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                            </div>
+
+                                            <div>
+                                                <label class="block text-gray-600 mb-1" for="Section">
+                                                    Section <span class="text-red-500">*</span>
+                                                </label>
+                                                <select required id="Section" name="cbxSection"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                    <option selected disabled>--Select Section--</option>
                                                     <option value="A">A</option>
                                                     <option value="B">B</option>
                                                     <option value="C">C</option>
@@ -165,8 +201,11 @@
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="Group">Group</label>
-                                                <select id="Group" name="cbxGroup" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="Group">
+                                                    Group <span class="text-red-500">*</span>
+                                                </label>
+                                                <select required id="Group" name="cbxGroup"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                                     <option selected disabled>--Select Group--</option>
                                                     @foreach($groups as $val)
                                                     <option value="{{ $val->name }}">{{ $val->name }}</option>
@@ -174,95 +213,120 @@
                                                 </select>
                                             </div>
 
-                                            <div class="">
+                                            <div>
                                                 <label class="block text-gray-600 mb-1" for="previous_school">Previous School</label>
-                                                <input type="text" id="previous_school" name="previous_school" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="previous_school" name="previous_school"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
-                                            
+
                                         </div>
                                     </div>
 
                                     <!-- Guardian Information -->
                                     <div class="border-b border-gray-300 pb-4 mb-6">
                                         <h3 class="text-xl font-semibold mb-4 text-gray-700">Guardian / Parent Information</h3>
+
                                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="father_name">Father Name</label>
-                                                <input type="text" id="father_name" name="father_name" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="father_name" name="father_name"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="father_profession">Profession</label>
-                                                <input type="text" id="father_profession" name="father_profession" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="father_profession" name="father_profession"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="father_contact">Father Contact</label>
-                                                <input type="text" id="father_contact" name="father_contact" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="father_contact">
+                                                    Father Contact <span class="text-red-500">*</span>
+                                                </label>
+                                                <input required type="text" id="father_contact" name="father_contact"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="father_email">Email</label>
-                                                <input type="email" id="father_email" name="father_email" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="email" id="father_email" name="father_email"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="father_nid">NID Number</label>
-                                                <input type="text" id="father_nid" name="father_nid" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="father_nid" name="father_nid"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="mother_name">Mother Name</label>
-                                                <input type="text" id="mother_name" name="mother_name" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="mother_name" name="mother_name"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="mother_profession">Profession</label>
-                                                <input type="text" id="mother_profession" name="mother_profession" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="mother_profession" name="mother_profession"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="mother_contact">Mother Contact</label>
-                                                <input type="text" id="mother_contact" name="mother_contact" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="mother_contact">
+                                                    Mother Contact <span class="text-red-500">*</span>
+                                                </label>
+                                                <input required type="text" id="mother_contact" name="mother_contact"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="mother_email">Email</label>
-                                                <input type="email" id="mother_email" name="mother_email" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="email" id="mother_email" name="mother_email"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="mother_nid">NID Number</label>
-                                                <input type="text" id="mother_nid" name="mother_nid" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="mother_nid" name="mother_nid"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="guardian_name">Guardian Name (if any)</label>
-                                                <input type="text" id="guardian_name" name="guardian_name" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="guardian_name" name="guardian_name"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
-                                                <label class="block text-gray-600 mb-1" for="guardian_contact">Guardian Contact</label>
-                                                <input type="text" id="guardian_contact" name="guardian_contact" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <label class="block text-gray-600 mb-1" for="guardian_contact">
+                                                    Guardian Contact <span class="text-red-500">*</span>
+                                                </label>
+                                                <input required type="text" id="guardian_contact" name="guardian_contact"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="guardian_email">Guardian Email</label>
-                                                <input type="email" id="guardian_email" name="guardian_email" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="email" id="guardian_email" name="guardian_email"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="guardian_nid">Guardian NID</label>
-                                                <input type="text" id="guardian_nid" name="guardian_nid" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="guardian_nid" name="guardian_nid"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
 
                                             <div>
                                                 <label class="block text-gray-600 mb-1" for="guardian_relationship">Relationship with Student</label>
-                                                <input type="text" id="guardian_relationship" name="guardian_relationship" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                                <input type="text" id="guardian_relationship" name="guardian_relationship"
+                                                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                                             </div>
+
                                         </div>
                                     </div>
+
 
                                     <div class="w-full px-3">
                                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">    

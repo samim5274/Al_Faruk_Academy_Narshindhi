@@ -137,6 +137,7 @@
                                                     <option value="Finance and Accounts">Finance and Accounts</option>
                                                     <option value="Assistant Professor">Assistant Professor</option>
                                                     <option value="Associate Professor">Associate Professor</option>
+                                                    <option value="Associate Teacher">Associate Teacher</option>
                                                     <option value="Professor">Professor</option>
                                                     <option value="Head of Department">Head of Department</option>
                                                     <option value="Dean">Dean (Faculty Level)</option>

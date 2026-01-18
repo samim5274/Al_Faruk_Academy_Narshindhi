@@ -52,7 +52,7 @@
                 <li class="pc-item">
                     <a href="{{url('/my-class')}}" class="pc-link">
                         <span class="pc-micon"><i class="fa-solid fa-business-time"></i></span>
-                        <span class="pc-mtext">Class Schedule</span>
+                        <span class="pc-mtext">Class Routine</span>
                     </a>
                 </li>
 
@@ -63,7 +63,7 @@
                 <li class="pc-item">
                     <a href="{{url('/student-attendance')}}" class="pc-link">
                         <span class="pc-micon"><i class="fa-solid fa-clipboard-user"></i></span>
-                        <span class="pc-mtext">My Attendance</span>
+                        <span class="pc-mtext">Attendance</span>
                     </a>
                 </li>
 
@@ -80,7 +80,7 @@
                 <li class="pc-item">
                     <a href="{{url('/student-exam-list')}}" class="pc-link">
                         <span class="pc-micon"><i class="fa-solid fa-book-open"></i></span>
-                        <span class="pc-mtext">Exam List</span>
+                        <span class="pc-mtext">Exam Routine</span>
                     </a>
                 </li>
                 <li class="pc-item">
@@ -100,7 +100,7 @@
                         <span class="pc-mtext">My Fees</span>
                     </a>
                 </li>
-                <li class="pc-item">
+                <!-- <li class="pc-item">
                     <a href="{{url('/payment-history')}}" class="pc-link">
                         <span class="pc-micon"><i class="fa-solid fa-cash-register"></i></span>
                         <span class="pc-mtext">My Payment Details</span>
@@ -111,7 +111,7 @@
                         <span class="pc-micon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
                         <span class="pc-mtext">Payment Summary</span>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Authentication -->
                 <li class="pc-item pc-caption">
