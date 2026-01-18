@@ -195,7 +195,7 @@ Route::group(['middleware' => ['admin']], function(){
 
     Route::get('/due-collection', [FinanceController::class, 'dueCollection'])->name('due-collection');
     Route::get('/student/payment-info/{student}', [FinanceController::class, 'paymentInfo']);
-    Route::post('/due-collection-payment', [FinanceController::class, 'duePament']);
+    Route::post('/due-collection-payment', [FinanceController::class, 'duePayment']);
 
     Route::get('/students/{class_id}', [FinanceController::class, 'getStudentsByClass']);
     Route::get('/fee-structures/{class_id}', [FinanceController::class, 'getFeeStructuresByClass']);

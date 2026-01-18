@@ -14,7 +14,7 @@ use App\Models\Room;
 use App\Models\Student;
 use App\Models\FeeCategory;
 use App\Models\FeeStructure;
-use App\Models\feePaymentDetails;
+use App\Models\FeePaymentDetails;
 use App\Models\FeePaymentItem;
 use App\Models\DueCollection;
 
@@ -349,7 +349,7 @@ class FinanceController extends Controller
         ]);
     }
 
-    public function duePament(Request $request){
+    public function duePayment(Request $request){
         
         $request->validate([
             'class_id'        => ['required', 'integer'],
@@ -365,9 +365,11 @@ class FinanceController extends Controller
         $paymentAgg = FeePaymentDetails::where('student_id', $studentId)->selectRaw('COALESCE(SUM(total_due),0) as total_due')->first();
         
         // due paid later (from due collections)
-        $duePaidLater = DueCollection::where('student_id', $studentId)->sum('paid_amount');
+        $duePaidLater = DueCollection::where('student_id', $studentId)->orderBy('id', 'desc')->value('remaining_due');
         
-        $currentDue = max(0, (float)$paymentAgg->total_due - (float)$duePaidLater);
+        $currentDue = $latestRemainingDue !== null ? (float) $latestRemainingDue : (float) $paymentAgg->total_due;
+
+        $currentDue = max(0, $currentDue);
                 
         if ($currentDue <= 0) {
             return redirect()->back()->with('warning', 'No due found for this student.');
@@ -377,7 +379,7 @@ class FinanceController extends Controller
             return redirect()->back()->with('error', 'Payment amount cannot be greater than due amount.');
         }
 
-        $remainingDue = $currentDue - $payAmount;
+        $remainingDue = max(0, $currentDue - $payAmount);
         
         DB::transaction(function () use ($request, $studentId, $payAmount, $currentDue, $remainingDue) {
 
