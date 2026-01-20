@@ -153,6 +153,8 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/create-exam', [ExamController::class, 'createExam'])->name('create-exam-view');
     Route::post('/create-new-exam', [ExamController::class, 'createNewExam']);
     Route::post('/update-exam/{id}', [ExamController::class, 'updateExam']);
+    Route::get('/print-student-result/{id}', [ExamController::class, 'printResult']);
+    Route::get('/print-class-student-result/{class_Id}', [ExamController::class, 'printAllClassStudentResult']);
 
 
 

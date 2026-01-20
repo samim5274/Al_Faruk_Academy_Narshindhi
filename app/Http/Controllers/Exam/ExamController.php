@@ -263,6 +263,59 @@ class ExamController extends Controller
         return view('exam.report.result-view', compact('marks','class','student','company'));
     }
 
+    public function printResult($id){
+        $company = Company::first();
+        $marks = Mark::with(['student','subject','exam'])->where('student_id', $id)->get()
+                        ->groupBy(fn($m) => optional($m->exam)->name ?? 'No Exam');
+        return view('exam.print.print-result-view', compact('marks','company'));
+    }
+
+    public function printAllClassStudentResult($classId){
+         $company = Company::first();
+
+        // Students (rows)
+        $students = Student::with('room')
+            ->where('class_id', $classId)
+            ->orderBy('roll_number')
+            ->get();
+
+        $studentIds = $students->pluck('id');
+
+        // Marks (with exam + subject)
+        $marks = Mark::with(['exam','subject','student'])
+            ->whereIn('student_id', $studentIds)
+            ->get();
+
+        // Exam wise group
+        $byExam = $marks->groupBy(fn($m) => optional($m->exam)->name ?? 'No Exam');
+
+        // Build matrix per exam
+        $examSheets = $byExam->map(function($examMarks) use ($students) {
+
+            // Subjects (columns) unique by id (sorted)
+            $subjects = $examMarks->map(fn($m) => $m->subject)
+                ->filter()
+                ->unique('id')
+                ->sortBy('id')
+                ->values();
+
+            // Fast lookup: [student_id][subject_id] => marks
+            $lookup = [];
+            foreach ($examMarks as $m) {
+                $lookup[$m->student_id][$m->subject_id] = $m->marks_obtained;
+            }
+
+            return [
+                'subjects' => $subjects,
+                'lookup'   => $lookup,
+            ];
+        });
+
+        $room = $students->first()?->room;
+
+        return view('exam.print.class-all-student-result', compact('company','students','room','examSheets'));
+    }
+
     public function totalReport(){
         $company = Company::first();
         $classes = Room::with('teachers')->get();
