@@ -141,12 +141,27 @@
                 @endphp
                 @foreach($groupedSchedules as $classId => $classSchedules)
                     <div class="bg-white shadow-xl rounded-2xl p-6 overflow-x-auto">
-                        <h2 class="text-2xl font-bold text-indigo-700 text-center mb-6">
-                            Class: {{ $classSchedules->first()->classRoom->name ?? 'N/A' }}
-                            <span class="text-sm text-gray-500 ml-2">
-                                ({{ $classSchedules->first()->classRoom->section ?? '' }})
-                            </span>
-                        </h2>
+                        <div class="flex flex-col items-center gap-3 mb-6">
+                            <!-- Title -->
+                            <h2 class="text-2xl font-bold text-indigo-700 text-center">
+                                Class: {{ $classSchedules->first()->classRoom->name ?? 'N/A' }}
+                                <span class="text-sm text-gray-500 ml-2">
+                                    ({{ $classSchedules->first()->classRoom->section ?? '' }})
+                                </span>
+                            </h2>
+
+                            <!-- Print Button -->
+                            <a href="{{ url('/print-class-schedule/'.$classSchedules->first()->classRoom->id) }}"
+                                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg
+                                    bg-indigo-600 text-white text-sm font-medium
+                                    shadow hover:bg-indigo-700
+                                    focus:outline-none focus:ring-2 focus:ring-indigo-300
+                                    transition" target="_blank">
+                                <i class="fa-solid fa-print"></i>
+                                Print Schedule
+                            </a>
+                        </div>
+
 
                         <table class="min-w-full border border-gray-200 text-sm text-center rounded-lg overflow-hidden">
                             <thead>

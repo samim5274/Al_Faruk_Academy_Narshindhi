@@ -274,4 +274,11 @@ class ClassController extends Controller
         $schedules = ClassSchedule::with(['subject', 'teacher', 'classRoom'])->where('teacher_id', $user)->get();
         return view('room.schedule.my-schedule', compact('schedules','company'));
     }
+
+    public function printSchedule($id){
+        $company = Company::first();
+        $schedules = ClassSchedule::with(['subject', 'teacher', 'classRoom'])
+                    ->where('class_id', $id)->orderBy('day')->orderBy('period')->get();
+        return view('room.schedule.print.print-class-schedule', compact('schedules','company'));
+    }
 }

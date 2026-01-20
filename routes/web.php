@@ -170,6 +170,7 @@ Route::group(['middleware' => ['admin']], function(){
     Route::post('/update-class-schedule/{id}', [ClassController::class, 'updateClassSchedule']);
     Route::get('/delete/class/schedule/{id}', [ClassController::class, 'deleteClassSchedule']);
     Route::get('/my-class-schedule', [ClassController::class, 'mySchedule'])->name('my-class-schedule');
+    Route::get('/print-class-schedule/{id}', [ClassController::class, 'printSchedule'])->name('print-schedule');
 
 
 
