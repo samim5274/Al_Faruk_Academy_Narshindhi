@@ -21,6 +21,7 @@ use App\Models\FeePaymentItem;
 use App\Models\ClassSchedule;
 use Auth;
 use App\Models\Company;
+use App\Models\Notice;
 
 class StudentPortalController extends Controller
 {
@@ -32,8 +33,15 @@ class StudentPortalController extends Controller
 
     public function profile(){
         $company = Company::first();
+        $notices = Notice::Where('is_active', 1)->Where('notice_type', 'Student')->latest()->take(6)->get();
         $student = $student = Auth::guard('student')->user();
-        return view('studentPortal.profile.student-profile', compact('student','company'));
+        return view('studentPortal.profile.student-profile', compact('student','company','notices'));
+    }
+
+    public function showNotice(){
+        $company = Company::first();
+        $notices = Notice::Where('is_active', 1)->Where('notice_type', 'Student')->get();        
+        return view('studentPortal.notice.student-notice', compact('company','notices'));
     }
 
     public function myClass(){
