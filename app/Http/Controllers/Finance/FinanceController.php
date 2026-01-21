@@ -349,7 +349,7 @@ class FinanceController extends Controller
         ]);
     }
 
-    public function duePament(Request $request){
+    public function duePayment(Request $request){
         
         $request->validate([
             'class_id'        => ['required', 'integer'],
