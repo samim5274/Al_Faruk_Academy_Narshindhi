@@ -329,22 +329,22 @@ class FinanceController extends Controller
     }
 
     public function paymentInfo($studentId){
-        $payment = feePaymentDetails::where('student_id', $studentId)
-            ->selectRaw('
-                SUM(total_amount) as total_amount,
-                SUM(total_paid) as total_paid,
-                SUM(total_due) as total_due
-            ')
-            ->first();
-        
-        $latestRemainingDue = DueCollection::where('student_id', $studentId)->orderBy('id', 'desc')->value('remaining_due');
+        // 1 Student wise total due (all invoices/fee entries)
+        $total_due = (float) feePaymentDetails::where('student_id', $studentId)
+            ->selectRaw('COALESCE(SUM(total_due),0) as total_due')
+            ->value('total_due');
 
-        $final_total_due = $latestRemainingDue !== null ? (float)$latestRemainingDue : (float)$payment->total_due;
+        // 2 Student wise total paid (all due collections)
+        $total_paid = (float) DueCollection::where('student_id', $studentId)
+            ->selectRaw('COALESCE(SUM(paid_amount),0) as total_paid')
+            ->value('total_paid');
+
+        // 3 Final Due = total_due - total_paid (never negative)
+        $final_total_due = max(0, $total_due - $total_paid);
 
         return response()->json([
-            'total_amount' => $payment->total_amount ?? 0,
-            'total_paid'   => $payment->total_paid ?? 0,
-            'total_due'    => $payment->total_due ?? 0,
+            'total_due'       => $total_due,
+            'total_paid'      => $total_paid,
             'final_total_due' => (float) $final_total_due,
         ]);
     }
