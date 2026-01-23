@@ -33,7 +33,7 @@ class StudentPortalController extends Controller
 
     public function profile(){
         $company = Company::first();
-        $notices = Notice::Where('is_active', 1)->Where('notice_type', 'Student')->latest()->take(6)->get();
+        $notices = Notice::Where('is_active', 1)->WhereIn('notice_type', ['Student', 'Public'])->latest()->take(6)->get();
         $student = $student = Auth::guard('student')->user();
         return view('studentPortal.profile.student-profile', compact('student','company','notices'));
     }

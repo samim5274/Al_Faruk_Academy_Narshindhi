@@ -265,6 +265,8 @@
                         <li class="pc-item"><a class="pc-link" href="{{url('/category-class-finance-report')}}">Category Report's</a></li>
                         <li class="pc-item"><a class="pc-link" href="{{url('/student-wise-payment-report')}}">Student Wise Report's</a></li>
                         <li class="pc-item"><a class="pc-link" href="{{url('/fee-payment-hisoty')}}">Payment History</a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{url('/due-collection-report')}}">Due Collection Report</a></li>
+                        <li class="pc-item"><a class="pc-link" href="{{url('/due-list')}}">Due Report</a></li>
                     </ul>
                 </li>
 

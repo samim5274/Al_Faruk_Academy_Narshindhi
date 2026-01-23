@@ -213,6 +213,11 @@ Route::group(['middleware' => ['admin']], function(){
     Route::get('/find-student-fee-payment', [FinanceReportController::class, 'findStudentFeeReport']);
     Route::get('/fee-payment-hisoty', [FinanceReportController::class, 'paymentHistory']);
     Route::get('/find-payment-history', [FinanceReportController::class,'findPaymentHistory']);
+    Route::get('/due-list', [FinanceReportController::class, 'dueList']);
+    Route::get('/print-due-list', [FinanceReportController::class, 'printDueList']);
+    Route::get('/send-mail-due-student', [FinanceReportController::class, 'sendMailDueStaudent']);
+    Route::get('/due-collection-report', [FinanceReportController::class, 'dueCollectionReport']);
+    Route::get('/filter-due-collection', [FinanceReportController::class, 'filterDueCollection']);
 
 
 
